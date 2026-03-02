@@ -1,4 +1,4 @@
-import { auth } from "./firebase-config.js";
+import { auth } from "./config.js";
 
 import { 
   signInWithEmailAndPassword,
@@ -27,4 +27,5 @@ onAuthStateChanged(auth, (user) => {
   if (!user && window.location.pathname.includes("dashboard.html")) {
     window.location.href = "index.html";
   }
+
 });
