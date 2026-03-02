@@ -87,6 +87,9 @@ button:hover{
     Cerrar Sesión
   </button>
 </div>
+  <button id="btnRegistrar">Registrar Ritual</button>
+          <p id="mensaje"></p>
+<input type="file" id="foto" accept="image/*">
 
 <script>
 
@@ -142,9 +145,6 @@ auth.onAuthStateChanged(async user=>{
         document.getElementById("usuarioInfo").innerHTML = `
           👤 <strong>${data.nombre}</strong><br>
           🏢 Área: <strong>${data.area}</strong>
-          <button id="btnRegistrar">Registrar Ritual</button>
-          <p id="mensaje"></p>
-          <input type="file" id="foto" accept="image/*">
         `;
         
       }else{
@@ -239,6 +239,7 @@ document.getElementById("btnRegistrar").addEventListener("click", async () => {
 </script>
 </body>
 </html>
+
 
 
 
