@@ -90,7 +90,7 @@ button:hover{
 
 <script>
 
-/* 🔥 CONFIG FIREBASE */
+/*  CONFIG FIREBASE */
 firebase.initializeApp({
   apiKey: "AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",
   authDomain: "registro-de-evidencia-ip.firebaseapp.com",
@@ -104,38 +104,62 @@ firebase.initializeApp({
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-/* 🔐 LOGIN */
+/* LOGIN */
 function login(){
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   auth.signInWithEmailAndPassword(email,password)
-    .then(()=>{})
     .catch(()=>{
       document.getElementById("error").innerText =
         "Correo o contraseña incorrectos";
     });
 }
 
-/* 🔓 LOGOUT */
+/* LOGOUT */
 function logout(){
   auth.signOut();
 }
 
-/* 🧠 CONTROL DE SESIÓN */
+/* CONTROL DE SESIÓN */
 auth.onAuthStateChanged(async user=>{
   
   if(user){
+
     document.getElementById("loginCard").classList.add("hidden");
     document.getElementById("dashboard").classList.remove("hidden");
 
-    // Aquí luego traeremos área desde Firestore
-    document.getElementById("usuarioInfo").innerText =
-      user.email;
+    try{
+
+      const doc = await db.collection("usuarios")
+                          .doc(user.uid)
+                          .get();
+
+      if(doc.exists){
+
+        const data = doc.data();
+
+        document.getElementById("usuarioInfo").innerHTML = `
+          👤 <strong>${data.nombre}</strong><br>
+          🏢 Área: <strong>${data.area}</strong>
+        `;
+
+      }else{
+
+        document.getElementById("usuarioInfo").innerHTML =
+          "Usuario sin área asignada";
+
+      }
+
+    }catch(error){
+      console.error(error);
+    }
 
   }else{
+
     document.getElementById("loginCard").classList.remove("hidden");
     document.getElementById("dashboard").classList.add("hidden");
+
   }
 
 });
@@ -144,3 +168,4 @@ auth.onAuthStateChanged(async user=>{
 
 </body>
 </html>
+
