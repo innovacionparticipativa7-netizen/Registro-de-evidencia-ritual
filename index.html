@@ -124,121 +124,82 @@ function logout(){
   auth.signOut();
 }
 
-/* CONTROL DE SESIÓN */
-auth.onAuthStateChanged(async user=>{
-  
-  if(user){
-
-    document.getElementById("loginCard").classList.add("hidden");
-    document.getElementById("dashboard").classList.remove("hidden");
-
-    try{
-
-      const doc = await db.collection("usuarios")
-                          .doc(user.uid)
-                          .get();
-
-      if(doc.exists){
-
-        const data = doc.data();
-
-        document.getElementById("usuarioInfo").innerHTML = `
-          👤 <strong>${data.nombre}</strong><br>
-          🏢 Área: <strong>${data.area}</strong>
-        `;
-        
-      }else{
-
-        document.getElementById("usuarioInfo").innerHTML =
-          "Usuario sin área asignada";
-
-      }
-
-    }catch(error){
-      console.error(error);
-    }
-
-  }else{
-
-    document.getElementById("loginCard").classList.remove("hidden");
-    document.getElementById("dashboard").classList.add("hidden");
-
-  }
-
-});
-
-  import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc, addDoc, collection, serverTimestamp } 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const auth = getAuth();
-const db = getFirestore();
-
+/* REGISTRAR RITUAL */
 document.getElementById("btnRegistrar").addEventListener("click", async () => {
 
   const mensaje = document.getElementById("mensaje");
-  mensaje.textContent = "Registrando...";
+  mensaje.innerText = "Registrando...";
 
   try {
 
     const user = auth.currentUser;
 
     if (!user) {
-      mensaje.textContent = "Usuario no autenticado";
+      mensaje.innerText = "Usuario no autenticado";
       return;
     }
 
-    // 🔹 Obtener área vinculada al usuario
-    const userDoc = await getDoc(doc(db, "usuarios", user.uid));
+    // Obtener datos del usuario
+    const userDoc = await db.collection("usuarios")
+                            .doc(user.uid)
+                            .get();
 
-    if (!userDoc.exists()) {
-      mensaje.textContent = "El usuario no tiene área asignada";
+    if (!userDoc.exists) {
+      mensaje.innerText = "El usuario no tiene área asignada";
       return;
     }
 
     const area = userDoc.data().area;
+    const nombre = userDoc.data().nombre;
 
-    // 🔹 Subir imagen a Cloudinary
+    // Obtener imagen
     const inputFile = document.getElementById("foto");
     const file = inputFile.files[0];
 
     if (!file) {
-      mensaje.textContent = "Selecciona una foto";
+      mensaje.innerText = "Selecciona una foto";
       return;
     }
 
+    // Subir a Cloudinary
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "TU_UPLOAD_PRESET");
+    formData.append("upload_preset", "rituales");
 
-    const response = await fetch("https://api.cloudinary.com/v1_1/TU_CLOUD_NAME/image/upload", {
+    const response = await fetch("https://api.cloudinary.com/v1_1/dc9wxwria/image/upload", {
       method: "POST",
       body: formData
     });
 
     const data = await response.json();
-    const imageUrl = data.secure_url;
 
-    // 🔹 Guardar en Firestore
-    await addDoc(collection(db, "rituales"), {
+    if (!data.secure_url) {
+      mensaje.innerText = "Error al subir imagen";
+      return;
+    }
+
+    // Guardar en Firestore
+    await db.collection("rituales").add({
       usuario: user.email,
+      nombre: nombre,
       area: area,
-      imagen: imageUrl,
-      fecha: serverTimestamp()
+      imagen: data.secure_url,
+      fecha: firebase.firestore.FieldValue.serverTimestamp()
     });
 
-    mensaje.textContent = "✅ Ritual registrado correctamente";
+    mensaje.innerText = "✅ Ritual registrado correctamente";
     inputFile.value = "";
 
   } catch (error) {
     console.error(error);
-    mensaje.textContent = "Error al registrar";
+    mensaje.innerText = "Error al registrar";
   }
 
 });
 </script>
 </body>
 </html>
+
 
 
 
