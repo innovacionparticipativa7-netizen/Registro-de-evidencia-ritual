@@ -20,15 +20,13 @@ body{
   height:100vh;
   margin:0;
 }
-
 .card{
   background:white;
   padding:30px;
   border-radius:16px;
   box-shadow:0 10px 25px rgba(0,0,0,0.1);
-  width:340px;
+  width:360px;
 }
-
 input{
   width:100%;
   padding:10px;
@@ -36,7 +34,6 @@ input{
   border-radius:8px;
   border:1px solid #ccc;
 }
-
 button{
   width:100%;
   padding:10px;
@@ -45,19 +42,16 @@ button{
   background:#2563eb;
   color:white;
   cursor:pointer;
+  margin-top:8px;
 }
-
-button:hover{
-  background:#1d4ed8;
-}
-
-.error{
-  color:red;
-  font-size:14px;
-}
-
-.hidden{
-  display:none;
+button:hover{ background:#1d4ed8; }
+.error{ color:red; font-size:14px; }
+.hidden{ display:none; }
+.admin-box{
+  margin-top:15px;
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:10px;
 }
 </style>
 </head>
@@ -77,22 +71,28 @@ button:hover{
   <h2>Bienvenido</h2>
   <p id="usuarioInfo"></p>
 
-  <button onclick="logout()" style="background:#ef4444;margin-top:15px;">
+  <input type="file" id="foto" accept="image/*">
+  <button id="btnRegistrar">Registrar Ritual</button>
+  <p id="mensaje"></p>
+
+  <!-- PANEL ADMIN -->
+  <div id="adminPanel" class="admin-box hidden">
+    <h3>📊 Panel Administrador</h3>
+    <button onclick="verRituales()">Ver Rituales</button>
+    <div id="listaRituales" style="margin-top:10px;"></div>
+  </div>
+
+  <button onclick="logout()" style="background:#ef4444;">
     Cerrar Sesión
   </button>
 </div>
 
 <script>
 
-/* CONFIG FIREBASE */
 firebase.initializeApp({
   apiKey: "AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",
   authDomain: "registro-de-evidencia-ip.firebaseapp.com",
-  projectId: "registro-de-evidencia-ip",
-  storageBucket: "registro-de-evidencia-ip.firebasestorage.app",
-  messagingSenderId: "1036238743155",
-  appId: "1:1036238743155:web:9ea3295cf23de0dfa32c06",
-  measurementId: "G-966RC1KP2L"
+  projectId: "registro-de-evidencia-ip"
 });
 
 const auth = firebase.auth();
@@ -104,20 +104,13 @@ function login(){
   const password = document.getElementById("password").value;
 
   auth.signInWithEmailAndPassword(email,password)
-    .then(()=>{
-      console.log("Login correcto");
-    })
-    .catch((error)=>{
-      console.log(error);
-      document.getElementById("error").innerText =
-        error.message;
+    .catch(error=>{
+      document.getElementById("error").innerText = error.message;
     });
 }
 
 /* LOGOUT */
-function logout(){
-  auth.signOut();
-}
+function logout(){ auth.signOut(); }
 
 /* CONTROL DE SESIÓN */
 auth.onAuthStateChanged(async user => {
@@ -127,40 +120,117 @@ auth.onAuthStateChanged(async user => {
     document.getElementById("loginCard").classList.add("hidden");
     document.getElementById("dashboard").classList.remove("hidden");
 
-    try{
-      const doc = await db.collection("usuarios")
-                          .doc(user.uid)
-                          .get();
+    const doc = await db.collection("usuarios").doc(user.uid).get();
 
-      if(doc.exists){
-        const data = doc.data();
+    if(doc.exists){
+      const data = doc.data();
 
-        document.getElementById("usuarioInfo").innerHTML = `
-          👤 <strong>${data.nombre}</strong><br>
-          🏢 Área: <strong>${data.area}</strong>
-        `;
-      }else{
-        document.getElementById("usuarioInfo").innerText =
-          "Usuario sin área asignada";
+      document.getElementById("usuarioInfo").innerHTML = `
+        👤 <strong>${data.nombre}</strong><br>
+        🏢 Área: <strong>${data.area}</strong>
+      `;
+
+      if(data.rol === "admin"){
+        document.getElementById("adminPanel").classList.remove("hidden");
       }
 
-    }catch(error){
-      console.log(error);
     }
 
   }else{
-
     document.getElementById("loginCard").classList.remove("hidden");
     document.getElementById("dashboard").classList.add("hidden");
-
   }
 
 });
 
+/* REGISTRAR RITUAL */
+document.getElementById("btnRegistrar").addEventListener("click", async ()=>{
+
+  const mensaje = document.getElementById("mensaje");
+  mensaje.innerText = "Registrando...";
+
+  const user = auth.currentUser;
+  if(!user){ mensaje.innerText="No autenticado"; return; }
+
+  const userDoc = await db.collection("usuarios").doc(user.uid).get();
+  const dataUser = userDoc.data();
+  const area = dataUser.area;
+  const nombre = dataUser.nombre;
+
+  // 🔒 Restricción por semana por área
+  const hoy = new Date();
+  const inicioSemana = new Date(hoy.setDate(hoy.getDate()-hoy.getDay()));
+  inicioSemana.setHours(0,0,0,0);
+
+  const existente = await db.collection("rituales")
+    .where("area","==",area)
+    .where("fecha",">=",inicioSemana)
+    .get();
+
+  if(!existente.empty){
+    mensaje.innerText="⚠️ Esta área ya registró ritual esta semana";
+    return;
+  }
+
+  const file = document.getElementById("foto").files[0];
+  if(!file){ mensaje.innerText="Selecciona una foto"; return; }
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "rituales");
+
+  const response = await fetch("https://api.cloudinary.com/v1_1/dc9wxwria/image/upload",{
+    method:"POST",
+    body:formData
+  });
+
+  const data = await response.json();
+
+  if(!data.secure_url){
+    mensaje.innerText="Error al subir imagen";
+    return;
+  }
+
+  await db.collection("rituales").add({
+    usuario:user.email,
+    nombre:nombre,
+    area:area,
+    imagen:data.secure_url,
+    fecha:firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  mensaje.innerText="✅ Ritual registrado correctamente";
+  document.getElementById("foto").value="";
+
+});
+
+/* PANEL ADMIN */
+async function verRituales(){
+
+  const contenedor=document.getElementById("listaRituales");
+  contenedor.innerHTML="Cargando...";
+
+  const snapshot=await db.collection("rituales")
+                         .orderBy("fecha","desc")
+                         .get();
+
+  contenedor.innerHTML="";
+
+  snapshot.forEach(doc=>{
+    const data=doc.data();
+    contenedor.innerHTML+=`
+      <div style="border:1px solid #ddd;padding:8px;margin-bottom:8px;border-radius:8px;">
+        <strong>${data.area}</strong><br>
+        ${data.nombre}<br>
+        <img src="${data.imagen}" width="100%">
+      </div>
+    `;
+  });
+}
+
 </script>
 </body>
 </html>
-
 
 
 
