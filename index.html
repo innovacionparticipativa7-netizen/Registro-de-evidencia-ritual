@@ -71,9 +71,9 @@ button:hover{ background:#1d4ed8; }
   <h2>Bienvenido</h2>
   <p id="usuarioInfo"></p>
 
-  <input type="file" id="foto" accept="image/*">
-  <button id="btnRegistrar">Registrar Ritual</button>
-  <p id="mensaje"></p>
+  <input type="file" id="evidencia" accept="image/*">
+<button id="btnRegistrar" onclick="registrarRitual()">Registrar Ritual</button>
+<p id="estado"></p>
 
   <!-- PANEL ADMIN -->
   <div id="adminPanel" class="admin-box hidden">
@@ -248,6 +248,7 @@ async function verRituales(){
 </script>
 </body>
 </html>
+
 
 
 
