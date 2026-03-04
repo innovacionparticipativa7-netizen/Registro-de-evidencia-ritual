@@ -166,16 +166,40 @@ async function registrarRitual(){
     return;
   }
 
-  const file = fileInput.files[0];
-
   boton.disabled = true;
-  estado.innerText = "Subiendo imagen...";
+  estado.innerText = "Validando semana...";
 
   try{
 
+    const user = auth.currentUser;
+
+    // 🔎 Obtener fecha actual
+    const ahora = new Date();
+
+    // 🔎 Obtener lunes de esta semana
+    const inicioSemana = new Date(ahora);
+    inicioSemana.setDate(ahora.getDate() - ahora.getDay());
+    inicioSemana.setHours(0,0,0,0);
+
+    // 🔎 Buscar si ya registró esta semana
+    const snapshot = await db.collection("rituales")
+      .where("usuario","==", user.uid)
+      .where("fecha", ">=", inicioSemana)
+      .get();
+
+    if(!snapshot.empty){
+      estado.innerText = "❌ Ya registraste tu ritual esta semana";
+      boton.disabled = false;
+      return;
+    }
+
+    estado.innerText = "Subiendo imagen...";
+
+    // 📤 SUBIR A CLOUDINARY
+    const file = fileInput.files[0];
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "rituales"); // tu preset unsigned
+    formData.append("upload_preset", "rituales");
 
     const response = await fetch(
       "https://api.cloudinary.com/v1_1/dc9wxwria/image/upload",
@@ -193,7 +217,6 @@ async function registrarRitual(){
 
     estado.innerText = "Guardando registro...";
 
-    const user = auth.currentUser;
     const userDoc = await db.collection("usuarios").doc(user.uid).get();
     const userData = userDoc.data();
 
@@ -218,7 +241,6 @@ async function registrarRitual(){
   }
 
 }
-
 /* PANEL ADMIN */
 
 async function verRituales(){
@@ -256,6 +278,7 @@ async function verRituales(){
 </script>
 </body>
 </html>
+
 
 
 
