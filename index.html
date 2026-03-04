@@ -144,45 +144,62 @@ auth.onAuthStateChanged(async user => {
 });
 
 /* REGISTRAR RITUAL */
-document.getElementById("btnRegistrar").addEventListener("click", async ()=>{
 
-  const mensaje = document.getElementById("mensaje");
-  mensaje.innerText = "Registrando...";
+async function registrarRitual(){
 
-  const user = auth.currentUser;
-  if(!user){ mensaje.innerText="No autenticado"; return; }
+  const fileInput = document.getElementById("evidencia");
+  const boton = document.getElementById("btnRegistrar");
+  const estado = document.getElementById("estado");
 
-  const userDoc = await db.collection("usuarios").doc(user.uid).get();
-  const dataUser = userDoc.data();
-  const area = dataUser.area;
-  const nombre = dataUser.nombre;
-
-  // 🔒 Restricción por semana por área
-  const hoy = new Date();
-  const inicioSemana = new Date(hoy.setDate(hoy.getDate()-hoy.getDay()));
-  inicioSemana.setHours(0,0,0,0);
-
-  const existente = await db.collection("rituales")
-    .where("area","==",area)
-    .where("fecha",">=",inicioSemana)
-    .get();
-
-  if(!existente.empty){
-    mensaje.innerText="⚠️ Esta área ya registró ritual esta semana";
+  if(fileInput.files.length === 0){
+    alert("Selecciona una imagen");
     return;
   }
 
-  const file = document.getElementById("foto").files[0];
-  if(!file){ mensaje.innerText="Selecciona una foto"; return; }
+  const file = fileInput.files[0];
 
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "rituales");
+  boton.disabled = true;
+  estado.innerText = "Subiendo imagen...";
 
-  const response = await fetch("https://api.cloudinary.com/v1_1/dc9wxwria/image/upload",{
-    method:"POST",
-    body:formData
-  });
+  try{
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "rituales"); // 👈 cambia esto
+
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/dc9wxwria/image/upload",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    const data = await response.json();
+
+    if(!response.ok){
+      throw new Error(data.error.message);
+    }
+
+    estado.innerText = "Guardando registro...";
+
+    const user = firebase.auth().currentUser;
+
+    await firebase.firestore().collection("rituales").add({
+      usuario: user.uid,
+      imagen: data.secure_url,
+      fecha: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    estado.innerText = "✅ Ritual registrado correctamente";
+    boton.disabled = false;
+
+  }catch(error){
+    console.error(error);
+    estado.innerText = "❌ Error: " + error.message;
+    boton.disabled = false;
+  }
+}
 
   const data = await response.json();
 
@@ -231,6 +248,7 @@ async function verRituales(){
 </script>
 </body>
 </html>
+
 
 
 
