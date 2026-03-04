@@ -235,7 +235,7 @@ async function registrarRitual(){
   }catch(error){
 
     console.error(error);
-    estado.innerText = "❌ Error: " + error.message;
+    estado.innerText = "❌ Error:  Solo puedes registrar un ritual a la semana" ;
     boton.disabled = false;
 
   }
@@ -278,6 +278,7 @@ async function verRituales(){
 </script>
 </body>
 </html>
+
 
 
 
