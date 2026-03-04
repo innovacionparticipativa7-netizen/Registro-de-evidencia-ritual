@@ -176,12 +176,12 @@ async function registrarRitual(){
     // 🔎 Obtener fecha actual
     const ahora = new Date();
 
-    // 🔎 Obtener lunes de esta semana
+    // 🔎 Obtener inicio de semana (domingo 00:00)
     const inicioSemana = new Date(ahora);
     inicioSemana.setDate(ahora.getDate() - ahora.getDay());
     inicioSemana.setHours(0,0,0,0);
 
-    // 🔎 Buscar si ya registró esta semana
+    // 🔎 Buscar si ESTE usuario ya registró esta semana
     const snapshot = await db.collection("rituales")
       .where("usuario","==", user.uid)
       .where("fecha", ">=", inicioSemana)
@@ -195,7 +195,7 @@ async function registrarRitual(){
 
     estado.innerText = "Subiendo imagen...";
 
-    // 📤 SUBIR A CLOUDINARY
+    // 📤 Subir a Cloudinary
     const file = fileInput.files[0];
     const formData = new FormData();
     formData.append("file", file);
@@ -235,7 +235,7 @@ async function registrarRitual(){
   }catch(error){
 
     console.error(error);
-    estado.innerText = "❌ Error:  Solo puedes registrar un ritual a la semana" ;
+    estado.innerText = "❌ Error real: " + error.message;
     boton.disabled = false;
 
   }
@@ -278,6 +278,7 @@ async function verRituales(){
 </script>
 </body>
 </html>
+
 
 
 
