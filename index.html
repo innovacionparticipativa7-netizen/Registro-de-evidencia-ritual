@@ -60,9 +60,8 @@ button:hover{ background:#1d4ed8; }
 <!-- LOGIN -->
 <div id="loginCard" class="card">
   <h2>Ritual Semanal</h2>
-  <input type="email" id="email" placeholder="Correo">
-  <input type="password" id="password" placeholder="Contraseña">
-  <button onclick="login()">Iniciar Sesión</button>
+<input type="number" id="numeroEmpleado" placeholder="Número de empleado">
+<button onclick="loginEmpleado()">Ingresar</button>
   <p id="error" class="error"></p>
 </div>
 
@@ -98,19 +97,75 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 /* LOGIN */
-function login(){
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+async function loginEmpleado(){
 
-  auth.signInWithEmailAndPassword(email,password)
-    .catch(error=>{
-      document.getElementById("error").innerText = error.message;
-    });
+  const numero = document.getElementById("numeroEmpleado").value;
+
+  if(numero === ""){
+    document.getElementById("error").innerText = "Ingresa tu número de empleado";
+    return;
+  }
+
+  try{
+
+    const doc = await db.collection("empleados").doc(numero).get();
+
+    if(!doc.exists){
+      document.getElementById("error").innerText = "Empleado no registrado";
+      return;
+    }
+
+    const data = doc.data();
+
+    // guardar sesión local
+    localStorage.setItem("empleado", numero);
+
+    document.getElementById("loginCard").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+
+    document.getElementById("usuarioInfo").innerHTML = `
+      👤 <strong>${data.nombre}</strong><br>
+      🏢 Área: <strong>${data.area}</strong>
+    `;
+
+    if(data.rol === "admin"){
+      document.getElementById("adminPanel").classList.remove("hidden");
+    }
+
+  }catch(error){
+    console.log(error);
+  }
+
+}
+  window.onload = async function(){
+
+  const numero = localStorage.getItem("empleado");
+
+  if(numero){
+
+    const doc = await db.collection("empleados").doc(numero).get();
+    const data = doc.data();
+
+    document.getElementById("loginCard").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+
+    document.getElementById("usuarioInfo").innerHTML = `
+      👤 <strong>${data.nombre}</strong><br>
+      🏢 Área: <strong>${data.area}</strong>
+    `;
+
+    if(data.rol === "admin"){
+      document.getElementById("adminPanel").classList.remove("hidden");
+    }
+
+  }
+
 }
 
 /* LOGOUT */
 function logout(){
-  auth.signOut();
+  localStorage.removeItem("empleado");
+  location.reload();
 }
 
 /* CONTROL DE SESIÓN */
@@ -278,6 +333,7 @@ async function verRituales(){
 </script>
 </body>
 </html>
+
 
 
 
