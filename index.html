@@ -9,6 +9,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 <style>
 body{
@@ -61,7 +62,7 @@ button:hover{ background:#1d4ed8; }
 <div id="loginCard" class="card">
   <h2>Ritual Semanal</h2>
 <input type="number" id="numeroEmpleado" placeholder="Número de empleado">
-<button onclick="loginEmpleado()">Ingresar</button>
+<button id="btnLogin">Ingresar</button>
   <p id="error" class="error"></p>
 </div>
 
@@ -94,7 +95,7 @@ button:hover{ background:#1d4ed8; }
 <div id="listaRituales" style="margin-top:10px;"></div>
 
 </div>
-
+  <script>
 firebase.initializeApp({
   apiKey: "AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",
   authDomain: "registro-de-evidencia-ip.firebaseapp.com",
@@ -234,7 +235,7 @@ async function registrarRitual(){
 
   try{
 
-    const user = auth.currentUser;
+    const numero = localStorage.getItem("empleado");
 
     // 🔎 Obtener fecha actual
     const ahora = new Date();
@@ -246,7 +247,7 @@ async function registrarRitual(){
 
     // 🔎 Buscar si ESTE usuario ya registró esta semana
     const snapshot = await db.collection("rituales")
-      .where("usuario","==", user.uid)
+      .where("usuario","==", numero)
       .where("fecha", ">=", inicioSemana)
       .get();
 
@@ -280,11 +281,11 @@ async function registrarRitual(){
 
     estado.innerText = "Guardando registro...";
 
-    const userDoc = await db.collection("usuarios").doc(user.uid).get();
+    const userDoc = await db.collection("empleados").doc(numero).get();
     const userData = userDoc.data();
 
     await db.collection("rituales").add({
-      usuario: user.uid,
+      usuario: numero,
       nombre: userData.nombre,
       area: userData.area,
       imagen: data.secure_url,
@@ -388,10 +389,11 @@ contador++;
 estado.innerText = "✅ " + contador + " empleados cargados correctamente";
 
 }
-
+document.getElementById("btnLogin").addEventListener("click", loginEmpleado);
 </script>
 </body>
 </html>
+
 
 
 
