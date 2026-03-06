@@ -2,397 +2,139 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Ritual Semanal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro Ritual</title>
 
-<!-- Firebase COMPAT -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 <style>
 body{
-  font-family: Arial, sans-serif;
-  background:#f4f6f8;
-  margin:0;
-  padding:30px;
+font-family:Arial;
+background:#f4f6f8;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
+
 .card{
-  background:white;
-  padding:30px;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.1);
-  width:360px;
-  margin:auto;
+background:white;
+padding:25px;
+border-radius:10px;
+width:350px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
-input{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
+
+input,select,button{
+width:100%;
+padding:10px;
+margin-top:10px;
 }
+
 button{
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  background:#2563eb;
-  color:white;
-  cursor:pointer;
-  margin-top:8px;
+background:#2563eb;
+color:white;
+border:none;
+cursor:pointer;
 }
-button:hover{ background:#1d4ed8; }
-.error{ color:red; font-size:14px; }
-.hidden{ display:none; }
-.admin-box{
-  margin-top:15px;
-  padding:10px;
-  border:1px solid #ddd;
-  border-radius:10px;
-}
+
 </style>
 </head>
+
 <body>
 
-<!-- LOGIN -->
-<div id="loginCard" class="card">
-  <h2>Ritual Semanal</h2>
-<input type="number" id="numeroEmpleado" placeholder="Número de empleado">
-<button id="btnLogin">Ingresar</button>
-  <p id="error" class="error"></p>
-</div>
+<div class="card">
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="card hidden">
-  <h2>Bienvenido</h2>
-<p id="usuarioInfo"></p>
+<h2>Registro Ritual</h2>
 
-<button onclick="logout()" style="background:#ef4444;margin-bottom:10px;">
-Cerrar sesión
-</button>
+<input type="number" id="numero" placeholder="Número de empleado">
 
-  <input type="file" id="evidencia" accept="image/*">
-<button id="btnRegistrar" onclick="registrarRitual()">Registrar Ritual</button>
+<button onclick="buscarEmpleado()">Buscar</button>
+
+<p id="nombreEmpleado"></p>
+
+<select id="area">
+<option value="">Selecciona área</option>
+<option>Producción</option>
+<option>Calidad</option>
+<option>Ingeniería</option>
+<option>Logística</option>
+</select>
+
+<input type="file" id="foto" accept="image/*">
+
+<button onclick="registrar()">Registrar Ritual</button>
+
 <p id="estado"></p>
 
-  <!-- PANEL ADMIN -->
-<div id="adminPanel" class="admin-box hidden">
-
-<h3>📊 Panel Administrador</h3>
-
-<button onclick="verRituales()">Ver Rituales</button>
-
-<hr>
-
-<h3>📥 Subir empleados (Excel)</h3>
-
-<input type="file" id="excelFile" accept=".xlsx,.xls" style="display:block;margin-top:10px;">
-
-<button onclick="subirExcel()">Subir empleados</button>
-
-<p id="estadoExcel"></p>
-
-<div id="listaRituales" style="margin-top:10px;"></div>
-
 </div>
-  <script>
+
+<script>
+
 firebase.initializeApp({
-  apiKey: "AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",
-  authDomain: "registro-de-evidencia-ip.firebaseapp.com",
-  projectId: "registro-de-evidencia-ip"
+apiKey: "TU_API_KEY",
+authDomain: "TU_AUTH",
+projectId: "TU_PROJECT"
 });
 
-const auth = firebase.auth();
 const db = firebase.firestore();
 
-/* LOGIN */
-async function loginEmpleado(){
+let nombreGlobal = "";
 
-  const numero = document.getElementById("numeroEmpleado").value;
+/* BUSCAR EMPLEADO */
 
-  if(numero === ""){
-    document.getElementById("error").innerText = "Ingresa tu número de empleado";
-    return;
-  }
+async function buscarEmpleado(){
 
-  try{
+const numero = document.getElementById("numero").value;
 
-    const doc = await db.collection("empleados").doc(numero).get();
+const doc = await db.collection("empleados").doc(numero).get();
 
-    if(!doc.exists){
-      document.getElementById("error").innerText = "Empleado no registrado";
-      return;
-    }
+if(!doc.exists){
 
-    const data = doc.data();
-
-    // guardar sesión local
-    localStorage.setItem("empleado", numero);
-
-    document.getElementById("loginCard").classList.add("hidden");
-    document.getElementById("dashboard").classList.remove("hidden");
-
-    document.getElementById("usuarioInfo").innerHTML = `
-      👤 <strong>${data.nombre}</strong><br>
-      🏢 Área: <strong>${data.area}</strong>
-    `;
-
-    if(data.rol === "admin"){
-      document.getElementById("adminPanel").classList.remove("hidden");
-    }
-
-  }catch(error){
-    console.log(error);
-  }
-
-}
-  window.onload = async function(){
-
-  const numero = localStorage.getItem("empleado");
-
-  if(numero){
-
-    const doc = await db.collection("empleados").doc(numero).get();
-    const data = doc.data();
-
-    document.getElementById("loginCard").classList.add("hidden");
-    document.getElementById("dashboard").classList.remove("hidden");
-
-    document.getElementById("usuarioInfo").innerHTML = `
-      👤 <strong>${data.nombre}</strong><br>
-      🏢 Área: <strong>${data.area}</strong>
-    `;
-
-    if(data.rol === "admin"){
-      document.getElementById("adminPanel").classList.remove("hidden");
-    }
-
-  }
+document.getElementById("nombreEmpleado").innerText = "Empleado no encontrado";
+return;
 
 }
 
-/* LOGOUT */
-function logout(){
-  localStorage.removeItem("empleado");
-  location.reload();
+const data = doc.data();
+
+nombreGlobal = data.nombre;
+
+document.getElementById("nombreEmpleado").innerText =
+"Empleado: " + data.nombre;
+
 }
-
-/* CONTROL DE SESIÓN */
-auth.onAuthStateChanged(async user => {
-
-  if(user){
-
-    document.getElementById("loginCard").classList.add("hidden");
-    document.getElementById("dashboard").classList.remove("hidden");
-
-    try{
-
-      const doc = await db.collection("usuarios").doc(user.uid).get();
-
-      if(doc.exists){
-
-        const data = doc.data();
-
-        document.getElementById("usuarioInfo").innerHTML = `
-          👤 <strong>${data.nombre}</strong><br>
-          🏢 Área: <strong>${data.area}</strong>
-        `;
-
-        if(data.rol === "admin"){
-          document.getElementById("adminPanel").classList.remove("hidden");
-        }
-
-      }
-
-    }catch(error){
-      console.log(error);
-    }
-
-  }else{
-
-    document.getElementById("loginCard").classList.remove("hidden");
-    document.getElementById("dashboard").classList.add("hidden");
-
-  }
-
-});
 
 /* REGISTRAR RITUAL */
 
-async function registrarRitual(){
+async function registrar(){
 
-  const fileInput = document.getElementById("evidencia");
-  const boton = document.getElementById("btnRegistrar");
-  const estado = document.getElementById("estado");
+const numero = document.getElementById("numero").value;
+const area = document.getElementById("area").value;
 
-  if(fileInput.files.length === 0){
-    alert("Selecciona una imagen");
-    return;
-  }
+if(numero=="" || nombreGlobal=="" || area==""){
 
-  boton.disabled = true;
-  estado.innerText = "Validando semana...";
-
-  try{
-
-    const numero = localStorage.getItem("empleado");
-
-    // 🔎 Obtener fecha actual
-    const ahora = new Date();
-
-    // 🔎 Obtener inicio de semana (domingo 00:00)
-    const inicioSemana = new Date(ahora);
-    inicioSemana.setDate(ahora.getDate() - ahora.getDay());
-    inicioSemana.setHours(0,0,0,0);
-
-    // 🔎 Buscar si ESTE usuario ya registró esta semana
-    const snapshot = await db.collection("rituales")
-      .where("usuario","==", numero)
-      .where("fecha", ">=", inicioSemana)
-      .get();
-
-    if(!snapshot.empty){
-      estado.innerText = "❌ Ya registraste tu ritual esta semana";
-      boton.disabled = false;
-      return;
-    }
-
-    estado.innerText = "Subiendo imagen...";
-
-    // 📤 Subir a Cloudinary
-    const file = fileInput.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "rituales");
-
-    const response = await fetch(
-      "https://api.cloudinary.com/v1_1/dc9wxwria/image/upload",
-      {
-        method: "POST",
-        body: formData
-      }
-    );
-
-    const data = await response.json();
-
-    if(!response.ok){
-      throw new Error(data.error.message);
-    }
-
-    estado.innerText = "Guardando registro...";
-
-    const userDoc = await db.collection("empleados").doc(numero).get();
-    const userData = userDoc.data();
-
-    await db.collection("rituales").add({
-      usuario: numero,
-      nombre: userData.nombre,
-      area: userData.area,
-      imagen: data.secure_url,
-      fecha: firebase.firestore.FieldValue.serverTimestamp()
-    });
-
-    estado.innerText = "✅ Ritual registrado correctamente";
-    boton.disabled = false;
-    fileInput.value = "";
-
-  }catch(error){
-
-    console.error(error);
-    estado.innerText = "❌ Error real: " + error.message;
-    boton.disabled = false;
-
-  }
-
-}
-/* PANEL ADMIN */
-
-async function verRituales(){
-
-  const contenedor = document.getElementById("listaRituales");
-  contenedor.innerHTML = "Cargando...";
-
-  try{
-
-    const snapshot = await db.collection("rituales")
-                             .orderBy("fecha","desc")
-                             .get();
-
-    contenedor.innerHTML = "";
-
-    snapshot.forEach(doc=>{
-      const data = doc.data();
-
-      contenedor.innerHTML += `
-        <div style="border:1px solid #ddd;padding:8px;margin-bottom:8px;border-radius:8px;">
-          <strong>${data.area}</strong><br>
-          ${data.nombre}<br>
-          <img src="${data.imagen}" width="100%">
-        </div>
-      `;
-    });
-
-  }catch(error){
-    console.log(error);
-    contenedor.innerHTML = "Error al cargar rituales";
-  }
-
-}
-  async function subirExcel(){
-
-const fileInput = document.getElementById("excelFile");
-const estado = document.getElementById("estadoExcel");
-
-if(fileInput.files.length === 0){
-estado.innerText = "Selecciona un archivo Excel";
+alert("Completa los datos");
 return;
+
 }
 
-estado.innerText = "Leyendo archivo...";
+await db.collection("rituales").add({
 
-const file = fileInput.files[0];
-const data = await file.arrayBuffer();
-
-const workbook = XLSX.read(data);
-
-const sheet = workbook.Sheets[workbook.SheetNames[0]];
-
-const rows = XLSX.utils.sheet_to_json(sheet);
-
-estado.innerText = "Subiendo empleados...";
-
-let contador = 0;
-
-for(const row of rows){
-
-const numero = row.numero;
-const nombre = row.nombre;
-const area = row.area;
-const rol = row.rol;
-
-if(numero){
-
-await db.collection("empleados").doc(String(numero)).set({
-
-nombre: nombre,
+numero: numero,
+nombre: nombreGlobal,
 area: area,
-rol: rol
+fecha: firebase.firestore.FieldValue.serverTimestamp()
 
 });
 
-contador++;
+document.getElementById("estado").innerText =
+"✅ Ritual registrado";
 
 }
 
-}
-
-estado.innerText = "✅ " + contador + " empleados cargados correctamente";
-
-}
-document.getElementById("btnLogin").addEventListener("click", loginEmpleado);
 </script>
+
 </body>
 </html>
 
