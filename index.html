@@ -67,7 +67,11 @@ button:hover{ background:#1d4ed8; }
 <!-- DASHBOARD -->
 <div id="dashboard" class="card hidden">
   <h2>Bienvenido</h2>
-  <p id="usuarioInfo"></p>
+<p id="usuarioInfo"></p>
+
+<button onclick="logout()" style="background:#ef4444;margin-bottom:10px;">
+Cerrar sesión
+</button>
 
   <input type="file" id="evidencia" accept="image/*">
 <button id="btnRegistrar" onclick="registrarRitual()">Registrar Ritual</button>
@@ -391,6 +395,7 @@ document.getElementById("btnLogin").addEventListener("click", loginEmpleado);
 </script>
 </body>
 </html>
+
 
 
 
