@@ -75,17 +75,25 @@ button:hover{ background:#1d4ed8; }
 <p id="estado"></p>
 
   <!-- PANEL ADMIN -->
-  <div id="adminPanel" class="admin-box hidden">
-    <h3>📊 Panel Administrador</h3>
-    <button onclick="verRituales()">Ver Rituales</button>
-    <div id="listaRituales" style="margin-top:10px;"></div>
-  </div>
+<div id="adminPanel" class="admin-box hidden">
 
-  <button onclick="logout()" style="background:#ef4444;">
-    Cerrar Sesión
-  </button>
+<h3>📊 Panel Administrador</h3>
+
+<button onclick="verRituales()">Ver Rituales</button>
+
+<hr>
+
+<h3>📥 Subir empleados (Excel)</h3>
+
+<input type="file" id="excelFile" accept=".xlsx,.xls">
+
+<button onclick="subirExcel()">Subir empleados</button>
+
+<p id="estadoExcel"></p>
+
+<div id="listaRituales" style="margin-top:10px;"></div>
+
 </div>
-<script>
 
 firebase.initializeApp({
   apiKey: "AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",
@@ -329,10 +337,62 @@ async function verRituales(){
   }
 
 }
+  async function subirExcel(){
+
+const fileInput = document.getElementById("excelFile");
+const estado = document.getElementById("estadoExcel");
+
+if(fileInput.files.length === 0){
+estado.innerText = "Selecciona un archivo Excel";
+return;
+}
+
+estado.innerText = "Leyendo archivo...";
+
+const file = fileInput.files[0];
+const data = await file.arrayBuffer();
+
+const workbook = XLSX.read(data);
+
+const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+const rows = XLSX.utils.sheet_to_json(sheet);
+
+estado.innerText = "Subiendo empleados...";
+
+let contador = 0;
+
+for(const row of rows){
+
+const numero = row.numero;
+const nombre = row.nombre;
+const area = row.area;
+const rol = row.rol;
+
+if(numero){
+
+await db.collection("empleados").doc(String(numero)).set({
+
+nombre: nombre,
+area: area,
+rol: rol
+
+});
+
+contador++;
+
+}
+
+}
+
+estado.innerText = "✅ " + contador + " empleados cargados correctamente";
+
+}
 
 </script>
 </body>
 </html>
+
 
 
 
