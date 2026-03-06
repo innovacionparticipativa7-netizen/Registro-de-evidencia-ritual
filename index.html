@@ -64,6 +64,7 @@ cursor:pointer;
 <input type="file" id="foto" accept="image/*">
 
 <button onclick="registrar()">Registrar Ritual</button>
+  <button onclick="abrirAdmin()">Panel Administrador</button>
 
 <p id="estado"></p>
 
@@ -136,11 +137,14 @@ document.getElementById("estado").innerText =
 "✅ Ritual registrado";
 
 }
-
+function abrirAdmin(){
+  window.location.href = "admin.html";
+}
 </script>
 
 </body>
 </html>
+
 
 
 
