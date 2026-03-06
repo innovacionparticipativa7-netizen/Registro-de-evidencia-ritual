@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Control de Rituales</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f2f5f8;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+max-width:400px;
+margin:auto;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+input,select,button{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+background:#2563eb;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+.admin{
+margin-top:40px;
+}
+
+img{
+width:100%;
+margin-top:10px;
+border-radius:6px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="card">
+
+<h2>Registro Ritual</h2>
+
+<input type="number" id="numero" placeholder="Numero empleado">
+
+<button onclick="buscarEmpleado()">Buscar empleado</button>
+
+<p id="nombreEmpleado"></p>
+
+<select id="area">
+
+<option value="">Selecciona área</option>
+
+<option>Produccion</option>
+<option>Calidad</option>
+<option>Ingenieria</option>
+<option>Logistica</option>
+<option>Mantenimiento</option>
+
+</select>
+
+<input type="file" id="foto" accept="image/*" capture="environment">
+
+<button onclick="registrar()">Registrar Ritual</button>
+
+<p id="estado"></p>
+
+</div>
+
+<div class="card admin">
+
+<h2>Panel Administrador</h2>
+
+<button onclick="verRituales()">Ver Rituales</button>
+
+<button onclick="verSemana()">Ver Semana</button>
+
+<h3>Subir empleados Excel</h3>
+
+<input type="file" id="excel">
+
+<button onclick="subirExcel()">Subir</button>
+
+<div id="lista"></div>
+
+</div>
+
+<script>
+
+firebase.initializeApp({
+apiKey:"AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",
+projectId:"registro-de-evidencia-ip"
+});
+
+const db = firebase.firestore();
+
+let nombreEmpleado="";
+
+async function buscarEmpleado(){
+
+const numero=document.getElementById("numero").value;
+
+const doc=await db.collection("empleados").doc(numero).get();
+
+if(!doc.exists){
+
+document.getElementById("nombreEmpleado").innerText="Empleado no encontrado";
+
+return;
+
+}
+
+nombreEmpleado=doc.data().nombre;
+
+document.getElementById("nombreEmpleado").innerText="Empleado: "+nombreEmpleado;
+
+}
+
+async function registrar(){
+
+const numero=document.getElementById("numero").value;
+const area=document.getElementById("area").value;
+const foto=document.getElementById("foto").files[0];
+
+if(!numero || !area || !foto){
+
+alert("Faltan datos");
+
+return;
+
+}
+
+document.getElementById("estado").innerText="Subiendo imagen...";
+
+const formData=new FormData();
+
+formData.append("file",foto);
+formData.append("upload_preset","rituales");
+
+const response=await fetch(
+"https://api.cloudinary.com/v1_1/dc9wxwria/image/upload",
+{method:"POST",body:formData}
+);
+
+const data=await response.json();
+
+await db.collection("rituales").add({
+
+numero:numero,
+nombre:nombreEmpleado,
+area:area,
+imagen:data.secure_url,
+fecha:firebase.firestore.FieldValue.serverTimestamp()
+
+});
+
+document.getElementById("estado").innerText="Ritual registrado";
+
+}
+
+async function verRituales(){
+
+const lista=document.getElementById("lista");
+
+lista.innerHTML="Cargando...";
+
+const snapshot=await db.collection("rituales").orderBy("fecha","desc").get();
+
+lista.innerHTML="";
+
+snapshot.forEach(doc=>{
+
+const d=doc.data();
+
+lista.innerHTML+=`
+
+<div style="border:1px solid #ddd;padding:10px;margin-top:10px">
+
+<strong>${d.nombre}</strong><br>
+
+${d.area}<br>
+
+<img src="${d.imagen}">
+
+</div>
+
+`;
+
+});
+
+}
+
+async function verSemana(){
+
+const lista=document.getElementById("lista");
+
+lista.innerHTML="Cargando semana...";
+
+const ahora=new Date();
+
+const inicio=new Date();
+
+inicio.setDate(ahora.getDate()-ahora.getDay());
+
+const snapshot=await db.collection("rituales")
+.where("fecha",">=",inicio)
+.get();
+
+lista.innerHTML="";
+
+snapshot.forEach(doc=>{
+
+const d=doc.data();
+
+lista.innerHTML+=`
+
+<div>
+
+${d.nombre} - ${d.area}
+
+</div>
+
+`;
+
+});
+
+}
+
+async function subirExcel(){
+
+const file=document.getElementById("excel").files[0];
+
+const data=await file.arrayBuffer();
+
+const workbook=XLSX.read(data);
+
+const sheet=workbook.Sheets[workbook.SheetNames[0]];
+
+const rows=XLSX.utils.sheet_to_json(sheet);
+
+let contador=0;
+
+for(const row of rows){
+
+await db.collection("empleados").doc(String(row.numero)).set({
+
+nombre:row.nombre
+
+});
+
+contador++;
+
+}
+
+alert(contador+" empleados cargados");
+
+}
+
+</script>
+
+</body>
+</html>
