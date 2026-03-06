@@ -15,11 +15,8 @@
 body{
   font-family: Arial, sans-serif;
   background:#f4f6f8;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
   margin:0;
+  padding:30px;
 }
 .card{
   background:white;
@@ -27,6 +24,7 @@ body{
   border-radius:16px;
   box-shadow:0 10px 25px rgba(0,0,0,0.1);
   width:360px;
+  margin:auto;
 }
 input{
   width:100%;
@@ -86,7 +84,7 @@ button:hover{ background:#1d4ed8; }
 
 <h3>📥 Subir empleados (Excel)</h3>
 
-<input type="file" id="excelFile" accept=".xlsx,.xls">
+<input type="file" id="excelFile" accept=".xlsx,.xls" style="display:block;margin-top:10px;">
 
 <button onclick="subirExcel()">Subir empleados</button>
 
@@ -393,6 +391,7 @@ document.getElementById("btnLogin").addEventListener("click", loginEmpleado);
 </script>
 </body>
 </html>
+
 
 
 
