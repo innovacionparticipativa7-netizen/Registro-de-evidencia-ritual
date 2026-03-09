@@ -2,33 +2,37 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Registro Ritual</title>
+<title>Control de Rituales</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 <style>
+
 body{
 font-family:Arial;
-background:#f4f6f8;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+background:#f2f5f8;
+padding:20px;
 }
 
 .card{
 background:white;
-padding:25px;
+padding:20px;
 border-radius:10px;
-width:350px;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
+max-width:400px;
+margin:auto;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+margin-bottom:20px;
 }
 
 input,select,button{
 width:100%;
 padding:10px;
 margin-top:10px;
+border-radius:6px;
+border:1px solid #ccc;
 }
 
 button{
@@ -36,6 +40,12 @@ background:#2563eb;
 color:white;
 border:none;
 cursor:pointer;
+}
+
+img{
+width:100%;
+margin-top:10px;
+border-radius:6px;
 }
 
 </style>
@@ -47,82 +57,90 @@ cursor:pointer;
 
 <h2>Registro Ritual</h2>
 
-<input type="number" id="numero" placeholder="Número de empleado">
+<input type="number" id="numero" placeholder="Numero empleado">
 
-<button onclick="buscarEmpleado()">Buscar</button>
+<button onclick="buscarEmpleado()">Buscar empleado</button>
 
 <p id="nombreEmpleado"></p>
 
 <select id="area">
 <option value="">Selecciona área</option>
-<option>LAVS</option>
-<option>ENVIOS A220</option>
-<option>GALLEYS & SMALL/MONUMENTOS</option>
-<option>SHIP LOOSE</option>
-<option>F2F</option>
-<option>CASCADAS</option>
-<option>MAQUINADO Y TROQUELADO</option>
-<option>AIRBUS</option>
-<option>BONDEO</option>
-<option>COMAC</option>
-<option>DECORADO,PINTURA</option>
-<option>MANTENIMIENTO</option>
-<option>ALMACEN</option>
-<option>INSERTOS A220</option>
-<option>CNC 3X/5X</option>
-<option>LIJADO</option>
-<option>LAMINADO / HORNOS</option>
-<option>BOEING</option>
-<option>DUCTOS Y SPARES</option>
-<option>MOLDES / PRENSAS</option>
+<option>Produccion</option>
+<option>Calidad</option>
+<option>Ingenieria</option>
+<option>Logistica</option>
+<option>Mantenimiento</option>
 </select>
 
-<input type="file" id="foto" accept="image/*">
+<input type="file" id="foto" accept="image/*" capture="environment">
 
 <button onclick="registrar()">Registrar Ritual</button>
-  <button onclick="abrirAdmin()">Panel Administrador</button>
 
 <p id="estado"></p>
+
+</div>
+
+<div class="card">
+
+<h2>Panel Administrador</h2>
+
+<button onclick="verRituales()">Ver Rituales</button>
+<button onclick="verSemana()">Ver Semana</button>
+<button onclick="dashboardAreas()">Dashboard áreas</button>
+<button onclick="exportarExcel()">Exportar rituales</button>
+
+<h3>Subir empleados Excel</h3>
+
+<input type="file" id="excel" accept=".xlsx,.xls">
+<button onclick="subirExcel()">Subir empleados</button>
+
+<div id="lista"></div>
 
 </div>
 
 <script>
 
 firebase.initializeApp({
-  apiKey: "AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",
-  authDomain: "registro-de-evidencia-ip.firebaseapp.com",
-  projectId: "registro-de-evidencia-ip",
-  storageBucket: "registro-de-evidencia-ip.firebasestorage.app",
-  messagingSenderId: "1036238743155",
-  appId: "1:1036238743155:web:9ea3295cf23de0dfa32c06",
-  measurementId: "G-966RC1KP2L"
+apiKey:"AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",
+projectId:"registro-de-evidencia-ip"
 });
 
-const db = firebase.firestore();
+const db=firebase.firestore();
 
-let nombreGlobal = "";
+let nombreEmpleado="";
 
 /* BUSCAR EMPLEADO */
 
 async function buscarEmpleado(){
 
-const numero = document.getElementById("numero").value;
+try{
 
-const doc = await db.collection("empleados").doc(numero).get();
+const numero=document.getElementById("numero").value;
+
+if(!numero){
+alert("Ingresa número de empleado");
+return;
+}
+
+const doc=await db.collection("empleados").doc(numero).get();
 
 if(!doc.exists){
 
-document.getElementById("nombreEmpleado").innerText = "Empleado no encontrado";
+document.getElementById("nombreEmpleado").innerText="Empleado no encontrado";
+nombreEmpleado="";
 return;
 
 }
 
-const data = doc.data();
+nombreEmpleado=doc.data().nombre;
 
-nombreGlobal = data.nombre;
+document.getElementById("nombreEmpleado").innerText="Empleado: "+nombreEmpleado;
 
-document.getElementById("nombreEmpleado").innerText =
-"Empleado: " + data.nombre;
+}catch(e){
+
+alert("Error buscando empleado");
+
+}
 
 }
 
@@ -130,22 +148,38 @@ document.getElementById("nombreEmpleado").innerText =
 
 async function registrar(){
 
+try{
+
 const numero=document.getElementById("numero").value;
 const area=document.getElementById("area").value;
 const foto=document.getElementById("foto").files[0];
 
-if(!numero || !area || !foto){
-
-alert("Faltan datos");
-
+if(!numero || !area || !foto || nombreEmpleado===""){
+alert("Busca empleado, selecciona área y foto");
 return;
+}
 
+document.getElementById("estado").innerText="Validando semana...";
+
+const ahora=new Date();
+const inicioSemana=new Date();
+
+inicioSemana.setDate(ahora.getDate()-ahora.getDay());
+inicioSemana.setHours(0,0,0,0);
+
+const existe=await db.collection("rituales")
+.where("numero","==",numero)
+.where("fecha",">=",inicioSemana)
+.get();
+
+if(!existe.empty){
+alert("Este empleado ya registró ritual esta semana");
+return;
 }
 
 document.getElementById("estado").innerText="Subiendo imagen...";
 
 const formData=new FormData();
-
 formData.append("file",foto);
 formData.append("upload_preset","rituales");
 
@@ -156,22 +190,217 @@ const response=await fetch(
 
 const data=await response.json();
 
+if(!data.secure_url){
+alert("Error subiendo imagen");
+return;
+}
+
 await db.collection("rituales").add({
 
 numero:numero,
-nombre:nombreEmpleado,
+nombre:String(nombreEmpleado),
 area:area,
 imagen:data.secure_url,
 fecha:firebase.firestore.FieldValue.serverTimestamp()
 
 });
 
-document.getElementById("estado").innerText="Ritual registrado";
+document.getElementById("estado").innerText="✅ Ritual registrado";
+
+document.getElementById("foto").value="";
+document.getElementById("area").value="";
+
+}catch(e){
+
+console.error(e);
+alert("Error registrando ritual");
 
 }
-function abrirAdmin(){
-  window.location.href = "admin.html";
+
 }
+
+/* VER TODOS LOS RITUALES */
+
+async function verRituales(){
+
+const lista=document.getElementById("lista");
+
+lista.innerHTML="Cargando...";
+
+const snapshot=await db.collection("rituales").orderBy("fecha","desc").get();
+
+lista.innerHTML="";
+
+snapshot.forEach(doc=>{
+
+const d=doc.data();
+
+lista.innerHTML+=`
+
+<div style="border:1px solid #ddd;padding:10px;margin-top:10px">
+
+<strong>${d.nombre}</strong><br>
+${d.area}<br>
+
+${d.imagen ? `<img src="${d.imagen}">` : ""}
+
+</div>
+
+`;
+
+});
+
+}
+
+/* VER SOLO ESTA SEMANA */
+
+async function verSemana(){
+
+const lista=document.getElementById("lista");
+
+lista.innerHTML="Cargando semana...";
+
+const ahora=new Date();
+const inicio=new Date();
+
+inicio.setDate(ahora.getDate()-ahora.getDay());
+inicio.setHours(0,0,0,0);
+
+const snapshot=await db.collection("rituales")
+.where("fecha",">=",inicio)
+.get();
+
+lista.innerHTML="";
+
+snapshot.forEach(doc=>{
+
+const d=doc.data();
+
+lista.innerHTML+=`
+
+<div style="padding:6px;border-bottom:1px solid #ddd">
+
+${d.nombre} - ${d.area}
+
+</div>
+
+`;
+
+});
+
+}
+
+/* DASHBOARD */
+
+async function dashboardAreas(){
+
+const lista=document.getElementById("lista");
+
+lista.innerHTML="Calculando...";
+
+const snapshot=await db.collection("rituales").get();
+
+let areas={};
+
+snapshot.forEach(doc=>{
+
+const area=doc.data().area;
+
+if(!areas[area]){
+areas[area]=0;
+}
+
+areas[area]++;
+
+});
+
+lista.innerHTML="<h3>Rituales por área</h3>";
+
+for(const area in areas){
+
+lista.innerHTML+=`
+
+<div style="padding:6px;border-bottom:1px solid #ddd">
+
+${area}: <strong>${areas[area]}</strong>
+
+</div>
+
+`;
+
+}
+
+}
+
+/* EXPORTAR EXCEL */
+
+async function exportarExcel(){
+
+const snapshot=await db.collection("rituales").get();
+
+let datos=[];
+
+snapshot.forEach(doc=>{
+
+const d=doc.data();
+
+datos.push({
+numero:d.numero,
+nombre:d.nombre,
+area:d.area,
+imagen:d.imagen
+});
+
+});
+
+const worksheet=XLSX.utils.json_to_sheet(datos);
+const workbook=XLSX.utils.book_new();
+
+XLSX.utils.book_append_sheet(workbook,worksheet,"Rituales");
+
+XLSX.writeFile(workbook,"rituales.xlsx");
+
+}
+
+/* SUBIR EMPLEADOS DESDE EXCEL */
+
+async function subirExcel(){
+
+const file=document.getElementById("excel").files[0];
+
+if(!file){
+alert("Selecciona archivo Excel");
+return;
+}
+
+const data=await file.arrayBuffer();
+
+const workbook=XLSX.read(data);
+
+const sheet=workbook.Sheets[workbook.SheetNames[0]];
+
+const rows=XLSX.utils.sheet_to_json(sheet);
+
+let contador=0;
+
+for(const row of rows){
+
+if(!row.numero || !row.nombre) continue;
+
+await db.collection("empleados").doc(String(row.numero)).set({
+
+nombre:String(row.nombre)
+
+});
+
+contador++;
+
+}
+
+alert(contador+" empleados cargados");
+
+}
+
 </script>
 
 </body>
