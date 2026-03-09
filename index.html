@@ -130,27 +130,43 @@ document.getElementById("nombreEmpleado").innerText =
 
 async function registrar(){
 
-const numero = document.getElementById("numero").value;
-const area = document.getElementById("area").value;
+const numero=document.getElementById("numero").value;
+const area=document.getElementById("area").value;
+const foto=document.getElementById("foto").files[0];
 
-if(numero=="" || nombreGlobal=="" || area==""){
+if(!numero || !area || !foto){
 
-alert("Completa los datos");
+alert("Faltan datos");
+
 return;
 
 }
 
+document.getElementById("estado").innerText="Subiendo imagen...";
+
+const formData=new FormData();
+
+formData.append("file",foto);
+formData.append("upload_preset","rituales");
+
+const response=await fetch(
+"https://api.cloudinary.com/v1_1/dc9wxwria/image/upload",
+{method:"POST",body:formData}
+);
+
+const data=await response.json();
+
 await db.collection("rituales").add({
 
-numero: numero,
-nombre: nombreGlobal,
-area: area,
-fecha: firebase.firestore.FieldValue.serverTimestamp()
+numero:numero,
+nombre:nombreEmpleado,
+area:area,
+imagen:data.secure_url,
+fecha:firebase.firestore.FieldValue.serverTimestamp()
 
 });
 
-document.getElementById("estado").innerText =
-"✅ Ritual registrado";
+document.getElementById("estado").innerText="Ritual registrado";
 
 }
 function abrirAdmin(){
@@ -160,6 +176,7 @@ function abrirAdmin(){
 
 </body>
 </html>
+
 
 
 
