@@ -24,6 +24,7 @@ border-radius:10px;
 max-width:400px;
 margin:auto;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
+margin-bottom:20px;
 }
 
 input,select,button{
@@ -93,11 +94,15 @@ border-radius:6px;
 
 <button onclick="verSemana()">Ver Semana</button>
 
+<button onclick="dashboardAreas()">Dashboard áreas</button>
+
+<button onclick="exportarExcel()">Exportar rituales</button>
+
 <h3>Subir empleados Excel</h3>
 
-<input type="file" id="excel">
+<input type="file" id="excel" accept=".xlsx,.xls">
 
-<button onclick="subirExcel()">Subir</button>
+<button onclick="subirExcel()">Subir empleados</button>
 
 <div id="lista"></div>
 
@@ -106,7 +111,7 @@ border-radius:6px;
 <script>
 
 firebase.initializeApp({
-apiKey:"AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",
+apiKey:"TU_API_KEY",
 projectId:"registro-de-evidencia-ip"
 });
 
@@ -118,12 +123,17 @@ async function buscarEmpleado(){
 
 const numero=document.getElementById("numero").value;
 
+if(!numero){
+alert("Ingresa número de empleado");
+return;
+}
+
 const doc=await db.collection("empleados").doc(numero).get();
 
 if(!doc.exists){
 
 document.getElementById("nombreEmpleado").innerText="Empleado no encontrado";
-
+nombreEmpleado="";
 return;
 
 }
@@ -140,18 +150,32 @@ const numero=document.getElementById("numero").value;
 const area=document.getElementById("area").value;
 const foto=document.getElementById("foto").files[0];
 
-if(!numero || !area || !foto){
-
-alert("Faltan datos");
-
+if(!numero || !area || !foto || nombreEmpleado===""){
+alert("Busca empleado, selecciona área y foto");
 return;
+}
 
+document.getElementById("estado").innerText="Validando semana...";
+
+const ahora=new Date();
+const inicioSemana=new Date();
+
+inicioSemana.setDate(ahora.getDate()-ahora.getDay());
+inicioSemana.setHours(0,0,0,0);
+
+const existe=await db.collection("rituales")
+.where("numero","==",numero)
+.where("fecha",">=",inicioSemana)
+.get();
+
+if(!existe.empty){
+alert("Este empleado ya registró ritual esta semana");
+return;
 }
 
 document.getElementById("estado").innerText="Subiendo imagen...";
 
 const formData=new FormData();
-
 formData.append("file",foto);
 formData.append("upload_preset","rituales");
 
@@ -172,7 +196,7 @@ fecha:firebase.firestore.FieldValue.serverTimestamp()
 
 });
 
-document.getElementById("estado").innerText="Ritual registrado";
+document.getElementById("estado").innerText="✅ Ritual registrado";
 
 }
 
@@ -215,10 +239,10 @@ const lista=document.getElementById("lista");
 lista.innerHTML="Cargando semana...";
 
 const ahora=new Date();
-
 const inicio=new Date();
 
 inicio.setDate(ahora.getDate()-ahora.getDay());
+inicio.setHours(0,0,0,0);
 
 const snapshot=await db.collection("rituales")
 .where("fecha",">=",inicio)
@@ -232,7 +256,7 @@ const d=doc.data();
 
 lista.innerHTML+=`
 
-<div>
+<div style="padding:6px;border-bottom:1px solid #ddd">
 
 ${d.nombre} - ${d.area}
 
@@ -244,9 +268,81 @@ ${d.nombre} - ${d.area}
 
 }
 
+async function dashboardAreas(){
+
+const lista=document.getElementById("lista");
+lista.innerHTML="Calculando...";
+
+const snapshot=await db.collection("rituales").get();
+
+let areas={};
+
+snapshot.forEach(doc=>{
+
+const area=doc.data().area;
+
+if(!areas[area]){
+areas[area]=0;
+}
+
+areas[area]++;
+
+});
+
+lista.innerHTML="<h3>Rituales por área</h3>";
+
+for(const area in areas){
+
+lista.innerHTML+=`
+
+<div style="padding:6px;border-bottom:1px solid #ddd">
+
+${area}: <strong>${areas[area]}</strong>
+
+</div>
+
+`;
+
+}
+
+}
+
+async function exportarExcel(){
+
+const snapshot=await db.collection("rituales").get();
+
+let datos=[];
+
+snapshot.forEach(doc=>{
+
+const d=doc.data();
+
+datos.push({
+numero:d.numero,
+nombre:d.nombre,
+area:d.area,
+imagen:d.imagen
+});
+
+});
+
+const worksheet=XLSX.utils.json_to_sheet(datos);
+const workbook=XLSX.utils.book_new();
+
+XLSX.utils.book_append_sheet(workbook,worksheet,"Rituales");
+
+XLSX.writeFile(workbook,"rituales.xlsx");
+
+}
+
 async function subirExcel(){
 
 const file=document.getElementById("excel").files[0];
+
+if(!file){
+alert("Selecciona un archivo Excel");
+return;
+}
 
 const data=await file.arrayBuffer();
 
@@ -259,6 +355,8 @@ const rows=XLSX.utils.sheet_to_json(sheet);
 let contador=0;
 
 for(const row of rows){
+
+if(!row.numero || !row.nombre) continue;
 
 await db.collection("empleados").doc(String(row.numero)).set({
 
