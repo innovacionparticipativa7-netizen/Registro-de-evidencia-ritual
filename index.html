@@ -101,7 +101,7 @@ border-radius:6px;
 
 <button onclick="verRituales()">Ver Rituales</button>
 <button onclick="verSemana()">Ver Semana</button>
-<button onclick="dashboardAreas()">Dashboard áreas</button>
+<button onclick="dashboardSemaforo()">Dashboard Semáforo</button>
 <button onclick="exportarExcel()">Exportar rituales</button>
 
 <h3>Subir empleados Excel</h3>
@@ -112,7 +112,7 @@ border-radius:6px;
 <button onclick="descargarPlantilla()">Descargar plantilla Excel</button>
 
 <div id="lista"></div>
-
+<div id="dashboard"></div>
 </div>
 
 <script>
@@ -185,12 +185,12 @@ inicioSemana.setDate(ahora.getDate()-ahora.getDay());
 inicioSemana.setHours(0,0,0,0);
 
 const existe=await db.collection("rituales")
-.where("numero","==",numero)
+.where("area","==",area)
 .where("fecha",">=",inicioSemana)
 .get();
 
 if(!existe.empty){
-alert("Este empleado ya registró ritual esta semana");
+alert("Esta area ya registró ritual esta semana");
 return;
 }
 
@@ -309,43 +309,132 @@ ${d.nombre} - ${d.area}
 
 /* DASHBOARD */
 
-async function dashboardAreas(){
+async function dashboardSemaforo(){
 
-const lista=document.getElementById("lista");
+const dashboard=document.getElementById("dashboard");
 
-lista.innerHTML="Calculando...";
+dashboard.innerHTML="Cargando dashboard...";
 
-const snapshot=await db.collection("rituales").get();
+/* LISTA AREAS */
 
-let areas={};
+const areas=[
+
+"LAVS",
+"ENVIOS A220",
+"GALLEYS & SMALL/MONUMENTOS",
+"SHIP LOOSE",
+"F2F",
+"CASCADAS",
+"MAQUINADO Y TROQUELADO",
+"AIRBUS",
+"BONDEO",
+"COMAC",
+"DECORADO,PINTURA",
+"MANTENIMIENTO",
+"ALMACEN",
+"INSERTOS A220",
+"CNC 3X/5X",
+"LIJADO",
+"LAMINADO / HORNOS",
+"BOEING",
+"DUCTOS Y SPARES",
+"MOLDES / PRENSAS"
+
+];
+
+/* INICIO SEMANA */
+
+const ahora=new Date();
+const inicioSemana=new Date();
+
+inicioSemana.setDate(ahora.getDate()-ahora.getDay());
+inicioSemana.setHours(0,0,0,0);
+
+/* CONSULTAR RITUALES */
+
+const snapshot=await db.collection("rituales")
+.where("fecha",">=",inicioSemana)
+.get();
+
+/* AREAS REGISTRADAS */
+
+let areasRegistradas={};
 
 snapshot.forEach(doc=>{
 
 const area=doc.data().area;
 
-if(!areas[area]){
-areas[area]=0;
-}
-
-areas[area]++;
+areasRegistradas[area]=true;
 
 });
 
-lista.innerHTML="<h3>Rituales por área</h3>";
+/* CONTAR */
 
-for(const area in areas){
+let registradas=0;
 
-lista.innerHTML+=`
+for(const area in areasRegistradas){
+registradas++;
+}
 
-<div style="padding:6px;border-bottom:1px solid #ddd">
+const total=areas.length;
 
-${area}: <strong>${areas[area]}</strong>
+const porcentaje=Math.round((registradas/total)*100);
+
+/* DASHBOARD */
+<h2>Dashboard Ritual Semanal</h2>
+
+  dashboard.innerHTML=`
+  
+<div style="
+background:#eee;
+border-radius:10px;
+overflow:hidden;
+margin-bottom:20px;
+">
+
+<div style="
+width:${porcentaje}%;
+background:#16a34a;
+color:white;
+padding:10px;
+font-weight:bold;
+text-align:center;
+">
+
+${porcentaje}% Cumplimiento
+
+</div>
+
+</div>
+
+<p><strong>${registradas}</strong> de <strong>${total}</strong> áreas registraron ritual</p>
+
+`;
+
+/* LISTA AREAS */
+
+areas.forEach(area=>{
+
+const estado=areasRegistradas[area] ? "🟢" : "🔴";
+
+dashboard.innerHTML+=`
+
+<div style="
+display:flex;
+justify-content:space-between;
+padding:10px;
+border-bottom:1px solid #ddd;
+font-size:18px;
+">
+
+<span>${area}</span>
+<span style="font-size:24px">${estado}</span>
 
 </div>
 
 `;
 
-}
+});
 
 }
 
@@ -453,34 +542,9 @@ XLSX.utils.book_append_sheet(workbook, worksheet, "Empleados");
 XLSX.writeFile(workbook, "plantilla_empleados.xlsx");
 
 }
+  setInterval(dashboardSemaforo,10000);
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
