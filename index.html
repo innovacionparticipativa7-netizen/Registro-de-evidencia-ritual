@@ -109,6 +109,8 @@ border-radius:6px;
 <input type="file" id="excel" accept=".xlsx,.xls">
 <button onclick="subirExcel()">Subir empleados</button>
 
+<button onclick="descargarPlantilla()">Descargar plantilla Excel</button>
+
 <div id="lista"></div>
 
 </div>
@@ -415,11 +417,27 @@ contador++;
 alert(contador+" empleados cargados");
 
 }
+function descargarPlantilla(){
 
+const datos = [
+{numero:"1001", nombre:"Juan Perez"},
+{numero:"1002", nombre:"Ana Lopez"}
+];
+
+const worksheet = XLSX.utils.json_to_sheet(datos);
+
+const workbook = XLSX.utils.book_new();
+
+XLSX.utils.book_append_sheet(workbook, worksheet, "Empleados");
+
+XLSX.writeFile(workbook, "plantilla_empleados.xlsx");
+
+}
 </script>
 
 </body>
 </html>
+
 
 
 
