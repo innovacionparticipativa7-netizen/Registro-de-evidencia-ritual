@@ -57,9 +57,8 @@ border-radius:6px;
 
 <h2>Registro Ritual</h2>
 
-<input type="number" id="numero" placeholder="Numero empleado">
+<input type="number" id="numero" placeholder="Numero empleado" onkeyup="buscarEmpleado()">
 
-<button onclick="buscarEmpleado()">Buscar empleado</button>
 
 <p id="nombreEmpleado"></p>
 
@@ -381,10 +380,10 @@ const total=areas.length;
 const porcentaje=Math.round((registradas/total)*100);
 
 /* DASHBOARD */
-<h2>Dashboard Ritual Semanal</h2>
+
 
   dashboard.innerHTML=`
-  
+  <h2>Dashboard Ritual Semanal</h2>
 <div style="
 background:#eee;
 border-radius:10px;
@@ -547,4 +546,5 @@ XLSX.writeFile(workbook, "plantilla_empleados.xlsx");
 
 </body>
 </html>
+
 
