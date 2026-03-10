@@ -108,7 +108,7 @@ border-radius:6px;
 
 <input type="file" id="excel" accept=".xlsx,.xls">
 <button onclick="subirExcel()">Subir empleados</button>
-
+<p id="estadoExcel"></p>
 <button onclick="descargarPlantilla()">Descargar plantilla Excel</button>
 
 <div id="lista"></div>
@@ -383,12 +383,18 @@ XLSX.writeFile(workbook,"rituales.xlsx");
 
 async function subirExcel(){
 
+try{
+
+const estado=document.getElementById("estadoExcel");
+
 const file=document.getElementById("excel").files[0];
 
 if(!file){
 alert("Selecciona archivo Excel");
 return;
 }
+
+estado.innerText="📂 Leyendo archivo Excel...";
 
 const data=await file.arrayBuffer();
 
@@ -397,6 +403,8 @@ const workbook=XLSX.read(data);
 const sheet=workbook.Sheets[workbook.SheetNames[0]];
 
 const rows=XLSX.utils.sheet_to_json(sheet);
+
+estado.innerText="⬆ Subiendo empleados...";
 
 let contador=0;
 
@@ -412,9 +420,21 @@ nombre:String(row.nombre)
 
 contador++;
 
+estado.innerText="Subiendo empleados: "+contador+" / "+rows.length;
+
 }
 
-alert(contador+" empleados cargados");
+estado.innerText="✅ "+contador+" empleados cargados correctamente";
+
+document.getElementById("excel").value="";
+
+}catch(e){
+
+console.error(e);
+
+document.getElementById("estadoExcel").innerText="❌ Error subiendo Excel";
+
+}
 
 }
 function descargarPlantilla(){
@@ -437,6 +457,7 @@ XLSX.writeFile(workbook, "plantilla_empleados.xlsx");
 
 </body>
 </html>
+
 
 
 
