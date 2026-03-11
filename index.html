@@ -94,9 +94,12 @@ border-radius:6px;
 
 </div>
 
-<div class="card">
+<button onclick="loginAdmin()">Acceso Administrador</button>
+
+<div class="card" id="panelAdmin" style="display:none;">
 
 <h2>Panel Administrador</h2>
+  
 <label>Filtrar por semana:</label>
 
 <input type="number" id="filtroSemana" placeholder="Ejemplo: 12">
@@ -159,6 +162,23 @@ document.getElementById("nombreEmpleado").innerText="Empleado: "+nombreEmpleado;
 }catch(e){
 
 alert("Error buscando empleado");
+
+}
+
+}
+  function loginAdmin(){
+
+const pass = prompt("Ingresa contraseña de administrador");
+
+if(pass === "1234"){
+
+document.getElementById("panelAdmin").style.display="block";
+
+alert("Acceso concedido");
+
+}else{
+
+alert("Contraseña incorrecta");
 
 }
 
@@ -611,6 +631,7 @@ XLSX.writeFile(workbook, "plantilla_empleados.xlsx");
 
 </body>
 </html>
+
 
 
 
