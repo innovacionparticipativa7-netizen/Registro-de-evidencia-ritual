@@ -97,7 +97,11 @@ border-radius:6px;
 <div class="card">
 
 <h2>Panel Administrador</h2>
+<label>Filtrar por semana:</label>
 
+<input type="number" id="filtroSemana" placeholder="Ejemplo: 12">
+
+<button onclick="verRitualesSemana()">Ver rituales por semana</button>
 <button onclick="verRituales()">Ver Rituales</button>
 <button onclick="verSemana()">Ver Semana</button>
 <button onclick="dashboardSemaforo()">Dashboard Semáforo</button>
@@ -261,6 +265,54 @@ lista.innerHTML+=`
 
 <strong>${d.nombre}</strong><br>
 ${d.area}<br>
+
+${d.imagen ? `<img src="${d.imagen}">` : ""}
+
+</div>
+
+`;
+
+});
+
+}
+  async function verRitualesSemana(){
+
+const lista=document.getElementById("lista");
+
+const semana=document.getElementById("filtroSemana").value;
+
+if(!semana){
+alert("Ingresa número de semana");
+return;
+}
+
+lista.innerHTML="Cargando rituales de semana "+semana+"...";
+
+const snapshot=await db.collection("rituales")
+.where("semana","==",Number(semana))
+.get();
+
+lista.innerHTML="";
+
+if(snapshot.empty){
+
+lista.innerHTML="No hay rituales en esa semana";
+
+return;
+
+}
+
+snapshot.forEach(doc=>{
+
+const d=doc.data();
+
+lista.innerHTML+=`
+
+<div style="border:1px solid #ddd;padding:10px;margin-top:10px">
+
+<strong>${d.nombre}</strong><br>
+Área: ${d.area}<br>
+Semana: ${d.semana}<br>
 
 ${d.imagen ? `<img src="${d.imagen}">` : ""}
 
@@ -445,7 +497,7 @@ font-size:18px;
 
 async function exportarExcel(){
 
-const snapshot=await db.collection("rituales").get();
+const snapshot=await db.collection("rituales").orderBy("fecha","desc").get();
 
 let datos=[];
 
@@ -453,10 +505,20 @@ snapshot.forEach(doc=>{
 
 const d=doc.data();
 
+let fechaFormateada="";
+
+if(d.fecha){
+const fecha=d.fecha.toDate ? d.fecha.toDate() : new Date(d.fecha);
+
+fechaFormateada=fecha.toLocaleDateString()+" "+fecha.toLocaleTimeString();
+}
+
 datos.push({
 numero:d.numero,
 nombre:d.nombre,
 area:d.area,
+semana:d.semana,
+fecha:fechaFormateada,
 imagen:d.imagen
 });
 
@@ -549,6 +611,7 @@ XLSX.writeFile(workbook, "plantilla_empleados.xlsx");
 
 </body>
 </html>
+
 
 
 
