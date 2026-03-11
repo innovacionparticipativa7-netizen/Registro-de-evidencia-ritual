@@ -11,41 +11,141 @@
 
 <style>
 
-body{
-font-family:Arial;
-background:#f2f5f8;
-padding:20px;
+*{
+box-sizing:border-box;
 }
+
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#1e3a8a,#2563eb);
+margin:0;
+padding:20px;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+/* TARJETAS */
 
 .card{
 background:white;
-padding:20px;
-border-radius:10px;
-max-width:400px;
-margin:auto;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+padding:25px;
+border-radius:14px;
+width:100%;
+max-width:420px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
 margin-bottom:20px;
+animation:fadeIn .4s ease;
 }
 
-input,select,button{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:1px solid #ccc;
+/* TITULOS */
+
+h2{
+text-align:center;
+margin-top:0;
+color:#1f2937;
 }
+
+/* INPUTS */
+
+input, select{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #d1d5db;
+font-size:14px;
+transition:.2s;
+}
+
+input:focus, select:focus{
+outline:none;
+border-color:#2563eb;
+box-shadow:0 0 0 2px rgba(37,99,235,0.15);
+}
+
+/* INPUT FILE */
+
+input[type="file"]{
+background:#f9fafb;
+padding:10px;
+}
+
+/* BOTONES */
 
 button{
+width:100%;
+padding:13px;
+margin-top:12px;
+border-radius:10px;
+border:none;
 background:#2563eb;
 color:white;
-border:none;
+font-weight:bold;
+font-size:15px;
 cursor:pointer;
+transition:.2s;
 }
+
+button:hover{
+background:#1d4ed8;
+transform:scale(1.02);
+}
+
+/* BOTONES ADMIN */
+
+button.secondary{
+background:#4b5563;
+}
+
+button.secondary:hover{
+background:#374151;
+}
+
+/* ESTADOS */
+
+#estado{
+margin-top:10px;
+font-weight:bold;
+text-align:center;
+color:#16a34a;
+}
+
+/* IMAGENES */
 
 img{
 width:100%;
 margin-top:10px;
-border-radius:6px;
+border-radius:10px;
+box-shadow:0 5px 12px rgba(0,0,0,0.15);
+}
+
+/* LISTA */
+
+#lista div{
+background:#f9fafb;
+border-radius:8px;
+padding:10px;
+margin-top:10px;
+}
+
+/* DASHBOARD */
+
+#dashboard{
+margin-top:10px;
+}
+
+/* ANIMACION */
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 </style>
@@ -631,6 +731,7 @@ XLSX.writeFile(workbook, "plantilla_empleados.xlsx");
 
 </body>
 </html>
+
 
 
 
