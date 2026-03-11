@@ -17,7 +17,7 @@ box-sizing:border-box;
 
 body{
 font-family:Arial, Helvetica, sans-serif;
-background:linear-gradient(135deg,#1e3a8a,#2563eb);
+background:linear-gradient(135deg,#facc15,#fbbf24);
 margin:0;
 padding:20px;
 display:flex;
@@ -35,7 +35,6 @@ width:100%;
 max-width:420px;
 box-shadow:0 10px 25px rgba(0,0,0,0.15);
 margin-bottom:20px;
-animation:fadeIn .4s ease;
 }
 
 /* TITULOS */
@@ -71,7 +70,7 @@ background:#f9fafb;
 padding:10px;
 }
 
-/* BOTONES */
+/* BOTONES PRINCIPALES */
 
 button{
 width:100%;
@@ -92,14 +91,14 @@ background:#1d4ed8;
 transform:scale(1.02);
 }
 
-/* BOTONES ADMIN */
+/* BOTON ADMIN */
 
-button.secondary{
-background:#4b5563;
+.admin-btn{
+background:#16a34a;
 }
 
-button.secondary:hover{
-background:#374151;
+.admin-btn:hover{
+background:#15803d;
 }
 
 /* ESTADOS */
@@ -127,25 +126,6 @@ background:#f9fafb;
 border-radius:8px;
 padding:10px;
 margin-top:10px;
-}
-
-/* DASHBOARD */
-
-#dashboard{
-margin-top:10px;
-}
-
-/* ANIMACION */
-
-@keyframes fadeIn{
-from{
-opacity:0;
-transform:translateY(10px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
 }
 
 </style>
@@ -194,7 +174,7 @@ transform:translateY(0);
 
 </div>
 
-<button onclick="loginAdmin()">Acceso Administrador</button>
+<button class="admin-btn" onclick="loginAdmin()">Panel Administrador</button>
 
 <div class="card" id="panelAdmin" style="display:none;">
 
@@ -731,6 +711,7 @@ XLSX.writeFile(workbook, "plantilla_empleados.xlsx");
 
 </body>
 </html>
+
 
 
 
