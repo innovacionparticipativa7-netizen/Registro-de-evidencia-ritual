@@ -8,6 +8,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 
@@ -223,7 +224,7 @@ margin-top:10px;
 
 <div class="card" id="panelAdmin" style="display:none;">
 
-<h2>Panel Administrador</h2>
+<h2>Panel Administrador</h2> /* ------------------Panel administrados---------------*/
   
 <label>Filtrar por semana:</label>
 
@@ -252,6 +253,8 @@ margin-top:10px;
   </div>
 
 </div>
+  <h3>Histórico de cumplimiento</h3>
+<canvas id="graficaSemanal" height="100"></canvas>
 </div>
 
 <script>
@@ -780,6 +783,97 @@ XLSX.writeFile(workbook, "plantilla_empleados.xlsx");
   // Ejecuta ambos
   verRitualesSemana();
   dashboardSemaforo();
+  generarGraficaSemanal();
+
+}
+  async function generarGraficaSemanal(){
+
+const ctx = document.getElementById("graficaSemanal").getContext("2d");
+
+/* AREAS (las mismas del dashboard) */
+const areas=[
+"LAVS",
+"ENVIOS A220",
+"GALLEYS & SMALL/MONUMENTOS",
+"SHIP LOOSE",
+"F2F",
+"CASCADAS",
+"MAQUINADO Y TROQUELADO",
+"AIRBUS",
+"BONDEO",
+"COMAC",
+"DECORADO,PINTURA",
+"MANTENIMIENTO",
+"ALMACEN",
+"INSERTOS A220",
+"CNC 3X/5X",
+"LIJADO",
+"LAMINADO / HORNOS",
+"BOEING",
+"MOLDES / PRENSAS"
+];
+
+const totalAreas = areas.length;
+
+/* TRAER TODOS LOS RITUALES */
+const snapshot = await db.collection("rituales").get();
+
+/* AGRUPAR POR SEMANA */
+let semanas = {};
+
+snapshot.forEach(doc=>{
+  const d = doc.data();
+  const semana = d.semana;
+  const area = d.area;
+
+  if(!semanas[semana]){
+    semanas[semana] = new Set();
+  }
+
+  semanas[semana].add(area);
+});
+
+/* ORDENAR SEMANAS */
+const semanasOrdenadas = Object.keys(semanas).sort((a,b)=>a-b);
+
+/* GENERAR DATOS */
+let labels = [];
+let datos = [];
+
+semanasOrdenadas.forEach(semana=>{
+  const registradas = semanas[semana].size;
+  const porcentaje = Math.round((registradas / totalAreas) * 100);
+
+  labels.push("Sem " + semana);
+  datos.push(porcentaje);
+});
+
+/* CREAR GRAFICA */
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [{
+      label: '% Cumplimiento',
+      data: datos,
+      tension: 0.3
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 100
+      }
+    }
+  }
+});
 
 }
 </script>
