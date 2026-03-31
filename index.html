@@ -224,7 +224,10 @@ margin-top:10px;
 
 <div class="card" id="panelAdmin" style="display:none;">
 
-<h2>Panel Administrador</h2> /* ------------------Panel administrados---------------*/
+  
+/* ------------------Panel administrados---------------*/
+
+<h2>Panel Administrador</h2> 
   
 <label>Filtrar por semana:</label>
 
@@ -850,7 +853,7 @@ semanasOrdenadas.forEach(semana=>{
 
 /* CREAR GRAFICA */
 new Chart(ctx, {
-  type: 'line',
+  type: 'bar',
   data: {
     labels: labels,
     datasets: [{
@@ -859,7 +862,7 @@ new Chart(ctx, {
       tension: 0.3
     }]
   },
-  options: {
+   options: {
     responsive: true,
     plugins: {
       legend: {
@@ -869,7 +872,12 @@ new Chart(ctx, {
     scales: {
       y: {
         beginAtZero: true,
-        max: 100
+        max: 100,
+        ticks: {
+          callback: function(value){
+            return value + "%";
+          }
+        }
       }
     }
   }
