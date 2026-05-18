@@ -17,18 +17,12 @@
   --amarillo-oscuro: #d97706;
   --azul: #1e3a8a;
   --azul-medio: #2563eb;
-  --azul-claro: #3b82f6;
   --verde: #16a34a;
   --rojo: #dc2626;
   --gris-fondo: #f1f5f9;
   --gris-borde: #e2e8f0;
   --texto: #0f172a;
   --texto-suave: #64748b;
-  --blanco: #ffffff;
-
-  --tab-rituales: #FACC15;
-  --tab-psr: #3b82f6;
-  --tab-qrqc: #7c3aed;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,128 +33,214 @@ body {
   min-height: 100vh;
 }
 
-/* ── HEADER ── */
-.app-header {
-  background: linear-gradient(135deg, var(--azul) 0%, #1e40af 100%);
-  padding: 18px 30px;
+#pantallaBienvenida {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1e40af 100%);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  justify-content: center;
+  padding: 30px 20px;
 }
 
-.header-logo {
-  width: 44px; height: 44px;
+.bienvenida-logo {
+  width: 72px; height: 72px;
   background: var(--amarillo);
-  border-radius: 10px;
+  border-radius: 18px;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900; font-size: 20px; color: var(--azul);
+  font-weight: 900; font-size: 32px; color: var(--azul);
+  margin-bottom: 20px;
+  box-shadow: 0 8px 30px rgba(250,204,21,0.4);
 }
 
-.header-title {
+.bienvenida-titulo {
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700; font-size: 22px; color: white;
+  font-size: 30px; font-weight: 900;
+  color: white; text-align: center;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.bienvenida-sub {
+  font-size: 14px; color: rgba(255,255,255,0.45);
+  text-align: center; margin-bottom: 50px;
   letter-spacing: 1px;
 }
 
-.header-sub { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+.bienvenida-pregunta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 17px; font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  text-align: center; margin-bottom: 24px;
+  text-transform: uppercase; letter-spacing: 1px;
+}
 
-/* ── TABS ── */
-.tabs-nav {
-  background: white;
+.bienvenida-opciones {
   display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.opcion-btn {
+  display: flex; align-items: center; gap: 18px;
+  padding: 20px 24px;
+  border-radius: 16px;
+  border: 2px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.06);
+  cursor: pointer;
+  transition: all .25s;
+  text-align: left;
+  backdrop-filter: blur(6px);
+}
+
+.opcion-btn:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.opcion-btn.rituales:hover { border-color: #facc15; box-shadow: 0 10px 30px rgba(250,204,21,0.2); }
+.opcion-btn.psr:hover      { border-color: #60a5fa; box-shadow: 0 10px 30px rgba(96,165,250,0.2); }
+.opcion-btn.qrqc:hover     { border-color: #a78bfa; box-shadow: 0 10px 30px rgba(167,139,250,0.2); }
+
+.opcion-icono { font-size: 30px; flex-shrink: 0; }
+
+.opcion-info-titulo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 19px; font-weight: 700; color: white; letter-spacing: .5px;
+}
+
+.opcion-info-desc { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 3px; }
+
+#appPrincipal { display: none; }
+
+.app-header {
+  background: linear-gradient(135deg, var(--azul) 0%, #1e40af 100%);
+  padding: 13px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.header-left { display: flex; align-items: center; gap: 12px; }
+
+.header-logo {
+  width: 38px; height: 38px;
+  background: var(--amarillo); border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 18px; color: var(--azul);
+  cursor: pointer; flex-shrink: 0;
+}
+
+.header-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 17px; color: white; letter-spacing: 1px; }
+.header-sub   { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 1px; }
+
+.btn-admin-discreto {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 600;
+  padding: 7px 14px; border-radius: 8px;
+  cursor: pointer; letter-spacing: .5px; text-transform: uppercase;
+  transition: .2s; display: flex; align-items: center; gap: 5px;
+}
+
+.btn-admin-discreto:hover {
+  background: rgba(255,255,255,0.15);
+  color: white; border-color: rgba(255,255,255,0.3);
+}
+
+.tabs-nav {
+  background: white; display: flex;
   border-bottom: 3px solid var(--gris-borde);
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   overflow-x: auto;
 }
 
 .tab-btn {
-  flex: 1; min-width: 120px;
-  padding: 16px 20px;
+  flex: 1; min-width: 110px; padding: 14px 20px;
   border: none; background: none;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px; font-weight: 700; letter-spacing: 1px;
-  color: var(--texto-suave);
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -3px;
-  transition: all .2s;
-  text-transform: uppercase;
+  font-size: 15px; font-weight: 700; letter-spacing: 1px;
+  color: var(--texto-suave); cursor: pointer;
+  border-bottom: 3px solid transparent; margin-bottom: -3px;
+  transition: all .2s; text-transform: uppercase;
 }
 
 .tab-btn:hover { color: var(--texto); background: var(--gris-fondo); }
-
 .tab-btn.active-rituales { color: #92400e; border-bottom-color: var(--amarillo); background: #fffbeb; }
-.tab-btn.active-psr      { color: var(--azul); border-bottom-color: var(--tab-psr); background: #eff6ff; }
-.tab-btn.active-qrqc     { color: #5b21b6; border-bottom-color: var(--tab-qrqc); background: #f5f3ff; }
+.tab-btn.active-psr      { color: var(--azul); border-bottom-color: var(--azul-medio); background: #eff6ff; }
+.tab-btn.active-qrqc     { color: #5b21b6; border-bottom-color: #7c3aed; background: #f5f3ff; }
 
-/* ── CONTENIDO MÓDULOS ── */
-.modulo { display: none; padding: 28px 20px; max-width: 1300px; margin: 0 auto; }
+.admin-panel-outer { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
+
+.admin-panel-body {
+  display: none;
+  background: white;
+  border: 1.5px solid var(--gris-borde);
+  border-radius: 0 0 12px 12px;
+  border-top: none;
+  padding: 20px 24px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  margin-bottom: 4px;
+}
+
+.admin-panel-body.abierto { display: block; }
+
+.modulo { display: none; padding: 22px 20px; max-width: 1300px; margin: 0 auto; }
 .modulo.activo { display: block; }
 
-/* ── CARDS ── */
 .card {
-  background: white;
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-  margin-bottom: 20px;
+  background: white; border-radius: 14px; padding: 22px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 20px;
 }
 
 .card-titulo {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 20px; font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 18px;
-  display: flex; align-items: center; gap: 10px;
+  font-size: 19px; font-weight: 700; color: var(--texto);
+  margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
 }
 
 .badge {
   font-size: 11px; font-weight: 700; font-family: 'Barlow', sans-serif;
   padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: .5px;
 }
-
 .badge-amarillo { background: #fef3c7; color: #92400e; }
 .badge-azul     { background: #dbeafe; color: var(--azul); }
 .badge-morado   { background: #ede9fe; color: #5b21b6; }
 .badge-verde    { background: #dcfce7; color: #15803d; }
 
-/* ── INPUTS ── */
 .campo { margin-bottom: 14px; }
-.campo label { display: block; font-size: 12px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+.campo label {
+  display: block; font-size: 11px; font-weight: 600;
+  color: var(--texto-suave); text-transform: uppercase;
+  letter-spacing: .5px; margin-bottom: 6px;
+}
 
-input[type="text"],
-input[type="number"],
-input[type="file"],
-input[type="date"],
-select, textarea {
-  width: 100%;
-  padding: 11px 14px;
-  border: 1.5px solid var(--gris-borde);
-  border-radius: 9px;
-  font-family: 'Barlow', sans-serif;
-  font-size: 14px;
-  color: var(--texto);
-  background: white;
-  transition: .2s;
+input[type="text"], input[type="number"], input[type="file"],
+input[type="date"], select, textarea {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--gris-borde); border-radius: 9px;
+  font-family: 'Barlow', sans-serif; font-size: 14px;
+  color: var(--texto); background: white; transition: .2s;
 }
 
 input:focus, select:focus, textarea:focus {
-  outline: none;
-  border-color: var(--azul-medio);
+  outline: none; border-color: var(--azul-medio);
   box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
 }
 
-/* ── BOTONES ── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 12px 22px;
-  border: none; border-radius: 10px;
+  padding: 12px 22px; border: none; border-radius: 10px;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 15px; font-weight: 700; letter-spacing: .5px;
-  cursor: pointer; transition: .2s;
-  text-transform: uppercase;
+  cursor: pointer; transition: .2s; text-transform: uppercase;
 }
 
 .btn-full { width: 100%; }
@@ -180,34 +260,25 @@ input:focus, select:focus, textarea:focus {
 .btn-outline:hover { border-color: var(--azul-medio); color: var(--azul-medio); }
 .btn-sm { padding: 7px 14px; font-size: 13px; }
 
-/* ── GRID ── */
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+@media(max-width:760px) { .grid2,.grid3 { grid-template-columns: 1fr; } }
 
-@media(max-width:760px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
-
-/* ── STATUS ── */
 .status { margin-top: 12px; font-weight: 600; font-size: 14px; text-align: center; padding: 10px; border-radius: 8px; }
-.status.ok  { background: #dcfce7; color: #15803d; }
-.status.err { background: #fee2e2; color: #b91c1c; }
-.status.info{ background: #dbeafe; color: var(--azul); }
+.status.ok   { background: #dcfce7; color: #15803d; }
+.status.err  { background: #fee2e2; color: #b91c1c; }
+.status.info { background: #dbeafe; color: var(--azul); }
 
-/* ── SEMAFORO ── */
 .semaforo-item {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--gris-borde);
-  font-size: 14px;
+  padding: 9px 12px; border-bottom: 1px solid var(--gris-borde); font-size: 14px;
 }
-
 .semaforo-item:last-child { border-bottom: none; }
-.dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+.dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 .dot-verde { background: #16a34a; box-shadow: 0 0 6px #16a34a88; }
 .dot-rojo  { background: #dc2626; box-shadow: 0 0 6px #dc262688; }
 
-.barra-progreso {
-  background: #e2e8f0; border-radius: 99px; overflow: hidden; height: 18px; margin: 10px 0;
-}
+.barra-progreso { background: #e2e8f0; border-radius: 99px; overflow: hidden; height: 18px; margin: 10px 0; }
 .barra-fill {
   height: 100%; background: var(--verde);
   display: flex; align-items: center; justify-content: center;
@@ -215,101 +286,57 @@ input:focus, select:focus, textarea:focus {
   border-radius: 99px; transition: width .5s;
 }
 
-/* ── LISTA RITUALES ── */
-.ritual-item {
-  background: var(--gris-fondo);
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-bottom: 10px;
-}
-
+.ritual-item { background: var(--gris-fondo); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; }
 .ritual-item img { width: 100%; border-radius: 8px; margin-top: 8px; }
 
-/* ── FOROS QRQC ── */
-.foro-card {
-  background: white;
-  border-radius: 12px;
-  border: 2px solid var(--gris-borde);
-  overflow: hidden;
-  margin-bottom: 16px;
-  transition: .2s;
-}
+.historial-item { background: var(--gris-fondo); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; font-size: 13px; }
 
+.admin-seccion { border-top: 2px solid var(--gris-borde); padding-top: 16px; margin-top: 16px; }
+
+.foro-card {
+  background: white; border-radius: 12px;
+  border: 2px solid var(--gris-borde);
+  overflow: hidden; margin-bottom: 14px; transition: .2s;
+}
 .foro-card:hover { border-color: #7c3aed44; box-shadow: 0 4px 14px rgba(124,58,237,0.1); }
 
 .foro-header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 16px;
-  background: #f5f3ff;
-  cursor: pointer;
+  padding: 13px 16px; background: #f5f3ff; cursor: pointer;
 }
-
 .foro-header-left { display: flex; align-items: center; gap: 10px; }
 
 .nivel-badge {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px; font-weight: 700;
-  padding: 3px 10px; border-radius: 6px;
-  text-transform: uppercase;
+  font-size: 12px; font-weight: 700;
+  padding: 3px 9px; border-radius: 6px; text-transform: uppercase;
 }
-
 .nivel-n3 { background: #fef3c7; color: #92400e; }
 .nivel-n2 { background: #dbeafe; color: #1e40af; }
 .nivel-n1 { background: #dcfce7; color: #15803d; }
 
-.foro-nombre {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px; font-weight: 700; color: var(--texto);
-}
+.foro-nombre { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; color: var(--texto); }
 
-.foro-body { padding: 16px; }
+.foro-body { display: none; padding: 16px; }
+.foro-body.abierto { display: block; }
+.chevron { transition: transform .2s; font-size: 16px; color: var(--texto-suave); }
+.chevron.rotado { transform: rotate(180deg); }
 
 .asistente-fila {
   display: flex; align-items: center; gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--gris-borde);
+  padding: 8px 0; border-bottom: 1px solid var(--gris-borde);
 }
-
 .asistente-fila:last-child { border-bottom: none; }
-
 .asistente-nombre { flex: 1; font-size: 14px; }
 .asistente-cargo  { font-size: 12px; color: var(--texto-suave); min-width: 80px; }
+input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: #7c3aed; }
 
-input[type="checkbox"] {
-  width: 18px; height: 18px; cursor: pointer; accent-color: #7c3aed;
-}
-
-/* ── HISTORIAL ── */
-.historial-item {
-  background: var(--gris-fondo);
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin-bottom: 8px;
-  font-size: 13px;
-}
-
-/* ── ADMIN PANEL ── */
-.admin-seccion { border-top: 2px solid var(--gris-borde); padding-top: 20px; margin-top: 20px; }
-
-/* ── COLLAPSE ── */
-.foro-body { display: none; }
-.foro-body.abierto { display: block; }
-.chevron { transition: transform .2s; font-size: 18px; color: var(--texto-suave); }
-.chevron.rotado { transform: rotate(180deg); }
-
-/* ── PSR ── */
 .psr-proyecto-item {
-  background: var(--gris-fondo);
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin-bottom: 10px;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px;
+  background: var(--gris-fondo); border-radius: 10px; padding: 10px 14px;
+  margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
 }
-
-.psr-proyecto-info { flex: 1; }
-.psr-proyecto-nombre { font-weight: 600; font-size: 15px; }
-.psr-proyecto-tier { font-size: 12px; color: var(--texto-suave); margin-top: 2px; }
+.psr-proyecto-nombre { font-weight: 600; font-size: 13px; }
+.psr-proyecto-tier   { font-size: 12px; color: var(--texto-suave); margin-top: 2px; }
 
 .tier-badge {
   font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
@@ -320,68 +347,195 @@ input[type="checkbox"] {
 .tier-3 { background: #fef9c3; color: #854d0e; }
 .tier-4 { background: #f0fdf4; color: #166534; }
 
-.nombre-hint {
-  font-size: 13px; color: var(--azul-medio); font-weight: 600;
-  margin-top: 4px; min-height: 18px;
+.champion-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #eff6ff; border: 1.5px solid #bfdbfe;
+  color: var(--azul); border-radius: 8px;
+  padding: 7px 14px; margin: 4px 4px 4px 0;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: .15s;
 }
+.champion-tag:hover        { background: #dbeafe; border-color: var(--azul-medio); }
+.champion-tag.seleccionado { background: var(--azul-medio); color: white; border-color: var(--azul-medio); }
 
-.scroll-box { max-height: 500px; overflow-y: auto; }
+.nombre-hint { font-size: 13px; color: var(--azul-medio); font-weight: 600; margin-top: 4px; min-height: 18px; }
+.scroll-box  { max-height: 480px; overflow-y: auto; }
 
 .modulo-desc {
-  background: white;
-  border-radius: 12px;
-  padding: 16px 20px;
-  margin-bottom: 20px;
-  border-left: 5px solid;
+  background: white; border-radius: 12px; padding: 13px 18px;
+  margin-bottom: 20px; border-left: 5px solid;
   display: flex; align-items: center; gap: 14px;
 }
 .modulo-desc.rituales { border-left-color: var(--amarillo); }
 .modulo-desc.psr      { border-left-color: var(--azul-medio); }
 .modulo-desc.qrqc     { border-left-color: #7c3aed; }
-.modulo-desc-icon { font-size: 28px; }
-.modulo-desc-texto h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; }
-.modulo-desc-texto p  { font-size: 13px; color: var(--texto-suave); margin-top: 3px; }
+.modulo-desc-icon { font-size: 24px; }
+.modulo-desc-texto h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; }
+.modulo-desc-texto p  { font-size: 12px; color: var(--texto-suave); margin-top: 2px; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="app-header">
-  <div class="header-logo">IP</div>
-  <div>
-    <div class="header-title">SISTEMA DE CONTROL OPERACIONAL</div>
-    <div class="header-sub">Rituales · PSR · QRQC</div>
+<div id="pantallaBienvenida">
+  <div class="bienvenida-logo">IP</div>
+  <div class="bienvenida-titulo">Sistema de Control Operacional</div>
+  <div class="bienvenida-sub">Selecciona el módulo que deseas registrar</div>
+  <div class="bienvenida-pregunta">¿Qué deseas registrar hoy?</div>
+  <div class="bienvenida-opciones">
+    <button class="opcion-btn rituales" onclick="entrarModulo('rituales')">
+      <div class="opcion-icono">⚡</div>
+      <div>
+        <div class="opcion-info-titulo">Rituales</div>
+        <div class="opcion-info-desc">Registro semanal de rituales por área con evidencia fotográfica</div>
+      </div>
+    </button>
+    <button class="opcion-btn psr" onclick="entrarModulo('psr')">
+      <div class="opcion-icono">📋</div>
+      <div>
+        <div class="opcion-info-titulo">PSR — Project Status Review</div>
+        <div class="opcion-info-desc">Asistencia a revisiones de proyectos por Tier y Champion</div>
+      </div>
+    </button>
+    <button class="opcion-btn qrqc" onclick="entrarModulo('qrqc')">
+      <div class="opcion-icono">🔍</div>
+      <div>
+        <div class="opcion-info-titulo">QRQC — Foros de Calidad</div>
+        <div class="opcion-info-desc">Asistencia en foros N3, N2 y N1 de Quick Response Quality Control</div>
+      </div>
+    </button>
   </div>
 </div>
 
-<!-- TABS -->
-<div class="tabs-nav">
-  <button class="tab-btn active-rituales" id="tab-rituales" onclick="cambiarTab('rituales')">⚡ Rituales</button>
-  <button class="tab-btn" id="tab-psr" onclick="cambiarTab('psr')">📋 PSR</button>
-  <button class="tab-btn" id="tab-qrqc" onclick="cambiarTab('qrqc')">🔍 QRQC</button>
-</div>
+<div id="appPrincipal">
 
-<!-- MÓDULO 1 — RITUALES -->
-<div class="modulo activo" id="modulo-rituales">
+  <div class="app-header">
+    <div class="header-left">
+      <div class="header-logo" onclick="volverInicio()" title="Volver al inicio">IP</div>
+      <div>
+        <div class="header-title">CONTROL OPERACIONAL</div>
+        <div class="header-sub">Rituales · PSR · QRQC</div>
+      </div>
+    </div>
+    <button class="btn-admin-discreto" onclick="toggleAdminPanel()">⚙ Admin</button>
+  </div>
 
-  <div class="modulo-desc rituales">
-    <div class="modulo-desc-icon">⚡</div>
-    <div class="modulo-desc-texto">
-      <h3>Registro de Rituales</h3>
-      <p>Registra el ritual semanal de cada área con evidencia fotográfica.</p>
+  <div class="tabs-nav">
+    <button class="tab-btn" id="tab-rituales" onclick="cambiarTab('rituales')">⚡ Rituales</button>
+    <button class="tab-btn" id="tab-psr"      onclick="cambiarTab('psr')">📋 PSR</button>
+    <button class="tab-btn" id="tab-qrqc"     onclick="cambiarTab('qrqc')">🔍 QRQC</button>
+  </div>
+
+  <div class="admin-panel-outer">
+    <div class="admin-panel-body" id="adminPanelGlobal">
+
+      <div id="adminRituales">
+        <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — Rituales</div>
+        <div class="grid2">
+          <div>
+            <div class="campo">
+              <label>Filtrar por semana</label>
+              <input type="number" id="r-filtroSemana" placeholder="Ej: 12">
+            </div>
+            <button class="btn btn-azul btn-full" onclick="verDashboardRituales()">Ver Semana</button>
+            <button class="btn btn-verde btn-full" style="margin-top:8px;" onclick="exportarRitualesExcel()">Exportar Excel</button>
+          </div>
+          <div>
+            <div class="campo" style="margin-bottom:8px;">
+              <label>Subir Empleados (Excel)</label>
+              <input type="file" id="r-excel" accept=".xlsx,.xls">
+            </div>
+            <button class="btn btn-gris btn-full" onclick="subirEmpleadosExcel()">Subir Empleados</button>
+            <button class="btn btn-outline btn-full" style="margin-top:8px;" onclick="descargarPlantilla()">Descargar Plantilla</button>
+            <div id="r-estadoExcel" style="margin-top:8px;font-size:13px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="adminPSR" style="display:none;">
+        <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — PSR</div>
+        <div class="grid2">
+          <div>
+            <div class="campo">
+              <label>Nombre del Proyecto</label>
+              <input type="text" id="p-nuevoProyecto" placeholder="Nombre del proyecto">
+            </div>
+            <div class="campo">
+              <label>Tier por default</label>
+              <select id="p-nuevoTier">
+                <option value="">Sin Tier</option>
+                <option>Tier 1</option><option>Tier 2</option>
+                <option>Tier 3</option><option>Tier 4</option>
+              </select>
+            </div>
+            <button class="btn btn-verde btn-full" onclick="agregarProyecto()">+ Agregar Proyecto</button>
+            <div id="p-estadoProyecto" style="margin-top:8px;font-size:13px;"></div>
+            <button class="btn btn-azul btn-full" style="margin-top:12px;" onclick="exportarPSRExcel()">Exportar Excel</button>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Proyectos Registrados</div>
+            <div class="scroll-box" id="p-listaProyectos" style="max-height:200px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="adminQRQC" style="display:none;">
+        <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — QRQC</div>
+        <div class="grid2">
+          <div>
+            <div class="campo">
+              <label>Nombre del Foro</label>
+              <input type="text" id="q-nuevoNombre" placeholder="Nombre del foro">
+            </div>
+            <div class="campo">
+              <label>Nivel</label>
+              <select id="q-nuevoNivel">
+                <option value="N3">N3</option>
+                <option value="N2">N2</option>
+                <option value="N1">N1</option>
+              </select>
+            </div>
+            <button class="btn btn-morado btn-full" onclick="agregarForo()">+ Agregar Foro</button>
+            <div id="q-estadoForo" style="margin-top:8px;font-size:13px;"></div>
+            <button class="btn btn-azul btn-full" style="margin-top:12px;" onclick="exportarQRQCExcel()">Exportar Excel</button>
+          </div>
+          <div>
+            <div class="campo">
+              <label>Foro destino</label>
+              <select id="q-foroDestino"></select>
+            </div>
+            <div class="campo">
+              <label>Nombre del asistente</label>
+              <input type="text" id="q-asistenteNombre" placeholder="Nombre completo">
+            </div>
+            <div class="campo">
+              <label>Cargo / Rol</label>
+              <input type="text" id="q-asistenteCargo" placeholder="Ej: Supervisor, Ingeniero...">
+            </div>
+            <button class="btn btn-morado btn-full" onclick="agregarAsistente()">+ Agregar Asistente</button>
+            <div id="q-estadoAsistente" style="margin-top:8px;font-size:13px;"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div class="grid2">
-    <div class="card">
+  <!-- RITUALES -->
+  <div class="modulo" id="modulo-rituales">
+    <div class="modulo-desc rituales">
+      <div class="modulo-desc-icon">⚡</div>
+      <div class="modulo-desc-texto">
+        <h3>Registro de Rituales</h3>
+        <p>Registra el ritual semanal de cada área con evidencia fotográfica.</p>
+      </div>
+    </div>
+    <div class="card" style="max-width:500px;">
       <div class="card-titulo">Nuevo Ritual <span class="badge badge-amarillo">Semanal</span></div>
-
       <div class="campo">
         <label>Número de Empleado</label>
         <input type="number" id="r-numero" placeholder="Ej: 1001" oninput="buscarEmpleado('r')">
         <div class="nombre-hint" id="r-nombreHint"></div>
       </div>
-
       <div class="campo">
         <label>Área</label>
         <select id="r-area">
@@ -407,87 +561,53 @@ input[type="checkbox"] {
           <option>MOLDES / PRENSAS</option>
         </select>
       </div>
-
       <div class="campo">
         <label>Foto de Evidencia</label>
         <input type="file" id="r-foto" accept="image/*" capture="environment">
       </div>
-
       <button class="btn btn-amarillo btn-full" onclick="registrarRitual()">⚡ Registrar Ritual</button>
       <div id="r-estado"></div>
     </div>
-
-    <div class="card">
-      <div class="card-titulo">Panel Administrador <span class="badge badge-amarillo">Admin</span></div>
-
-      <div class="campo">
-        <label>Contraseña</label>
-        <input type="number" id="r-pass" placeholder="Contraseña admin">
-      </div>
-      <button class="btn btn-azul btn-full" onclick="loginAdmin('rituales')">Acceder</button>
-
-      <div id="panelAdminRituales" style="display:none; margin-top:20px;">
-
-        <div class="campo">
-          <label>Filtrar por semana</label>
-          <input type="number" id="r-filtroSemana" placeholder="Ej: 12">
+    <div id="dashboardRituales" style="display:none;">
+      <div class="grid2">
+        <div class="card">
+          <div class="card-titulo">📋 Rituales Registrados</div>
+          <div class="scroll-box" id="r-lista"></div>
         </div>
-        <button class="btn btn-azul btn-full" onclick="verDashboardRituales()">Ver Semana</button>
-        <button class="btn btn-verde btn-full" style="margin-top:8px;" onclick="exportarRitualesExcel()">Exportar Excel</button>
-
-        <div class="admin-seccion">
-          <div class="card-titulo" style="font-size:15px;">Subir Empleados (Excel)</div>
-          <input type="file" id="r-excel" accept=".xlsx,.xls" style="margin-top:8px;">
-          <button class="btn btn-gris btn-full" style="margin-top:8px;" onclick="subirEmpleadosExcel()">Subir Empleados</button>
-          <button class="btn btn-outline btn-full" style="margin-top:8px;" onclick="descargarPlantilla()">Descargar Plantilla</button>
-          <div id="r-estadoExcel"></div>
+        <div class="card">
+          <div class="card-titulo">🚦 Semáforo de Áreas</div>
+          <div id="r-dashboard"></div>
         </div>
-
-      </div>
-    </div>
-  </div>
-
-  <div id="dashboardRituales" style="display:none;">
-    <div class="grid2">
-      <div class="card">
-        <div class="card-titulo">📋 Rituales Registrados</div>
-        <div class="scroll-box" id="r-lista"></div>
       </div>
       <div class="card">
-        <div class="card-titulo">🚦 Semáforo de Áreas</div>
-        <div id="r-dashboard"></div>
+        <div class="card-titulo">📈 Histórico de Cumplimiento</div>
+        <canvas id="r-graficaSemanal" height="80"></canvas>
       </div>
     </div>
-    <div class="card">
-      <div class="card-titulo">📈 Histórico de Cumplimiento</div>
-      <canvas id="r-graficaSemanal" height="80"></canvas>
-    </div>
   </div>
 
-</div>
-
-
-<!-- MÓDULO 2 — PSR -->
-<div class="modulo" id="modulo-psr">
-
-  <div class="modulo-desc psr">
-    <div class="modulo-desc-icon">📋</div>
-    <div class="modulo-desc-texto">
-      <h3>PSR — Project Status Review</h3>
-      <p>Registro de asistencia a reuniones de revisión de proyectos por Tier y Champion.</p>
+  <!-- PSR -->
+  <div class="modulo" id="modulo-psr">
+    <div class="modulo-desc psr">
+      <div class="modulo-desc-icon">📋</div>
+      <div class="modulo-desc-texto">
+        <h3>PSR — Project Status Review</h3>
+        <p>Registro de asistencia a revisiones de proyectos por Tier y Champion.</p>
+      </div>
     </div>
-  </div>
-
-  <div class="grid2">
-    <div class="card">
-      <div class="card-titulo">Registrar Asistencia PSR <span class="badge badge-azul">Proyecto</span></div>
-
+    <div class="card" style="max-width:540px;">
+      <div class="card-titulo">Registrar Asistencia <span class="badge badge-azul">PSR</span></div>
       <div class="campo">
         <label>Número de Empleado</label>
         <input type="number" id="p-numero" placeholder="Ej: 1001" oninput="buscarEmpleado('p')">
         <div class="nombre-hint" id="p-nombreHint"></div>
       </div>
-
+      <div class="campo">
+        <label>Proyecto</label>
+        <select id="p-proyecto" onchange="actualizarChampionsYTier()">
+          <option value="">Selecciona proyecto</option>
+        </select>
+      </div>
       <div class="campo">
         <label>Tier</label>
         <select id="p-tier">
@@ -498,167 +618,71 @@ input[type="checkbox"] {
           <option value="Tier 4">Tier 4</option>
         </select>
       </div>
-
       <div class="campo">
-        <label>Champion / Responsable</label>
-        <input type="text" id="p-champion" placeholder="Nombre del Champion">
+        <label>Champion</label>
+        <div id="p-championsContainer" style="margin-top:4px;min-height:36px;">
+          <span style="font-size:13px;color:var(--texto-suave);">Selecciona un proyecto primero</span>
+        </div>
+        <input type="hidden" id="p-championValor">
       </div>
-
-      <div class="campo">
-        <label>Proyecto</label>
-        <select id="p-proyecto">
-          <option value="">Selecciona proyecto</option>
-        </select>
-      </div>
-
       <button class="btn btn-azul btn-full" onclick="registrarAsistenciaPSR()">📋 Registrar Asistencia</button>
       <div id="p-estado"></div>
     </div>
-
     <div class="card">
-      <div class="card-titulo">Gestión PSR <span class="badge badge-azul">Admin</span></div>
+      <div class="card-titulo">📅 Historial de Asistencia PSR</div>
+      <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px;">
+        <div class="campo" style="margin-bottom:0;min-width:180px;">
+          <label>Filtrar por fecha</label>
+          <input type="date" id="p-filtroFecha">
+        </div>
+        <button class="btn btn-gris btn-sm" onclick="verHistorialPSR()">Ver Historial</button>
+      </div>
+      <div class="scroll-box" id="p-historial"></div>
+    </div>
+  </div>
 
-      <button class="btn btn-azul btn-full" onclick="loginAdmin('psr')">Panel Administrador</button>
-
-      <div id="panelAdminPSR" style="display:none; margin-top:20px;">
-
-        <div class="admin-seccion">
-          <div class="card-titulo" style="font-size:15px; margin-bottom:12px;">Agregar Proyecto</div>
+  <!-- QRQC -->
+  <div class="modulo" id="modulo-qrqc">
+    <div class="modulo-desc qrqc">
+      <div class="modulo-desc-icon">🔍</div>
+      <div class="modulo-desc-texto">
+        <h3>QRQC — Quick Response Quality Control</h3>
+        <p>Registro de asistencia en foros QRQC por nivel N3, N2 y N1.</p>
+      </div>
+    </div>
+    <div class="grid2">
+      <div>
+        <div class="card">
+          <div class="card-titulo">Seleccionar Foro <span class="badge badge-morado">QRQC</span></div>
           <div class="campo">
-            <label>Nombre del Proyecto</label>
-            <input type="text" id="p-nuevoProyecto" placeholder="Nombre del proyecto">
-          </div>
-          <div class="campo">
-            <label>Tier por default</label>
-            <select id="p-nuevoTier">
-              <option value="">Sin Tier</option>
-              <option>Tier 1</option>
-              <option>Tier 2</option>
-              <option>Tier 3</option>
-              <option>Tier 4</option>
+            <label>Filtrar por Nivel</label>
+            <select id="q-filtroNivel" onchange="filtrarForos()">
+              <option value="">Todos los niveles</option>
+              <option value="N3">N3</option>
+              <option value="N2">N2</option>
+              <option value="N1">N1</option>
             </select>
           </div>
-          <button class="btn btn-verde btn-full" onclick="agregarProyecto()">+ Agregar Proyecto</button>
-          <div id="p-estadoProyecto"></div>
         </div>
-
-        <div class="admin-seccion">
-          <div class="card-titulo" style="font-size:15px; margin-bottom:12px;">Proyectos Registrados</div>
-          <div class="scroll-box" id="p-listaProyectos"></div>
-        </div>
-
-        <div class="admin-seccion">
-          <button class="btn btn-verde btn-full" onclick="exportarPSRExcel()">Exportar Asistencias Excel</button>
-        </div>
-
+        <div id="q-listaForos"></div>
       </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-titulo">📅 Historial de Asistencia PSR</div>
-    <div class="campo" style="max-width:200px;">
-      <label>Filtrar por fecha</label>
-      <input type="date" id="p-filtroFecha">
-    </div>
-    <button class="btn btn-gris btn-sm" onclick="verHistorialPSR()">Ver Historial</button>
-    <div class="scroll-box" id="p-historial" style="margin-top:14px;"></div>
-  </div>
-
-</div>
-
-
-<!-- MÓDULO 3 — QRQC -->
-<div class="modulo" id="modulo-qrqc">
-
-  <div class="modulo-desc qrqc">
-    <div class="modulo-desc-icon">🔍</div>
-    <div class="modulo-desc-texto">
-      <h3>QRQC — Quick Response Quality Control</h3>
-      <p>Registro de asistencia en foros QRQC por nivel N3, N2 y N1.</p>
-    </div>
-  </div>
-
-  <div class="grid2">
-    <div>
-      <div class="card">
-        <div class="card-titulo">Seleccionar Foro <span class="badge badge-morado">QRQC</span></div>
-        <div class="campo">
-          <label>Filtrar por Nivel</label>
-          <select id="q-filtroNivel" onchange="filtrarForos()">
-            <option value="">Todos</option>
-            <option value="N3">N3</option>
-            <option value="N2">N2</option>
-            <option value="N1">N1</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="q-listaForos"></div>
-    </div>
-
-    <div>
-      <div class="card">
-        <div class="card-titulo">Gestión QRQC <span class="badge badge-morado">Admin</span></div>
-        <button class="btn btn-morado btn-full" onclick="loginAdmin('qrqc')">Panel Administrador</button>
-
-        <div id="panelAdminQRQC" style="display:none; margin-top:20px;">
-          <div class="admin-seccion">
-            <div class="card-titulo" style="font-size:15px; margin-bottom:12px;">Agregar Nuevo Foro</div>
-            <div class="campo">
-              <label>Nombre del Foro</label>
-              <input type="text" id="q-nuevoNombre" placeholder="Nombre del foro">
+      <div>
+        <div class="card">
+          <div class="card-titulo">📅 Historial QRQC</div>
+          <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px;">
+            <div class="campo" style="margin-bottom:0;min-width:170px;">
+              <label>Filtrar por fecha</label>
+              <input type="date" id="q-filtroFecha">
             </div>
-            <div class="campo">
-              <label>Nivel</label>
-              <select id="q-nuevoNivel">
-                <option value="N3">N3</option>
-                <option value="N2">N2</option>
-                <option value="N1">N1</option>
-              </select>
-            </div>
-            <button class="btn btn-morado btn-full" onclick="agregarForo()">+ Agregar Foro</button>
-            <div id="q-estadoForo"></div>
+            <button class="btn btn-gris btn-sm" onclick="verHistorialQRQC()">Ver</button>
           </div>
-
-          <div class="admin-seccion">
-            <div class="card-titulo" style="font-size:15px; margin-bottom:12px;">Agregar Asistente a Foro</div>
-            <div class="campo">
-              <label>Foro destino</label>
-              <select id="q-foroDestino"></select>
-            </div>
-            <div class="campo">
-              <label>Nombre del asistente</label>
-              <input type="text" id="q-asistenteNombre" placeholder="Nombre completo">
-            </div>
-            <div class="campo">
-              <label>Cargo / Rol</label>
-              <input type="text" id="q-asistenteCargo" placeholder="Ej: Supervisor, Ingeniero...">
-            </div>
-            <button class="btn btn-morado btn-full" onclick="agregarAsistente()">+ Agregar Asistente</button>
-            <div id="q-estadoAsistente"></div>
-          </div>
-
-          <div class="admin-seccion">
-            <button class="btn btn-verde btn-full" onclick="exportarQRQCExcel()">Exportar Asistencias Excel</button>
-          </div>
+          <div class="scroll-box" id="q-historial"></div>
         </div>
-      </div>
-
-      <div class="card">
-        <div class="card-titulo">📅 Historial QRQC</div>
-        <div class="campo" style="max-width:200px;">
-          <label>Filtrar por fecha</label>
-          <input type="date" id="q-filtroFecha">
-        </div>
-        <button class="btn btn-gris btn-sm" onclick="verHistorialQRQC()">Ver Historial</button>
-        <div class="scroll-box" id="q-historial" style="margin-top:14px;"></div>
       </div>
     </div>
   </div>
 
 </div>
-
 
 <script>
 
@@ -669,59 +693,94 @@ firebase.initializeApp({
 
 const db = firebase.firestore();
 
-let nombreEmpleados = { r: "", p: "" };
-let forosQRQC = [];
-let proyectosPSR = [];
-let adminAccess = { rituales: false, psr: false, qrqc: false };
-let graficaRituales = null;
+let nombreEmpleados   = { r:"", p:"" };
+let forosQRQC         = [];
+let proyectosPSR      = [];
+let graficaRituales   = null;
+let adminDesbloqueado = false;
+let tabActual         = 'rituales';
+
+const CHAMPIONS_POR_PROYECTO = {
+  "Buy to Make":           ["Antonio Aguilar"],
+  "DTC":                   ["Jaime Castro"],
+  "Material Optimization": ["Fabian Perez", "Jorge Millan"],
+  "Resourcing":            ["Gerardo Loredo"],
+  "OH Cost Control":       ["Carlos Perez"]
+};
+
+function entrarModulo(modulo) {
+  document.getElementById('pantallaBienvenida').style.display = 'none';
+  document.getElementById('appPrincipal').style.display = 'block';
+  cambiarTab(modulo);
+}
+
+function volverInicio() {
+  document.getElementById('appPrincipal').style.display = 'none';
+  document.getElementById('pantallaBienvenida').style.display = 'flex';
+  document.getElementById('adminPanelGlobal').classList.remove('abierto');
+  adminDesbloqueado = false;
+}
 
 function cambiarTab(modulo) {
+  tabActual = modulo;
   document.querySelectorAll('.modulo').forEach(m => m.classList.remove('activo'));
   document.querySelectorAll('.tab-btn').forEach(b => b.className = 'tab-btn');
   document.getElementById('modulo-' + modulo).classList.add('activo');
   document.getElementById('tab-' + modulo).classList.add('active-' + modulo);
+  if (adminDesbloqueado) mostrarAdminSeccion(modulo);
   if (modulo === 'qrqc') cargarForosQRQC();
-  if (modulo === 'psr') cargarProyectosPSR();
+  if (modulo === 'psr')  cargarProyectosPSR();
+}
+
+function toggleAdminPanel() {
+  if (!adminDesbloqueado) {
+    const pass = prompt('Contraseña de administrador:');
+    if (pass !== '1234') { alert('Contraseña incorrecta'); return; }
+    adminDesbloqueado = true;
+    document.getElementById('dashboardRituales').style.display = 'block';
+    if (tabActual === 'psr')  cargarListaProyectosAdmin();
+    if (tabActual === 'qrqc') cargarForosSelectAdmin();
+  }
+  const panel = document.getElementById('adminPanelGlobal');
+  panel.classList.toggle('abierto');
+  mostrarAdminSeccion(tabActual);
+}
+
+function mostrarAdminSeccion(modulo) {
+  document.getElementById('adminRituales').style.display = modulo==='rituales' ? 'block' : 'none';
+  document.getElementById('adminPSR').style.display      = modulo==='psr'      ? 'block' : 'none';
+  document.getElementById('adminQRQC').style.display     = modulo==='qrqc'     ? 'block' : 'none';
+  if (modulo==='psr'  && adminDesbloqueado) cargarListaProyectosAdmin();
+  if (modulo==='qrqc' && adminDesbloqueado) cargarForosSelectAdmin();
 }
 
 async function buscarEmpleado(prefijo) {
-  const numero = document.getElementById(prefijo + '-numero').value;
-  const hint = document.getElementById(prefijo + '-nombreHint');
-  if (!numero || numero.length < 3) { hint.innerText = ''; return; }
+  const numero = document.getElementById(prefijo+'-numero').value;
+  const hint   = document.getElementById(prefijo+'-nombreHint');
+  if (!numero || numero.length < 3) { hint.innerText=''; return; }
   try {
     const doc = await db.collection('empleados').doc(String(numero)).get();
     if (doc.exists) {
       nombreEmpleados[prefijo] = doc.data().nombre;
-      hint.innerText = '👤 ' + doc.data().nombre;
+      hint.innerText = '👤 '+doc.data().nombre;
     } else {
       hint.innerText = 'Empleado no encontrado';
       nombreEmpleados[prefijo] = '';
     }
-  } catch(e) { hint.innerText = 'Error buscando empleado'; }
+  } catch(e) { hint.innerText='Error buscando empleado'; }
 }
 
-function loginAdmin(modulo) {
-  const pass = prompt('Ingresa contraseña de administrador:');
-  if (pass === '1234') {
-    adminAccess[modulo] = true;
-    if (modulo === 'rituales') {
-      document.getElementById('panelAdminRituales').style.display = 'block';
-      document.getElementById('dashboardRituales').style.display = 'block';
-    }
-    if (modulo === 'psr') {
-      document.getElementById('panelAdminPSR').style.display = 'block';
-      cargarListaProyectosAdmin();
-    }
-    if (modulo === 'qrqc') {
-      document.getElementById('panelAdminQRQC').style.display = 'block';
-      cargarForosSelectAdmin();
-    }
-  } else {
-    alert('Contraseña incorrecta');
-  }
+function getSemanaActual() {
+  const hoy = new Date();
+  const ini = new Date(hoy.getFullYear(),0,1);
+  return Math.ceil((((hoy-ini)/86400000)+ini.getDay()+1)/7);
 }
 
-// ── RITUALES ──
+function mostrarEstado(id, msg, tipo) {
+  const el = document.getElementById(id);
+  el.className = 'status '+tipo;
+  el.innerText  = msg;
+}
 
 const AREAS_RITUALES = [
   "LAVS","ENVIOS A220","GALLEYS & SMALL/MONUMENTOS","SHIP LOOSE","F2F",
@@ -730,71 +789,33 @@ const AREAS_RITUALES = [
   "CNC 3X/5X","LIJADO","LAMINADO / HORNOS","BOEING","MOLDES / PRENSAS"
 ];
 
-function getSemanaActual() {
-  const hoy = new Date();
-  const inicio = new Date(hoy.getFullYear(), 0, 1);
-  return Math.ceil((((hoy - inicio) / 86400000) + inicio.getDay() + 1) / 7);
-}
-
-function mostrarEstado(id, msg, tipo) {
-  const el = document.getElementById(id);
-  el.className = 'status ' + tipo;
-  el.innerText = msg;
-}
-
 async function registrarRitual() {
   try {
     const numero = document.getElementById('r-numero').value;
-    const area = document.getElementById('r-area').value;
-    const foto = document.getElementById('r-foto').files[0];
+    const area   = document.getElementById('r-area').value;
+    const foto   = document.getElementById('r-foto').files[0];
     const semana = getSemanaActual();
-
-    if (!numero || !area || !foto || !nombreEmpleados.r) {
-      mostrarEstado('r-estado', 'Completa todos los campos y busca el empleado', 'err');
-      return;
+    if (!numero||!area||!foto||!nombreEmpleados.r) {
+      mostrarEstado('r-estado','Completa todos los campos y busca el empleado','err'); return;
     }
-
-    mostrarEstado('r-estado', 'Validando semana...', 'info');
-
-    const existe = await db.collection('rituales')
-      .where('area','==',area)
-      .where('semana','==',semana)
-      .get();
-
-    if (!existe.empty) {
-      mostrarEstado('r-estado', '⚠ Esta área ya registró ritual esta semana', 'err');
-      return;
-    }
-
-    mostrarEstado('r-estado', 'Subiendo imagen...', 'info');
-
+    mostrarEstado('r-estado','Validando semana...','info');
+    const existe = await db.collection('rituales').where('area','==',area).where('semana','==',semana).get();
+    if (!existe.empty) { mostrarEstado('r-estado','⚠ Esta área ya registró ritual esta semana','err'); return; }
+    mostrarEstado('r-estado','Subiendo imagen...','info');
     const formData = new FormData();
-    formData.append('file', foto);
-    formData.append('upload_preset', 'rituales');
-
-    const response = await fetch('https://api.cloudinary.com/v1_1/dc9wxwria/image/upload', {
-      method: 'POST', body: formData
-    });
-    const data = await response.json();
-
-    if (!data.secure_url) {
-      mostrarEstado('r-estado', 'Error subiendo imagen', 'err');
-      return;
-    }
-
+    formData.append('file',foto);
+    formData.append('upload_preset','rituales');
+    const res  = await fetch('https://api.cloudinary.com/v1_1/dc9wxwria/image/upload',{method:'POST',body:formData});
+    const data = await res.json();
+    if (!data.secure_url) { mostrarEstado('r-estado','Error subiendo imagen','err'); return; }
     await db.collection('rituales').add({
-      numero, nombre: String(nombreEmpleados.r),
-      area, imagen: data.secure_url, semana, fecha: new Date()
+      numero, nombre:String(nombreEmpleados.r),
+      area, imagen:data.secure_url, semana, fecha:new Date()
     });
-
-    mostrarEstado('r-estado', '✅ Ritual registrado correctamente', 'ok');
-    document.getElementById('r-foto').value = '';
-    document.getElementById('r-area').value = '';
-
-  } catch(e) {
-    console.error(e);
-    mostrarEstado('r-estado', 'Error registrando ritual', 'err');
-  }
+    mostrarEstado('r-estado','✅ Ritual registrado correctamente','ok');
+    document.getElementById('r-foto').value='';
+    document.getElementById('r-area').value='';
+  } catch(e) { console.error(e); mostrarEstado('r-estado','Error registrando ritual','err'); }
 }
 
 async function verDashboardRituales() {
@@ -807,181 +828,188 @@ async function verDashboardRituales() {
 
 async function verRitualesSemana(semana) {
   const lista = document.getElementById('r-lista');
-  lista.innerHTML = '<p style="color:var(--texto-suave)">Cargando...</p>';
-  const snapshot = await db.collection('rituales').where('semana','==',semana).get();
-  lista.innerHTML = '';
-  if (snapshot.empty) { lista.innerHTML = '<p>No hay rituales en semana ' + semana + '</p>'; return; }
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    lista.innerHTML += `
-      <div class="ritual-item">
-        <strong>${d.nombre}</strong><br>
-        <span style="color:var(--texto-suave);font-size:13px;">${d.area} · Sem ${d.semana}</span>
-        ${d.imagen ? `<img src="${d.imagen}" loading="lazy">` : ''}
-      </div>`;
+  lista.innerHTML='<p style="color:var(--texto-suave)">Cargando...</p>';
+  const snap = await db.collection('rituales').where('semana','==',semana).get();
+  lista.innerHTML='';
+  if (snap.empty) { lista.innerHTML='<p>No hay rituales en semana '+semana+'</p>'; return; }
+  snap.forEach(doc => {
+    const d=doc.data();
+    lista.innerHTML+=`<div class="ritual-item">
+      <strong>${d.nombre}</strong><br>
+      <span style="color:var(--texto-suave);font-size:13px;">${d.area} · Sem ${d.semana}</span>
+      ${d.imagen?`<img src="${d.imagen}" loading="lazy">`:''}
+    </div>`;
   });
 }
 
 async function dashboardSemaforoRituales(semana) {
-  const dashboard = document.getElementById('r-dashboard');
-  dashboard.innerHTML = '<p style="color:var(--texto-suave)">Cargando...</p>';
-  const snapshot = await db.collection('rituales').where('semana','==',semana).get();
-  let registradas = {};
-  snapshot.forEach(doc => { registradas[doc.data().area] = true; });
-  const total = AREAS_RITUALES.length;
-  const registradasCount = Object.keys(registradas).length;
-  const pct = Math.round((registradasCount / total) * 100);
-  dashboard.innerHTML = `
-    <div style="margin-bottom:16px;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-        <span style="font-size:13px;color:var(--texto-suave)">Cumplimiento Semana ${semana}</span>
-        <strong>${pct}%</strong>
-      </div>
-      <div class="barra-progreso">
-        <div class="barra-fill" style="width:${pct}%">${pct}%</div>
-      </div>
-      <p style="font-size:13px;color:var(--texto-suave);margin-top:6px;">
-        <strong>${registradasCount}</strong> de <strong>${total}</strong> áreas
-      </p>
+  const dashboard=document.getElementById('r-dashboard');
+  dashboard.innerHTML='<p style="color:var(--texto-suave)">Cargando...</p>';
+  const snap=await db.collection('rituales').where('semana','==',semana).get();
+  let reg={};
+  snap.forEach(doc=>{ reg[doc.data().area]=true; });
+  const total=AREAS_RITUALES.length, cnt=Object.keys(reg).length;
+  const pct=Math.round((cnt/total)*100);
+  dashboard.innerHTML=`<div style="margin-bottom:14px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+      <span style="font-size:13px;color:var(--texto-suave)">Cumplimiento Sem ${semana}</span>
+      <strong>${pct}%</strong>
+    </div>
+    <div class="barra-progreso"><div class="barra-fill" style="width:${pct}%">${pct}%</div></div>
+    <p style="font-size:13px;color:var(--texto-suave);margin-top:5px;"><strong>${cnt}</strong> de <strong>${total}</strong> áreas</p>
+  </div>`;
+  AREAS_RITUALES.forEach(a=>{
+    dashboard.innerHTML+=`<div class="semaforo-item">
+      <span style="font-size:13px;">${a}</span>
+      <div class="dot ${reg[a]?'dot-verde':'dot-rojo'}"></div>
     </div>`;
-  AREAS_RITUALES.forEach(area => {
-    const ok = registradas[area];
-    dashboard.innerHTML += `
-      <div class="semaforo-item">
-        <span style="font-size:13px;">${area}</span>
-        <div class="dot ${ok ? 'dot-verde' : 'dot-rojo'}"></div>
-      </div>`;
   });
 }
 
 async function generarGraficaRituales() {
-  const ctx = document.getElementById('r-graficaSemanal').getContext('2d');
-  const snapshot = await db.collection('rituales').get();
-  let semanas = {};
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    if (!semanas[d.semana]) semanas[d.semana] = new Set();
-    semanas[d.semana].add(d.area);
-  });
-  const semanasOrdenadas = Object.keys(semanas).sort((a,b) => a-b);
-  const labels = semanasOrdenadas.map(s => 'Sem ' + s);
-  const datos = semanasOrdenadas.map(s => Math.round((semanas[s].size / AREAS_RITUALES.length) * 100));
+  const ctx=document.getElementById('r-graficaSemanal').getContext('2d');
+  const snap=await db.collection('rituales').get();
+  let sem={};
+  snap.forEach(doc=>{ const d=doc.data(); if(!sem[d.semana]) sem[d.semana]=new Set(); sem[d.semana].add(d.area); });
+  const keys=Object.keys(sem).sort((a,b)=>a-b);
+  const labels=keys.map(s=>'Sem '+s);
+  const datos=keys.map(s=>Math.round((sem[s].size/AREAS_RITUALES.length)*100));
   if (graficaRituales) graficaRituales.destroy();
-  graficaRituales = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        label: '% Cumplimiento',
-        data: datos,
-        backgroundColor: '#FACC1588',
-        borderColor: '#d97706',
-        borderWidth: 2,
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } }
-    }
+  graficaRituales=new Chart(ctx,{
+    type:'bar',
+    data:{labels,datasets:[{label:'% Cumplimiento',data:datos,backgroundColor:'#FACC1588',borderColor:'#d97706',borderWidth:2,borderRadius:6}]},
+    options:{responsive:true,scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}}}
   });
 }
 
 async function exportarRitualesExcel() {
-  const snapshot = await db.collection('rituales').orderBy('fecha','desc').get();
-  let datos = [];
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    let fecha = '';
-    if (d.fecha) {
-      const f = d.fecha.toDate ? d.fecha.toDate() : new Date(d.fecha);
-      fecha = f.toLocaleDateString() + ' ' + f.toLocaleTimeString();
-    }
-    datos.push({ numero: d.numero, nombre: d.nombre, area: d.area, semana: d.semana, fecha, imagen: d.imagen });
+  const snap=await db.collection('rituales').orderBy('fecha','desc').get();
+  let datos=[];
+  snap.forEach(doc=>{
+    const d=doc.data();
+    const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
+    datos.push({numero:d.numero,nombre:d.nombre,area:d.area,semana:d.semana,
+      fecha:f?f.toLocaleDateString()+' '+f.toLocaleTimeString():'',imagen:d.imagen});
   });
-  const ws = XLSX.utils.json_to_sheet(datos);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Rituales');
-  XLSX.writeFile(wb, 'rituales.xlsx');
+  const ws=XLSX.utils.json_to_sheet(datos);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Rituales');
+  XLSX.writeFile(wb,'rituales.xlsx');
 }
 
 async function subirEmpleadosExcel() {
   try {
-    const estado = document.getElementById('r-estadoExcel');
-    const file = document.getElementById('r-excel').files[0];
+    const estado=document.getElementById('r-estadoExcel');
+    const file=document.getElementById('r-excel').files[0];
     if (!file) { alert('Selecciona archivo Excel'); return; }
-    estado.innerText = '📂 Leyendo...';
-    const data = await file.arrayBuffer();
-    const wb = XLSX.read(data);
-    const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-    let c = 0;
+    estado.innerText='📂 Leyendo...';
+    const data=await file.arrayBuffer();
+    const wb=XLSX.read(data);
+    const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+    let c=0;
     for (const row of rows) {
-      if (!row.numero || !row.nombre) continue;
-      await db.collection('empleados').doc(String(row.numero)).set({ nombre: String(row.nombre) });
+      if (!row.numero||!row.nombre) continue;
+      await db.collection('empleados').doc(String(row.numero)).set({nombre:String(row.nombre)});
       c++;
-      estado.innerText = 'Subiendo: ' + c + ' / ' + rows.length;
+      estado.innerText='Subiendo: '+c+'/'+rows.length;
     }
-    estado.innerText = '✅ ' + c + ' empleados cargados';
-    document.getElementById('r-excel').value = '';
-  } catch(e) {
-    document.getElementById('r-estadoExcel').innerText = '❌ Error subiendo Excel';
-  }
+    estado.innerText='✅ '+c+' empleados cargados';
+    document.getElementById('r-excel').value='';
+  } catch(e) { document.getElementById('r-estadoExcel').innerText='❌ Error subiendo Excel'; }
 }
 
 function descargarPlantilla() {
-  const datos = [{numero:'1001',nombre:'Juan Perez'},{numero:'1002',nombre:'Ana Lopez'}];
-  const ws = XLSX.utils.json_to_sheet(datos);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Empleados');
-  XLSX.writeFile(wb, 'plantilla_empleados.xlsx');
+  const ws=XLSX.utils.json_to_sheet([{numero:'1001',nombre:'Juan Perez'},{numero:'1002',nombre:'Ana Lopez'}]);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Empleados');
+  XLSX.writeFile(wb,'plantilla_empleados.xlsx');
 }
 
-// ── PSR ──
-
 async function cargarProyectosPSR() {
-  const select = document.getElementById('p-proyecto');
-  select.innerHTML = '<option value="">Selecciona proyecto</option>';
-  const snapshot = await db.collection('proyectosPSR').orderBy('nombre').get();
-  proyectosPSR = [];
-  snapshot.forEach(doc => {
-    proyectosPSR.push({ id: doc.id, ...doc.data() });
-    const opt = document.createElement('option');
-    opt.value = doc.id;
-    opt.textContent = doc.data().nombre + (doc.data().tier ? ' (' + doc.data().tier + ')' : '');
+  const select=document.getElementById('p-proyecto');
+  select.innerHTML='<option value="">Selecciona proyecto</option>';
+  const snap=await db.collection('proyectosPSR').orderBy('nombre').get();
+  proyectosPSR=[];
+  snap.forEach(doc=>{
+    proyectosPSR.push({id:doc.id,...doc.data()});
+    const opt=document.createElement('option');
+    opt.value=doc.id;
+    opt.textContent=doc.data().nombre+(doc.data().tier?' ('+doc.data().tier+')':'');
     select.appendChild(opt);
   });
+  await inicializarProyectosDefault();
+}
+
+async function inicializarProyectosDefault() {
+  for (const nombre of Object.keys(CHAMPIONS_POR_PROYECTO)) {
+    if (!proyectosPSR.find(p=>p.nombre===nombre)) {
+      const ref=await db.collection('proyectosPSR').add({nombre,tier:'',creadoEn:new Date()});
+      proyectosPSR.push({id:ref.id,nombre,tier:''});
+      const opt=document.createElement('option');
+      opt.value=ref.id;
+      opt.textContent=nombre;
+      document.getElementById('p-proyecto').appendChild(opt);
+    }
+  }
+}
+
+function actualizarChampionsYTier() {
+  const proyectoId=document.getElementById('p-proyecto').value;
+  const proyecto=proyectosPSR.find(p=>p.id===proyectoId);
+  const container=document.getElementById('p-championsContainer');
+  const hidden=document.getElementById('p-championValor');
+  hidden.value='';
+  if (!proyecto) {
+    container.innerHTML='<span style="font-size:13px;color:var(--texto-suave);">Selecciona un proyecto primero</span>';
+    return;
+  }
+  if (proyecto.tier) document.getElementById('p-tier').value=proyecto.tier;
+  const champions=CHAMPIONS_POR_PROYECTO[proyecto.nombre];
+  if (!champions||!champions.length) {
+    container.innerHTML='<span style="font-size:13px;color:var(--texto-suave);">Sin champion asignado — ingresa manualmente:</span><input type="text" id="p-championManual" placeholder="Nombre del champion" style="margin-top:8px;" oninput="document.getElementById(\'p-championValor\').value=this.value">';
+    return;
+  }
+  if (champions.length===1) {
+    hidden.value=champions[0];
+    container.innerHTML=`<div class="champion-tag seleccionado">👤 ${champions[0]}</div>
+      <div style="font-size:11px;color:var(--texto-suave);margin-top:4px;">Champion asignado automáticamente</div>`;
+    return;
+  }
+  container.innerHTML=champions.map(c=>`<span class="champion-tag" onclick="seleccionarChampion(this,'${c}')">👤 ${c}</span>`).join('');
+}
+
+function seleccionarChampion(el,nombre) {
+  document.querySelectorAll('.champion-tag').forEach(t=>t.classList.remove('seleccionado'));
+  el.classList.add('seleccionado');
+  document.getElementById('p-championValor').value=nombre;
 }
 
 async function cargarListaProyectosAdmin() {
-  const lista = document.getElementById('p-listaProyectos');
-  lista.innerHTML = 'Cargando...';
-  const snapshot = await db.collection('proyectosPSR').orderBy('nombre').get();
-  lista.innerHTML = '';
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    const tierNum = d.tier ? d.tier.replace('Tier ','') : '';
-    lista.innerHTML += `
-      <div class="psr-proyecto-item">
-        <div class="psr-proyecto-info">
-          <div class="psr-proyecto-nombre">${d.nombre}</div>
-          ${d.tier ? `<div class="psr-proyecto-tier">${d.tier}</div>` : ''}
-        </div>
-        ${tierNum ? `<span class="tier-badge tier-${tierNum}">${d.tier}</span>` : ''}
-        <button class="btn btn-rojo btn-sm" onclick="eliminarProyecto('${doc.id}')">✕</button>
-      </div>`;
+  const lista=document.getElementById('p-listaProyectos');
+  lista.innerHTML='Cargando...';
+  const snap=await db.collection('proyectosPSR').orderBy('nombre').get();
+  lista.innerHTML='';
+  snap.forEach(doc=>{
+    const d=doc.data();
+    const tn=d.tier?d.tier.replace('Tier ',''):'';
+    lista.innerHTML+=`<div class="psr-proyecto-item">
+      <div><div class="psr-proyecto-nombre">${d.nombre}</div>${d.tier?`<div class="psr-proyecto-tier">${d.tier}</div>`:''}</div>
+      ${tn?`<span class="tier-badge tier-${tn}">${d.tier}</span>`:''}
+      <button class="btn btn-rojo btn-sm" onclick="eliminarProyecto('${doc.id}')">✕</button>
+    </div>`;
   });
-  if (snapshot.empty) lista.innerHTML = '<p style="color:var(--texto-suave)">No hay proyectos registrados</p>';
+  if (snap.empty) lista.innerHTML='<p style="color:var(--texto-suave)">No hay proyectos</p>';
 }
 
 async function agregarProyecto() {
-  const nombre = document.getElementById('p-nuevoProyecto').value.trim();
-  const tier = document.getElementById('p-nuevoTier').value;
-  const estado = document.getElementById('p-estadoProyecto');
-  if (!nombre) { estado.innerText = 'Ingresa nombre del proyecto'; return; }
-  await db.collection('proyectosPSR').add({ nombre, tier, creadoEn: new Date() });
-  estado.innerText = '✅ Proyecto agregado';
-  document.getElementById('p-nuevoProyecto').value = '';
-  document.getElementById('p-nuevoTier').value = '';
+  const nombre=document.getElementById('p-nuevoProyecto').value.trim();
+  const tier=document.getElementById('p-nuevoTier').value;
+  const estado=document.getElementById('p-estadoProyecto');
+  if (!nombre) { estado.innerText='Ingresa nombre del proyecto'; return; }
+  await db.collection('proyectosPSR').add({nombre,tier,creadoEn:new Date()});
+  estado.innerText='✅ Proyecto agregado';
+  document.getElementById('p-nuevoProyecto').value='';
+  document.getElementById('p-nuevoTier').value='';
   await cargarProyectosPSR();
   await cargarListaProyectosAdmin();
 }
@@ -995,348 +1023,291 @@ async function eliminarProyecto(id) {
 
 async function registrarAsistenciaPSR() {
   try {
-    const numero = document.getElementById('p-numero').value;
-    const tier = document.getElementById('p-tier').value;
-    const champion = document.getElementById('p-champion').value.trim();
-    const proyectoId = document.getElementById('p-proyecto').value;
-    if (!numero || !tier || !champion || !proyectoId || !nombreEmpleados.p) {
-      mostrarEstado('p-estado', 'Completa todos los campos', 'err');
-      return;
+    const numero=document.getElementById('p-numero').value;
+    const tier=document.getElementById('p-tier').value;
+    const champion=document.getElementById('p-championValor').value;
+    const proyectoId=document.getElementById('p-proyecto').value;
+    if (!numero||!tier||!champion||!proyectoId||!nombreEmpleados.p) {
+      mostrarEstado('p-estado','Completa todos los campos y selecciona champion','err'); return;
     }
-    const proyecto = proyectosPSR.find(p => p.id === proyectoId);
-    const ahora = new Date();
+    const proyecto=proyectosPSR.find(p=>p.id===proyectoId);
+    const ahora=new Date();
     await db.collection('asistenciasPSR').add({
-      numero, nombre: String(nombreEmpleados.p),
-      tier, champion,
-      proyectoId, proyectoNombre: proyecto ? proyecto.nombre : '',
-      fecha: ahora,
-      fechaStr: ahora.toISOString().split('T')[0]
+      numero,nombre:String(nombreEmpleados.p),tier,champion,
+      proyectoId,proyectoNombre:proyecto?proyecto.nombre:'',
+      fecha:ahora,fechaStr:ahora.toISOString().split('T')[0]
     });
-    mostrarEstado('p-estado', '✅ Asistencia PSR registrada', 'ok');
-    document.getElementById('p-numero').value = '';
-    document.getElementById('p-nombreHint').innerText = '';
-    nombreEmpleados.p = '';
-    document.getElementById('p-champion').value = '';
-  } catch(e) {
-    console.error(e);
-    mostrarEstado('p-estado', 'Error registrando asistencia', 'err');
-  }
+    mostrarEstado('p-estado','✅ Asistencia PSR registrada','ok');
+    document.getElementById('p-numero').value='';
+    document.getElementById('p-nombreHint').innerText='';
+    nombreEmpleados.p='';
+    document.getElementById('p-proyecto').value='';
+    document.getElementById('p-tier').value='';
+    document.getElementById('p-championValor').value='';
+    document.getElementById('p-championsContainer').innerHTML='<span style="font-size:13px;color:var(--texto-suave);">Selecciona un proyecto primero</span>';
+  } catch(e) { console.error(e); mostrarEstado('p-estado','Error registrando asistencia','err'); }
 }
 
 async function verHistorialPSR() {
-  const historial = document.getElementById('p-historial');
-  const fecha = document.getElementById('p-filtroFecha').value;
-  historial.innerHTML = 'Cargando...';
-  let query = db.collection('asistenciasPSR').orderBy('fecha','desc');
-  if (fecha) query = query.where('fechaStr','==',fecha);
-  const snapshot = await query.limit(100).get();
-  historial.innerHTML = '';
-  if (snapshot.empty) { historial.innerHTML = '<p style="color:var(--texto-suave)">Sin registros</p>'; return; }
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    const f = d.fecha ? (d.fecha.toDate ? d.fecha.toDate() : new Date(d.fecha)) : null;
-    const tierNum = d.tier ? d.tier.replace('Tier ','') : '';
-    historial.innerHTML += `
-      <div class="historial-item">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <strong>${d.nombre}</strong>
-          ${tierNum ? `<span class="tier-badge tier-${tierNum}">${d.tier}</span>` : ''}
-        </div>
-        <div style="font-size:12px;color:var(--texto-suave);">
-          Champion: ${d.champion} · Proyecto: ${d.proyectoNombre}
-          ${f ? ' · ' + f.toLocaleDateString() + ' ' + f.toLocaleTimeString() : ''}
-        </div>
-      </div>`;
+  const historial=document.getElementById('p-historial');
+  const fecha=document.getElementById('p-filtroFecha').value;
+  historial.innerHTML='Cargando...';
+  let query=db.collection('asistenciasPSR').orderBy('fecha','desc');
+  if (fecha) query=query.where('fechaStr','==',fecha);
+  const snap=await query.limit(100).get();
+  historial.innerHTML='';
+  if (snap.empty) { historial.innerHTML='<p style="color:var(--texto-suave)">Sin registros</p>'; return; }
+  snap.forEach(doc=>{
+    const d=doc.data();
+    const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
+    const tn=d.tier?d.tier.replace('Tier ',''):'';
+    historial.innerHTML+=`<div class="historial-item">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+        <strong>${d.nombre}</strong>
+        ${tn?`<span class="tier-badge tier-${tn}">${d.tier}</span>`:''}
+      </div>
+      <div style="font-size:12px;color:var(--texto-suave);">
+        Champion: <strong>${d.champion}</strong> · Proyecto: ${d.proyectoNombre}
+        ${f?' · '+f.toLocaleDateString()+' '+f.toLocaleTimeString():''}
+      </div>
+    </div>`;
   });
 }
 
 async function exportarPSRExcel() {
-  const snapshot = await db.collection('asistenciasPSR').orderBy('fecha','desc').get();
-  let datos = [];
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    const f = d.fecha ? (d.fecha.toDate ? d.fecha.toDate() : new Date(d.fecha)) : null;
-    datos.push({
-      numero: d.numero, nombre: d.nombre, tier: d.tier,
-      champion: d.champion, proyecto: d.proyectoNombre,
-      fecha: f ? f.toLocaleDateString() + ' ' + f.toLocaleTimeString() : ''
-    });
+  const snap=await db.collection('asistenciasPSR').orderBy('fecha','desc').get();
+  let datos=[];
+  snap.forEach(doc=>{
+    const d=doc.data();
+    const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
+    datos.push({numero:d.numero,nombre:d.nombre,tier:d.tier,champion:d.champion,
+      proyecto:d.proyectoNombre,fecha:f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''});
   });
-  const ws = XLSX.utils.json_to_sheet(datos);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Asistencias PSR');
-  XLSX.writeFile(wb, 'asistencias_psr.xlsx');
+  const ws=XLSX.utils.json_to_sheet(datos);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Asistencias PSR');
+  XLSX.writeFile(wb,'asistencias_psr.xlsx');
 }
 
-// ── QRQC ──
-
-const FOROS_DEFAULT = [
-  { nombre: 'N3', nivel: 'N3' },
-  { nombre: 'WHS', nivel: 'N2' },
-  { nombre: 'Boeing', nivel: 'N2' },
-  { nombre: 'A220 F2F', nivel: 'N2' },
-  { nombre: 'A220 Galleys', nivel: 'N2' },
-  { nombre: 'A220 Ship Loose', nivel: 'N2' },
-  { nombre: 'AirBus Other', nivel: 'N2' },
-  { nombre: 'COMAC', nivel: 'N2' },
-  { nombre: 'A320 Cascades', nivel: 'N2' },
-  { nombre: 'Primary Process CNC/Layup/Press', nivel: 'N2' },
-  { nombre: 'Primary Process Metal Works', nivel: 'N2' },
-  { nombre: 'Legacy', nivel: 'N2' },
-  { nombre: 'A220 LAVS', nivel: 'N2' },
-  { nombre: 'Spares APT', nivel: 'N1' },
-  { nombre: 'A220 Galleys G1 + APT', nivel: 'N1' },
-  { nombre: 'A220 Galleys G2 & G4 + APT', nivel: 'N1' },
-  { nombre: 'Boeing 787 - Secondary APT', nivel: 'N1' },
-  { nombre: 'A220 Galleys / Small Mnts APT', nivel: 'N1' },
-  { nombre: 'A320 Cascades APT', nivel: 'N1' },
-  { nombre: 'A220 LAVS Dual APT', nivel: 'N1' },
-  { nombre: 'Airbus Others A350 APT', nivel: 'N1' },
-  { nombre: 'Comac APT', nivel: 'N1' },
-  { nombre: 'CNC 3x & 5x APT', nivel: 'N1' },
-  { nombre: 'Boeing 787', nivel: 'N1' }
+const FOROS_DEFAULT=[
+  {nombre:'N3',nivel:'N3'},
+  {nombre:'WHS',nivel:'N2'},{nombre:'Boeing',nivel:'N2'},
+  {nombre:'A220 F2F',nivel:'N2'},{nombre:'A220 Galleys',nivel:'N2'},
+  {nombre:'A220 Ship Loose',nivel:'N2'},{nombre:'AirBus Other',nivel:'N2'},
+  {nombre:'COMAC',nivel:'N2'},{nombre:'A320 Cascades',nivel:'N2'},
+  {nombre:'Primary Process CNC/Layup/Press',nivel:'N2'},
+  {nombre:'Primary Process Metal Works',nivel:'N2'},
+  {nombre:'Legacy',nivel:'N2'},{nombre:'A220 LAVS',nivel:'N2'},
+  {nombre:'Spares APT',nivel:'N1'},
+  {nombre:'A220 Galleys G1 + APT',nivel:'N1'},
+  {nombre:'A220 Galleys G2 & G4 + APT',nivel:'N1'},
+  {nombre:'Boeing 787 - Secondary APT',nivel:'N1'},
+  {nombre:'A220 Galleys / Small Mnts APT',nivel:'N1'},
+  {nombre:'A320 Cascades APT',nivel:'N1'},
+  {nombre:'A220 LAVS Dual APT',nivel:'N1'},
+  {nombre:'Airbus Others A350 APT',nivel:'N1'},
+  {nombre:'Comac APT',nivel:'N1'},
+  {nombre:'CNC 3x & 5x APT',nivel:'N1'},
+  {nombre:'Boeing 787',nivel:'N1'}
 ];
 
 async function inicializarForosDefault() {
-  const snapshot = await db.collection('forosQRQC').get();
-  if (!snapshot.empty) return;
-  for (const f of FOROS_DEFAULT) {
-    await db.collection('forosQRQC').add({ nombre: f.nombre, nivel: f.nivel, creadoEn: new Date() });
-  }
+  const snap=await db.collection('forosQRQC').get();
+  if (!snap.empty) return;
+  for (const f of FOROS_DEFAULT)
+    await db.collection('forosQRQC').add({nombre:f.nombre,nivel:f.nivel,creadoEn:new Date()});
 }
 
 async function cargarForosQRQC() {
   await inicializarForosDefault();
-  const snapshot = await db.collection('forosQRQC').orderBy('nivel').get();
-  forosQRQC = [];
-  snapshot.forEach(doc => forosQRQC.push({ id: doc.id, ...doc.data() }));
+  const snap=await db.collection('forosQRQC').orderBy('nivel').get();
+  forosQRQC=[];
+  snap.forEach(doc=>forosQRQC.push({id:doc.id,...doc.data()}));
   filtrarForos();
 }
 
 function filtrarForos() {
-  const nivelFiltro = document.getElementById('q-filtroNivel').value;
-  const contenedor = document.getElementById('q-listaForos');
-  contenedor.innerHTML = '';
-  const filtrados = nivelFiltro ? forosQRQC.filter(f => f.nivel === nivelFiltro) : forosQRQC;
-  if (filtrados.length === 0) {
-    contenedor.innerHTML = '<p style="color:var(--texto-suave);padding:10px;">No hay foros</p>';
-    return;
-  }
-  filtrados.forEach(foro => {
-    const nivelClass = 'nivel-' + foro.nivel.toLowerCase();
-    contenedor.innerHTML += `
-      <div class="foro-card">
-        <div class="foro-header" onclick="toggleForo('${foro.id}')">
-          <div class="foro-header-left">
-            <span class="nivel-badge ${nivelClass}">${foro.nivel}</span>
-            <span class="foro-nombre">${foro.nombre}</span>
-          </div>
-          <span class="chevron" id="chev-${foro.id}">▾</span>
+  const filtro=document.getElementById('q-filtroNivel').value;
+  const contenedor=document.getElementById('q-listaForos');
+  contenedor.innerHTML='';
+  const lista=filtro?forosQRQC.filter(f=>f.nivel===filtro):forosQRQC;
+  if (!lista.length) { contenedor.innerHTML='<p style="color:var(--texto-suave);padding:10px;">No hay foros</p>'; return; }
+  lista.forEach(foro=>{
+    const nc='nivel-'+foro.nivel.toLowerCase();
+    contenedor.innerHTML+=`<div class="foro-card">
+      <div class="foro-header" onclick="toggleForo('${foro.id}')">
+        <div class="foro-header-left">
+          <span class="nivel-badge ${nc}">${foro.nivel}</span>
+          <span class="foro-nombre">${foro.nombre}</span>
         </div>
-        <div class="foro-body" id="body-${foro.id}">
-          <div id="asistentes-${foro.id}">Cargando asistentes...</div>
-          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="btn btn-morado btn-sm" onclick="guardarAsistenciaForo('${foro.id}','${foro.nombre}','${foro.nivel}')">
-              ✅ Guardar Asistencia
-            </button>
-            <button class="btn btn-outline btn-sm" onclick="verAsistentesAdmin('${foro.id}')">
-              Ver historial
-            </button>
-          </div>
-          <div id="estado-foro-${foro.id}" style="margin-top:8px;"></div>
+        <span class="chevron" id="chev-${foro.id}">▾</span>
+      </div>
+      <div class="foro-body" id="body-${foro.id}">
+        <div id="asistentes-${foro.id}">Cargando...</div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-morado btn-sm" onclick="guardarAsistenciaForo('${foro.id}','${foro.nombre}','${foro.nivel}')">✅ Guardar Asistencia</button>
+          <button class="btn btn-outline btn-sm" onclick="verAsistentesAdmin('${foro.id}')">Ver historial</button>
         </div>
-      </div>`;
+        <div id="estado-foro-${foro.id}" style="margin-top:8px;"></div>
+      </div>
+    </div>`;
   });
 }
 
 async function toggleForo(foroId) {
-  const body = document.getElementById('body-' + foroId);
-  const chev = document.getElementById('chev-' + foroId);
-  const estaAbierto = body.classList.contains('abierto');
-  if (estaAbierto) {
-    body.classList.remove('abierto');
-    chev.classList.remove('rotado');
+  const body=document.getElementById('body-'+foroId);
+  const chev=document.getElementById('chev-'+foroId);
+  if (body.classList.contains('abierto')) {
+    body.classList.remove('abierto'); chev.classList.remove('rotado');
   } else {
-    body.classList.add('abierto');
-    chev.classList.add('rotado');
+    body.classList.add('abierto'); chev.classList.add('rotado');
     await cargarAsistentesEnForo(foroId);
   }
 }
 
 async function cargarAsistentesEnForo(foroId) {
-  const contenedor = document.getElementById('asistentes-' + foroId);
-  contenedor.innerHTML = 'Cargando...';
-  const snapshot = await db.collection('forosQRQC').doc(foroId).collection('asistentes').orderBy('nombre').get();
-  if (snapshot.empty) {
-    contenedor.innerHTML = '<p style="color:var(--texto-suave);font-size:13px;padding:6px 0;">No hay asistentes configurados. Agrégalos desde el Panel Administrador.</p>';
-    return;
-  }
-  contenedor.innerHTML = '';
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    contenedor.innerHTML += `
-      <div class="asistente-fila">
-        <input type="checkbox" id="chk-${doc.id}" data-id="${doc.id}" data-nombre="${d.nombre}" data-cargo="${d.cargo || ''}">
-        <div style="flex:1;">
-          <div class="asistente-nombre">${d.nombre}</div>
-          ${d.cargo ? `<div class="asistente-cargo">${d.cargo}</div>` : ''}
-        </div>
-      </div>`;
+  const c=document.getElementById('asistentes-'+foroId);
+  c.innerHTML='Cargando...';
+  const snap=await db.collection('forosQRQC').doc(foroId).collection('asistentes').orderBy('nombre').get();
+  if (snap.empty) { c.innerHTML='<p style="color:var(--texto-suave);font-size:13px;padding:6px 0;">Sin asistentes. Agrégalos desde ⚙ Admin.</p>'; return; }
+  c.innerHTML='';
+  snap.forEach(doc=>{
+    const d=doc.data();
+    c.innerHTML+=`<div class="asistente-fila">
+      <input type="checkbox" id="chk-${doc.id}" data-id="${doc.id}" data-nombre="${d.nombre}" data-cargo="${d.cargo||''}">
+      <div style="flex:1;">
+        <div class="asistente-nombre">${d.nombre}</div>
+        ${d.cargo?`<div class="asistente-cargo">${d.cargo}</div>`:''}
+      </div>
+    </div>`;
   });
 }
 
-async function guardarAsistenciaForo(foroId, foroNombre, foroNivel) {
+async function guardarAsistenciaForo(foroId,foroNombre,foroNivel) {
   try {
-    const checkboxes = document.querySelectorAll(`#asistentes-${foroId} input[type="checkbox"]`);
-    const ahora = new Date();
-    const presentes = [];
-    const ausentes = [];
-    checkboxes.forEach(chk => {
-      const obj = { nombre: chk.dataset.nombre, cargo: chk.dataset.cargo };
-      if (chk.checked) presentes.push(obj);
-      else ausentes.push(obj);
-    });
-    if (checkboxes.length === 0) {
-      mostrarEstadoForo(foroId, 'No hay asistentes configurados', 'err');
-      return;
-    }
+    const chks=document.querySelectorAll(`#asistentes-${foroId} input[type="checkbox"]`);
+    if (!chks.length) { mostrarEstadoForo(foroId,'Sin asistentes configurados','err'); return; }
+    const ahora=new Date(),presentes=[],ausentes=[];
+    chks.forEach(chk=>{ const o={nombre:chk.dataset.nombre,cargo:chk.dataset.cargo}; (chk.checked?presentes:ausentes).push(o); });
     await db.collection('asistenciasQRQC').add({
-      foroId, foroNombre, foroNivel,
-      fecha: ahora,
-      fechaStr: ahora.toISOString().split('T')[0],
-      presentes, ausentes,
-      total: checkboxes.length,
-      totalPresentes: presentes.length
+      foroId,foroNombre,foroNivel,fecha:ahora,
+      fechaStr:ahora.toISOString().split('T')[0],
+      presentes,ausentes,total:chks.length,totalPresentes:presentes.length
     });
-    mostrarEstadoForo(foroId, `✅ Asistencia guardada — ${presentes.length}/${checkboxes.length} presentes`, 'ok');
-    checkboxes.forEach(chk => chk.checked = false);
-  } catch(e) {
-    console.error(e);
-    mostrarEstadoForo(foroId, 'Error guardando asistencia', 'err');
-  }
+    mostrarEstadoForo(foroId,`✅ Guardado — ${presentes.length}/${chks.length} presentes`,'ok');
+    chks.forEach(chk=>chk.checked=false);
+  } catch(e) { console.error(e); mostrarEstadoForo(foroId,'Error guardando','err'); }
 }
 
-function mostrarEstadoForo(foroId, msg, tipo) {
-  const el = document.getElementById('estado-foro-' + foroId);
-  el.className = 'status ' + tipo;
-  el.innerText = msg;
+function mostrarEstadoForo(foroId,msg,tipo) {
+  const el=document.getElementById('estado-foro-'+foroId);
+  el.className='status '+tipo;
+  el.innerText=msg;
 }
 
 async function cargarForosSelectAdmin() {
-  const select = document.getElementById('q-foroDestino');
-  select.innerHTML = '<option value="">Selecciona foro</option>';
-  const snapshot = await db.collection('forosQRQC').orderBy('nivel').get();
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    const opt = document.createElement('option');
-    opt.value = doc.id;
-    opt.textContent = `[${d.nivel}] ${d.nombre}`;
+  const select=document.getElementById('q-foroDestino');
+  select.innerHTML='<option value="">Selecciona foro</option>';
+  const snap=await db.collection('forosQRQC').orderBy('nivel').get();
+  snap.forEach(doc=>{
+    const d=doc.data();
+    const opt=document.createElement('option');
+    opt.value=doc.id;
+    opt.textContent=`[${d.nivel}] ${d.nombre}`;
     select.appendChild(opt);
   });
 }
 
 async function agregarForo() {
-  const nombre = document.getElementById('q-nuevoNombre').value.trim();
-  const nivel = document.getElementById('q-nuevoNivel').value;
-  const estado = document.getElementById('q-estadoForo');
-  if (!nombre || !nivel) { estado.innerText = 'Completa nombre y nivel'; return; }
-  await db.collection('forosQRQC').add({ nombre, nivel, creadoEn: new Date() });
-  estado.innerText = '✅ Foro agregado';
-  document.getElementById('q-nuevoNombre').value = '';
+  const nombre=document.getElementById('q-nuevoNombre').value.trim();
+  const nivel=document.getElementById('q-nuevoNivel').value;
+  const estado=document.getElementById('q-estadoForo');
+  if (!nombre||!nivel) { estado.innerText='Completa nombre y nivel'; return; }
+  await db.collection('forosQRQC').add({nombre,nivel,creadoEn:new Date()});
+  estado.innerText='✅ Foro agregado';
+  document.getElementById('q-nuevoNombre').value='';
   await cargarForosQRQC();
   await cargarForosSelectAdmin();
 }
 
 async function agregarAsistente() {
-  const foroId = document.getElementById('q-foroDestino').value;
-  const nombre = document.getElementById('q-asistenteNombre').value.trim();
-  const cargo = document.getElementById('q-asistenteCargo').value.trim();
-  const estado = document.getElementById('q-estadoAsistente');
-  if (!foroId || !nombre) { estado.innerText = 'Selecciona foro e ingresa nombre'; return; }
-  await db.collection('forosQRQC').doc(foroId).collection('asistentes').add({
-    nombre, cargo, creadoEn: new Date()
-  });
-  estado.innerText = '✅ Asistente agregado';
-  document.getElementById('q-asistenteNombre').value = '';
-  document.getElementById('q-asistenteCargo').value = '';
+  const foroId=document.getElementById('q-foroDestino').value;
+  const nombre=document.getElementById('q-asistenteNombre').value.trim();
+  const cargo=document.getElementById('q-asistenteCargo').value.trim();
+  const estado=document.getElementById('q-estadoAsistente');
+  if (!foroId||!nombre) { estado.innerText='Selecciona foro e ingresa nombre'; return; }
+  await db.collection('forosQRQC').doc(foroId).collection('asistentes').add({nombre,cargo,creadoEn:new Date()});
+  estado.innerText='✅ Asistente agregado';
+  document.getElementById('q-asistenteNombre').value='';
+  document.getElementById('q-asistenteCargo').value='';
 }
 
 async function verHistorialQRQC() {
-  const historial = document.getElementById('q-historial');
-  const fecha = document.getElementById('q-filtroFecha').value;
-  historial.innerHTML = 'Cargando...';
-  let query = db.collection('asistenciasQRQC').orderBy('fecha','desc');
-  if (fecha) query = query.where('fechaStr','==',fecha);
-  const snapshot = await query.limit(100).get();
-  historial.innerHTML = '';
-  if (snapshot.empty) { historial.innerHTML = '<p style="color:var(--texto-suave)">Sin registros</p>'; return; }
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    const f = d.fecha ? (d.fecha.toDate ? d.fecha.toDate() : new Date(d.fecha)) : null;
-    const nivelClass = 'nivel-' + (d.foroNivel || '').toLowerCase();
-    const pct = d.total > 0 ? Math.round((d.totalPresentes / d.total) * 100) : 0;
-    historial.innerHTML += `
-      <div class="historial-item">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span class="nivel-badge ${nivelClass}">${d.foroNivel}</span>
-          <strong>${d.foroNombre}</strong>
-        </div>
-        <div style="font-size:12px;color:var(--texto-suave);">
-          ${d.totalPresentes}/${d.total} presentes (${pct}%)
-          ${f ? ' · ' + f.toLocaleDateString() + ' ' + f.toLocaleTimeString() : ''}
-        </div>
-        <div style="margin-top:6px;">
-          ${(d.presentes||[]).map(p => `<span style="font-size:11px;background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✓ ${p.nombre}</span>`).join('')}
-          ${(d.ausentes||[]).map(p => `<span style="font-size:11px;background:#fee2e2;color:#b91c1c;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✗ ${p.nombre}</span>`).join('')}
-        </div>
-      </div>`;
+  const historial=document.getElementById('q-historial');
+  const fecha=document.getElementById('q-filtroFecha').value;
+  historial.innerHTML='Cargando...';
+  let query=db.collection('asistenciasQRQC').orderBy('fecha','desc');
+  if (fecha) query=query.where('fechaStr','==',fecha);
+  const snap=await query.limit(100).get();
+  historial.innerHTML='';
+  if (snap.empty) { historial.innerHTML='<p style="color:var(--texto-suave)">Sin registros</p>'; return; }
+  snap.forEach(doc=>{
+    const d=doc.data();
+    const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
+    const nc='nivel-'+(d.foroNivel||'').toLowerCase();
+    const pct=d.total>0?Math.round((d.totalPresentes/d.total)*100):0;
+    historial.innerHTML+=`<div class="historial-item">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+        <span class="nivel-badge ${nc}">${d.foroNivel}</span>
+        <strong>${d.foroNombre}</strong>
+      </div>
+      <div style="font-size:12px;color:var(--texto-suave);">
+        ${d.totalPresentes}/${d.total} presentes (${pct}%)
+        ${f?' · '+f.toLocaleDateString()+' '+f.toLocaleTimeString():''}
+      </div>
+      <div style="margin-top:5px;">
+        ${(d.presentes||[]).map(p=>`<span style="font-size:11px;background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✓ ${p.nombre}</span>`).join('')}
+        ${(d.ausentes||[]).map(p=>`<span style="font-size:11px;background:#fee2e2;color:#b91c1c;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✗ ${p.nombre}</span>`).join('')}
+      </div>
+    </div>`;
   });
 }
 
 async function exportarQRQCExcel() {
-  const snapshot = await db.collection('asistenciasQRQC').orderBy('fecha','desc').get();
-  let datos = [];
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    const f = d.fecha ? (d.fecha.toDate ? d.fecha.toDate() : new Date(d.fecha)) : null;
-    const presentes = (d.presentes||[]).map(p => p.nombre).join(', ');
-    const ausentes = (d.ausentes||[]).map(p => p.nombre).join(', ');
-    datos.push({
-      foro: d.foroNombre, nivel: d.foroNivel,
-      presentes_total: d.totalPresentes, total: d.total,
-      presentes, ausentes,
-      fecha: f ? f.toLocaleDateString() + ' ' + f.toLocaleTimeString() : ''
-    });
+  const snap=await db.collection('asistenciasQRQC').orderBy('fecha','desc').get();
+  let datos=[];
+  snap.forEach(doc=>{
+    const d=doc.data();
+    const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
+    datos.push({foro:d.foroNombre,nivel:d.foroNivel,presentes_total:d.totalPresentes,total:d.total,
+      presentes:(d.presentes||[]).map(p=>p.nombre).join(', '),
+      ausentes:(d.ausentes||[]).map(p=>p.nombre).join(', '),
+      fecha:f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''});
   });
-  const ws = XLSX.utils.json_to_sheet(datos);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Asistencias QRQC');
-  XLSX.writeFile(wb, 'asistencias_qrqc.xlsx');
+  const ws=XLSX.utils.json_to_sheet(datos);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Asistencias QRQC');
+  XLSX.writeFile(wb,'asistencias_qrqc.xlsx');
 }
 
 async function verAsistentesAdmin(foroId) {
-  const historial = document.getElementById('q-historial');
-  historial.innerHTML = 'Cargando historial del foro...';
-  const snapshot = await db.collection('asistenciasQRQC')
-    .where('foroId','==',foroId)
-    .orderBy('fecha','desc')
-    .limit(30)
-    .get();
-  historial.innerHTML = '';
-  if (snapshot.empty) { historial.innerHTML = '<p style="color:var(--texto-suave)">Sin historial para este foro</p>'; return; }
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    const f = d.fecha ? (d.fecha.toDate ? d.fecha.toDate() : new Date(d.fecha)) : null;
-    historial.innerHTML += `
-      <div class="historial-item">
-        <div style="font-size:12px;font-weight:600;margin-bottom:4px;">${f ? f.toLocaleDateString() + ' ' + f.toLocaleTimeString() : ''}</div>
-        <div>
-          ${(d.presentes||[]).map(p => `<span style="font-size:11px;background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✓ ${p.nombre}</span>`).join('')}
-          ${(d.ausentes||[]).map(p => `<span style="font-size:11px;background:#fee2e2;color:#b91c1c;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✗ ${p.nombre}</span>`).join('')}
-        </div>
-      </div>`;
+  const historial=document.getElementById('q-historial');
+  historial.innerHTML='Cargando historial...';
+  const snap=await db.collection('asistenciasQRQC').where('foroId','==',foroId).orderBy('fecha','desc').limit(30).get();
+  historial.innerHTML='';
+  if (snap.empty) { historial.innerHTML='<p style="color:var(--texto-suave)">Sin historial para este foro</p>'; return; }
+  snap.forEach(doc=>{
+    const d=doc.data();
+    const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
+    historial.innerHTML+=`<div class="historial-item">
+      <div style="font-size:12px;font-weight:600;margin-bottom:4px;">${f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''}</div>
+      <div>
+        ${(d.presentes||[]).map(p=>`<span style="font-size:11px;background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✓ ${p.nombre}</span>`).join('')}
+        ${(d.ausentes||[]).map(p=>`<span style="font-size:11px;background:#fee2e2;color:#b91c1c;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✗ ${p.nombre}</span>`).join('')}
+      </div>
+    </div>`;
   });
-  document.getElementById('q-historial').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('q-historial').scrollIntoView({behavior:'smooth'});
 }
 
 </script>
