@@ -78,43 +78,33 @@ body {
 }
 
 .bienvenida-opciones {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  width: 100%;
-  max-width: 420px;
+  display: flex; flex-direction: column;
+  gap: 14px; width: 100%; max-width: 420px;
 }
 
 .opcion-btn {
   display: flex; align-items: center; gap: 18px;
-  padding: 20px 24px;
-  border-radius: 16px;
+  padding: 20px 24px; border-radius: 16px;
   border: 2px solid rgba(255,255,255,0.1);
   background: rgba(255,255,255,0.06);
-  cursor: pointer;
-  transition: all .25s;
-  text-align: left;
-  backdrop-filter: blur(6px);
+  cursor: pointer; transition: all .25s;
+  text-align: left; backdrop-filter: blur(6px);
 }
-
 .opcion-btn:hover {
   transform: translateY(-3px);
   border-color: rgba(255,255,255,0.3);
   background: rgba(255,255,255,0.12);
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
-
 .opcion-btn.rituales:hover { border-color: #facc15; box-shadow: 0 10px 30px rgba(250,204,21,0.2); }
 .opcion-btn.psr:hover      { border-color: #60a5fa; box-shadow: 0 10px 30px rgba(96,165,250,0.2); }
 .opcion-btn.qrqc:hover     { border-color: #a78bfa; box-shadow: 0 10px 30px rgba(167,139,250,0.2); }
 
 .opcion-icono { font-size: 30px; flex-shrink: 0; }
-
 .opcion-info-titulo {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 19px; font-weight: 700; color: white; letter-spacing: .5px;
 }
-
 .opcion-info-desc { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 3px; }
 
 #appPrincipal { display: none; }
@@ -125,9 +115,7 @@ body {
   display: flex; align-items: center; justify-content: space-between;
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
-
 .header-left { display: flex; align-items: center; gap: 12px; }
-
 .header-logo {
   width: 38px; height: 38px;
   background: var(--amarillo); border-radius: 9px;
@@ -136,7 +124,6 @@ body {
   font-weight: 900; font-size: 18px; color: var(--azul);
   cursor: pointer; flex-shrink: 0;
 }
-
 .header-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 17px; color: white; letter-spacing: 1px; }
 .header-sub   { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 1px; }
 
@@ -150,11 +137,7 @@ body {
   cursor: pointer; letter-spacing: .5px; text-transform: uppercase;
   transition: .2s; display: flex; align-items: center; gap: 5px;
 }
-
-.btn-admin-discreto:hover {
-  background: rgba(255,255,255,0.15);
-  color: white; border-color: rgba(255,255,255,0.3);
-}
+.btn-admin-discreto:hover { background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.3); }
 
 .tabs-nav {
   background: white; display: flex;
@@ -162,7 +145,6 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   overflow-x: auto;
 }
-
 .tab-btn {
   flex: 1; min-width: 110px; padding: 14px 20px;
   border: none; background: none;
@@ -172,25 +154,20 @@ body {
   border-bottom: 3px solid transparent; margin-bottom: -3px;
   transition: all .2s; text-transform: uppercase;
 }
-
 .tab-btn:hover { color: var(--texto); background: var(--gris-fondo); }
 .tab-btn.active-rituales { color: #92400e; border-bottom-color: var(--amarillo); background: #fffbeb; }
 .tab-btn.active-psr      { color: var(--azul); border-bottom-color: var(--azul-medio); background: #eff6ff; }
 .tab-btn.active-qrqc     { color: #5b21b6; border-bottom-color: #7c3aed; background: #f5f3ff; }
 
 .admin-panel-outer { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
-
 .admin-panel-body {
-  display: none;
-  background: white;
+  display: none; background: white;
   border: 1.5px solid var(--gris-borde);
-  border-radius: 0 0 12px 12px;
-  border-top: none;
+  border-radius: 0 0 12px 12px; border-top: none;
   padding: 20px 24px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.08);
   margin-bottom: 4px;
 }
-
 .admin-panel-body.abierto { display: block; }
 
 .modulo { display: none; padding: 22px 20px; max-width: 1300px; margin: 0 auto; }
@@ -200,7 +177,6 @@ body {
   background: white; border-radius: 14px; padding: 22px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 20px;
 }
-
 .card-titulo {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 19px; font-weight: 700; color: var(--texto);
@@ -222,7 +198,6 @@ body {
   color: var(--texto-suave); text-transform: uppercase;
   letter-spacing: .5px; margin-bottom: 6px;
 }
-
 input[type="text"], input[type="number"], input[type="file"],
 input[type="date"], select, textarea {
   width: 100%; padding: 11px 14px;
@@ -230,7 +205,6 @@ input[type="date"], select, textarea {
   font-family: 'Barlow', sans-serif; font-size: 14px;
   color: var(--texto); background: white; transition: .2s;
 }
-
 input:focus, select:focus, textarea:focus {
   outline: none; border-color: var(--azul-medio);
   box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
@@ -243,7 +217,6 @@ input:focus, select:focus, textarea:focus {
   font-size: 15px; font-weight: 700; letter-spacing: .5px;
   cursor: pointer; transition: .2s; text-transform: uppercase;
 }
-
 .btn-full { width: 100%; }
 .btn-amarillo { background: var(--amarillo); color: #78350f; }
 .btn-amarillo:hover { background: #f59e0b; }
@@ -298,13 +271,11 @@ input:focus, select:focus, textarea:focus {
   overflow: hidden; margin-bottom: 14px; transition: .2s;
 }
 .foro-card:hover { border-color: #2563eb44; box-shadow: 0 4px 14px rgba(37,99,235,0.1); }
-
 .foro-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 13px 16px; background: #eff6ff; cursor: pointer;
 }
 .foro-header-left { display: flex; align-items: center; gap: 10px; }
-
 .qrqc-foro-card .foro-header { background: #f5f3ff; }
 .qrqc-foro-card:hover { border-color: #7c3aed44; box-shadow: 0 4px 14px rgba(124,58,237,0.1); }
 
@@ -318,7 +289,6 @@ input:focus, select:focus, textarea:focus {
 .nivel-n1 { background: #dcfce7; color: #15803d; }
 
 .foro-nombre { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; color: var(--texto); }
-
 .foro-body { display: none; padding: 16px; }
 .foro-body.abierto { display: block; }
 .chevron { transition: transform .2s; font-size: 16px; color: var(--texto-suave); }
@@ -347,7 +317,7 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
 
 .modulo-desc {
   background: white; border-radius: 12px; padding: 13px 18px;
-  margin-bottom: 20px; border-left: 5px solid;
+  margin-bottom: 16px; border-left: 5px solid;
   display: flex; align-items: center; gap: 14px;
 }
 .modulo-desc.rituales { border-left-color: var(--amarillo); }
@@ -357,12 +327,17 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
 .modulo-desc-texto h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; }
 .modulo-desc-texto p  { font-size: 12px; color: var(--texto-suave); margin-top: 2px; }
 
-.psr-acciones-foro {
-  display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; align-items: center;
+.registrador-banner {
+  background: #f0fdf4; border: 1.5px solid #bbf7d0;
+  border-radius: 10px; padding: 10px 16px;
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 20px;
 }
-.psr-contador {
-  margin-left: auto; font-size: 13px; color: var(--texto-suave); font-weight: 600;
-}
+.rb-label  { font-size: 11px; color: var(--texto-suave); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+.rb-nombre { font-size: 14px; font-weight: 700; color: var(--verde); }
+
+.psr-acciones-foro { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
+.psr-contador { margin-left: auto; font-size: 13px; color: var(--texto-suave); font-weight: 600; }
 
 .admin-psr-proyectos-lista { max-height: 260px; overflow-y: auto; }
 .admin-psr-proyecto-row {
@@ -372,6 +347,30 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
 }
 .admin-psr-proyecto-row strong { font-size: 13px; }
 .admin-psr-proyecto-row span  { font-size: 12px; color: var(--texto-suave); }
+
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.65); backdrop-filter: blur(5px);
+  align-items: center; justify-content: center;
+}
+.modal-overlay.abierto { display: flex; }
+.modal-box {
+  background: white; border-radius: 20px; padding: 36px 30px;
+  width: 100%; max-width: 380px; margin: 20px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  animation: popIn .2s ease;
+}
+@keyframes popIn {
+  from { transform: scale(.92); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+.modal-icono  { font-size: 40px; text-align: center; margin-bottom: 10px; }
+.modal-titulo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 24px; font-weight: 900; color: var(--azul);
+  text-align: center; letter-spacing: 1px; margin-bottom: 4px;
+}
+.modal-sub { font-size: 13px; color: var(--texto-suave); text-align: center; margin-bottom: 24px; }
 </style>
 </head>
 <body>
@@ -407,12 +406,31 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
   </div>
 </div>
 
+<!-- MODAL LOGIN -->
+<div class="modal-overlay" id="modalLogin">
+  <div class="modal-box">
+    <div class="modal-icono">🔐</div>
+    <div class="modal-titulo">VERIFICAR IDENTIDAD</div>
+    <div class="modal-sub" id="login-modulo-label">Accediendo al módulo</div>
+    <div class="campo">
+      <label>Número de Empleado</label>
+      <input type="number" id="login-numero" placeholder="Ej: 1001"
+        oninput="buscarEmpleadoLogin()"
+        onkeydown="if(event.key==='Enter') confirmarLogin()">
+      <div class="nombre-hint" id="login-hint"></div>
+    </div>
+    <div id="login-estado" style="font-size:13px;font-weight:600;min-height:18px;margin-bottom:14px;"></div>
+    <button class="btn btn-azul btn-full" onclick="confirmarLogin()">✅ Confirmar e Ingresar</button>
+    <button class="btn btn-outline btn-full" style="margin-top:10px;" onclick="cerrarLogin()">Cancelar</button>
+  </div>
+</div>
+
 <!-- APP PRINCIPAL -->
 <div id="appPrincipal">
 
   <div class="app-header">
     <div class="header-left">
-      <div class="header-logo" onclick="volverInicio()" title="Volver al inicio">Registro de Asistencia</div>
+      <div class="header-logo" onclick="volverInicio()" title="Volver al inicio">IP</div>
       <div>
         <div class="header-title">CONTROL OPERACIONAL</div>
         <div class="header-sub">Rituales · PSR · QRQC</div>
@@ -427,11 +445,9 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
     <button class="tab-btn" id="tab-qrqc"     onclick="cambiarTab('qrqc')">🔍 QRQC</button>
   </div>
 
-  <!-- ADMIN PANEL -->
   <div class="admin-panel-outer">
     <div class="admin-panel-body" id="adminPanelGlobal">
 
-      <!-- Admin Rituales -->
       <div id="adminRituales">
         <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — Rituales</div>
         <div class="grid2">
@@ -455,7 +471,6 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
         </div>
       </div>
 
-      <!-- Admin PSR -->
       <div id="adminPSR" style="display:none;">
         <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — PSR</div>
         <div class="grid2">
@@ -475,7 +490,6 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
             </div>
             <button class="btn btn-verde btn-full" onclick="agregarProyecto()">+ Agregar Proyecto</button>
             <div id="p-estadoProyecto" style="margin-top:8px;font-size:13px;"></div>
-
             <div style="border-top:2px solid var(--gris-borde);margin:18px 0 14px;"></div>
             <div style="font-size:12px;font-weight:700;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Agregar Persona al Proyecto</div>
             <div class="campo">
@@ -502,7 +516,6 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
         </div>
       </div>
 
-      <!-- Admin QRQC -->
       <div id="adminQRQC" style="display:none;">
         <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — QRQC</div>
         <div class="grid2">
@@ -554,13 +567,15 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
         <p>Registra el ritual semanal de cada área con evidencia fotográfica.</p>
       </div>
     </div>
+    <div class="registrador-banner">
+      <span style="font-size:20px;">👤</span>
+      <div>
+        <div class="rb-label">Registrando como</div>
+        <div class="rb-nombre" id="banner-nombre-rituales"></div>
+      </div>
+    </div>
     <div class="card" style="max-width:500px;">
       <div class="card-titulo">Nuevo Ritual <span class="badge badge-amarillo">Semanal</span></div>
-      <div class="campo">
-        <label>Número de Empleado</label>
-        <input type="number" id="r-numero" placeholder="Ej: 1001" oninput="buscarEmpleado('r')">
-        <div class="nombre-hint" id="r-nombreHint"></div>
-      </div>
       <div class="campo">
         <label>Área</label>
         <select id="r-area">
@@ -620,20 +635,15 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
         <p>Lista de asistencia por proyecto. Selecciona el foro y marca a los presentes.</p>
       </div>
     </div>
-
-    <!-- Paso 1 -->
-    <div class="card" style="max-width:500px;">
-      <div class="card-titulo">Paso 1 — Quien Registra <span class="badge badge-azul">PSR</span></div>
-      <div class="campo">
-        <label>Número de Empleado (registrador)</label>
-        <input type="number" id="p-numero" placeholder="Ej: 1001" oninput="buscarEmpleadoPSR()">
-        <div class="nombre-hint" id="p-nombreHint"></div>
+    <div class="registrador-banner">
+      <span style="font-size:20px;">👤</span>
+      <div>
+        <div class="rb-label">Registrando como</div>
+        <div class="rb-nombre" id="banner-nombre-psr"></div>
       </div>
     </div>
-
-    <!-- Paso 2 -->
     <div class="card">
-      <div class="card-titulo">Paso 2 — Seleccionar Proyecto / Foro</div>
+      <div class="card-titulo">Seleccionar Proyecto / Foro <span class="badge badge-azul">PSR</span></div>
       <div class="campo" style="max-width:400px;">
         <label>Filtrar por Tier</label>
         <select id="p-filtroTier" onchange="filtrarProyectosPSR()">
@@ -646,8 +656,6 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
       </div>
       <div id="p-listaForos"></div>
     </div>
-
-    <!-- Historial PSR -->
     <div class="card">
       <div class="card-titulo">📅 Historial de Asistencia PSR</div>
       <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px;">
@@ -668,6 +676,13 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
       <div class="modulo-desc-texto">
         <h3>QRQC — Quick Response Quality Control</h3>
         <p>Registro de asistencia en foros QRQC por nivel N3, N2 y N1.</p>
+      </div>
+    </div>
+    <div class="registrador-banner">
+      <span style="font-size:20px;">👤</span>
+      <div>
+        <div class="rb-label">Registrando como</div>
+        <div class="rb-nombre" id="banner-nombre-qrqc"></div>
       </div>
     </div>
     <div class="grid2">
@@ -712,27 +727,90 @@ firebase.initializeApp({
 
 const db = firebase.firestore();
 
-let nombreEmpleados      = { r:"" };
-let nombreRegistradorPSR = "";
-let forosQRQC            = [];
-let proyectosPSR         = [];
-let graficaRituales      = null;
-let adminDesbloqueado    = false;
-let tabActual            = 'rituales';
+// ── VARIABLES GLOBALES ────────────────────────────────────────────────────────
+let usuarioActual     = { numero:"", nombre:"" };
+let moduloDestino     = "";
+let forosQRQC         = [];
+let proyectosPSR      = [];
+let graficaRituales   = null;
+let adminDesbloqueado = false;
+let tabActual         = 'rituales';
 
-// ── NAVEGACIÓN ────────────────────────────────────────────────────────────────
+// ── LOGIN ─────────────────────────────────────────────────────────────────────
 
 function entrarModulo(modulo) {
-  document.getElementById('pantallaBienvenida').style.display = 'none';
-  document.getElementById('appPrincipal').style.display = 'block';
-  cambiarTab(modulo);
+  moduloDestino = modulo;
+  const etiquetas = {
+    rituales: '⚡ Rituales',
+    psr:      '📋 PSR — Project Status Review',
+    qrqc:     '🔍 QRQC — Quick Response Quality Control'
+  };
+  document.getElementById('login-modulo-label').innerText = 'Accediendo a: ' + etiquetas[modulo];
+  document.getElementById('login-numero').value = '';
+  document.getElementById('login-hint').innerText = '';
+  document.getElementById('login-estado').innerText = '';
+  document.getElementById('modalLogin').classList.add('abierto');
+  setTimeout(() => document.getElementById('login-numero').focus(), 150);
 }
+
+async function buscarEmpleadoLogin() {
+  const numero = document.getElementById('login-numero').value;
+  const hint   = document.getElementById('login-hint');
+  document.getElementById('login-estado').innerText = '';
+  if (!numero || numero.length < 3) { hint.innerText = ''; return; }
+  try {
+    const doc = await db.collection('empleados').doc(String(numero)).get();
+    hint.innerText = doc.exists ? '👤 ' + doc.data().nombre : '';
+  } catch(e) { hint.innerText = 'Error de conexión'; }
+}
+
+async function confirmarLogin() {
+  const numero = document.getElementById('login-numero').value;
+  const estado = document.getElementById('login-estado');
+  if (!numero) {
+    estado.style.color = 'var(--rojo)';
+    estado.innerText = '⚠ Ingresa tu número de empleado';
+    return;
+  }
+  estado.style.color = 'var(--azul)';
+  estado.innerText = 'Verificando...';
+  try {
+    const doc = await db.collection('empleados').doc(String(numero)).get();
+    if (!doc.exists) {
+      estado.style.color = 'var(--rojo)';
+      estado.innerText = '❌ Empleado no encontrado en el sistema';
+      return;
+    }
+    usuarioActual.numero = numero;
+    usuarioActual.nombre = doc.data().nombre;
+    document.getElementById('modalLogin').classList.remove('abierto');
+    document.getElementById('pantallaBienvenida').style.display = 'none';
+    document.getElementById('appPrincipal').style.display = 'block';
+    const texto = usuarioActual.nombre + ' · #' + usuarioActual.numero;
+    ['rituales','psr','qrqc'].forEach(m => {
+      const el = document.getElementById('banner-nombre-' + m);
+      if (el) el.innerText = texto;
+    });
+    cambiarTab(moduloDestino);
+  } catch(e) {
+    estado.style.color = 'var(--rojo)';
+    estado.innerText = 'Error de conexión con la base de datos';
+  }
+}
+
+function cerrarLogin() {
+  document.getElementById('modalLogin').classList.remove('abierto');
+}
+
+// ── NAVEGACIÓN ────────────────────────────────────────────────────────────────
 
 function volverInicio() {
   document.getElementById('appPrincipal').style.display = 'none';
   document.getElementById('pantallaBienvenida').style.display = 'flex';
   document.getElementById('adminPanelGlobal').classList.remove('abierto');
   adminDesbloqueado = false;
+  usuarioActual = { numero:"", nombre:"" };
+  moduloDestino = "";
 }
 
 function cambiarTab(modulo) {
@@ -766,40 +844,6 @@ function mostrarAdminSeccion(modulo) {
   if (modulo==='qrqc' && adminDesbloqueado) cargarForosSelectAdmin();
 }
 
-// ── EMPLEADOS ─────────────────────────────────────────────────────────────────
-
-async function buscarEmpleado(prefijo) {
-  const numero = document.getElementById(prefijo+'-numero').value;
-  const hint   = document.getElementById(prefijo+'-nombreHint');
-  if (!numero || numero.length < 3) { hint.innerText=''; return; }
-  try {
-    const doc = await db.collection('empleados').doc(String(numero)).get();
-    if (doc.exists) {
-      nombreEmpleados[prefijo] = doc.data().nombre;
-      hint.innerText = '👤 '+doc.data().nombre;
-    } else {
-      hint.innerText = 'Empleado no encontrado';
-      nombreEmpleados[prefijo] = '';
-    }
-  } catch(e) { hint.innerText='Error buscando empleado'; }
-}
-
-async function buscarEmpleadoPSR() {
-  const numero = document.getElementById('p-numero').value;
-  const hint   = document.getElementById('p-nombreHint');
-  if (!numero || numero.length < 3) { hint.innerText=''; nombreRegistradorPSR=''; return; }
-  try {
-    const doc = await db.collection('empleados').doc(String(numero)).get();
-    if (doc.exists) {
-      nombreRegistradorPSR = doc.data().nombre;
-      hint.innerText = '👤 '+doc.data().nombre;
-    } else {
-      hint.innerText = 'Empleado no encontrado';
-      nombreRegistradorPSR = '';
-    }
-  } catch(e) { hint.innerText='Error buscando empleado'; nombreRegistradorPSR=''; }
-}
-
 // ── RITUALES ──────────────────────────────────────────────────────────────────
 
 function getSemanaActual() {
@@ -810,7 +854,7 @@ function getSemanaActual() {
 
 function mostrarEstado(id, msg, tipo) {
   const el = document.getElementById(id);
-  el.className = 'status '+tipo;
+  el.className = 'status ' + tipo;
   el.innerText  = msg;
 }
 
@@ -823,30 +867,30 @@ const AREAS_RITUALES = [
 
 async function registrarRitual() {
   try {
-    const numero = document.getElementById('r-numero').value;
     const area   = document.getElementById('r-area').value;
     const foto   = document.getElementById('r-foto').files[0];
     const semana = getSemanaActual();
-    if (!numero||!area||!foto||!nombreEmpleados.r) {
-      mostrarEstado('r-estado','Completa todos los campos y busca el empleado','err'); return;
+    if (!area || !foto) {
+      mostrarEstado('r-estado','Selecciona área y agrega foto de evidencia','err'); return;
     }
     mostrarEstado('r-estado','Validando semana...','info');
     const existe = await db.collection('rituales').where('area','==',area).where('semana','==',semana).get();
     if (!existe.empty) { mostrarEstado('r-estado','⚠ Esta área ya registró ritual esta semana','err'); return; }
     mostrarEstado('r-estado','Subiendo imagen...','info');
     const formData = new FormData();
-    formData.append('file',foto);
+    formData.append('file', foto);
     formData.append('upload_preset','rituales');
     const res  = await fetch('https://api.cloudinary.com/v1_1/dc9wxwria/image/upload',{method:'POST',body:formData});
     const data = await res.json();
     if (!data.secure_url) { mostrarEstado('r-estado','Error subiendo imagen','err'); return; }
     await db.collection('rituales').add({
-      numero, nombre:String(nombreEmpleados.r),
-      area, imagen:data.secure_url, semana, fecha:new Date()
+      numero: usuarioActual.numero,
+      nombre: usuarioActual.nombre,
+      area, imagen: data.secure_url, semana, fecha: new Date()
     });
     mostrarEstado('r-estado','✅ Ritual registrado correctamente','ok');
-    document.getElementById('r-foto').value='';
-    document.getElementById('r-area').value='';
+    document.getElementById('r-foto').value = '';
+    document.getElementById('r-area').value = '';
   } catch(e) { console.error(e); mostrarEstado('r-estado','Error registrando ritual','err'); }
 }
 
@@ -860,13 +904,13 @@ async function verDashboardRituales() {
 
 async function verRitualesSemana(semana) {
   const lista = document.getElementById('r-lista');
-  lista.innerHTML='<p style="color:var(--texto-suave)">Cargando...</p>';
+  lista.innerHTML = '<p style="color:var(--texto-suave)">Cargando...</p>';
   const snap = await db.collection('rituales').where('semana','==',semana).get();
-  lista.innerHTML='';
+  lista.innerHTML = '';
   if (snap.empty) { lista.innerHTML='<p>No hay rituales en semana '+semana+'</p>'; return; }
   snap.forEach(doc => {
-    const d=doc.data();
-    lista.innerHTML+=`<div class="ritual-item">
+    const d = doc.data();
+    lista.innerHTML += `<div class="ritual-item">
       <strong>${d.nombre}</strong><br>
       <span style="color:var(--texto-suave);font-size:13px;">${d.area} · Sem ${d.semana}</span>
       ${d.imagen?`<img src="${d.imagen}" loading="lazy">`:''}
@@ -875,14 +919,14 @@ async function verRitualesSemana(semana) {
 }
 
 async function dashboardSemaforoRituales(semana) {
-  const dashboard=document.getElementById('r-dashboard');
-  dashboard.innerHTML='<p style="color:var(--texto-suave)">Cargando...</p>';
-  const snap=await db.collection('rituales').where('semana','==',semana).get();
-  let reg={};
-  snap.forEach(doc=>{ reg[doc.data().area]=true; });
-  const total=AREAS_RITUALES.length, cnt=Object.keys(reg).length;
-  const pct=Math.round((cnt/total)*100);
-  dashboard.innerHTML=`<div style="margin-bottom:14px;">
+  const dashboard = document.getElementById('r-dashboard');
+  dashboard.innerHTML = '<p style="color:var(--texto-suave)">Cargando...</p>';
+  const snap = await db.collection('rituales').where('semana','==',semana).get();
+  let reg = {};
+  snap.forEach(doc => { reg[doc.data().area] = true; });
+  const total = AREAS_RITUALES.length, cnt = Object.keys(reg).length;
+  const pct   = Math.round((cnt/total)*100);
+  dashboard.innerHTML = `<div style="margin-bottom:14px;">
     <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
       <span style="font-size:13px;color:var(--texto-suave)">Cumplimiento Sem ${semana}</span>
       <strong>${pct}%</strong>
@@ -890,8 +934,8 @@ async function dashboardSemaforoRituales(semana) {
     <div class="barra-progreso"><div class="barra-fill" style="width:${pct}%">${pct}%</div></div>
     <p style="font-size:13px;color:var(--texto-suave);margin-top:5px;"><strong>${cnt}</strong> de <strong>${total}</strong> áreas</p>
   </div>`;
-  AREAS_RITUALES.forEach(a=>{
-    dashboard.innerHTML+=`<div class="semaforo-item">
+  AREAS_RITUALES.forEach(a => {
+    dashboard.innerHTML += `<div class="semaforo-item">
       <span style="font-size:13px;">${a}</span>
       <div class="dot ${reg[a]?'dot-verde':'dot-rojo'}"></div>
     </div>`;
@@ -899,65 +943,69 @@ async function dashboardSemaforoRituales(semana) {
 }
 
 async function generarGraficaRituales() {
-  const ctx=document.getElementById('r-graficaSemanal').getContext('2d');
-  const snap=await db.collection('rituales').get();
-  let sem={};
-  snap.forEach(doc=>{ const d=doc.data(); if(!sem[d.semana]) sem[d.semana]=new Set(); sem[d.semana].add(d.area); });
-  const keys=Object.keys(sem).sort((a,b)=>a-b);
-  const labels=keys.map(s=>'Sem '+s);
-  const datos=keys.map(s=>Math.round((sem[s].size/AREAS_RITUALES.length)*100));
+  const ctx  = document.getElementById('r-graficaSemanal').getContext('2d');
+  const snap = await db.collection('rituales').get();
+  let sem = {};
+  snap.forEach(doc => {
+    const d = doc.data();
+    if (!sem[d.semana]) sem[d.semana] = new Set();
+    sem[d.semana].add(d.area);
+  });
+  const keys   = Object.keys(sem).sort((a,b) => a-b);
+  const labels = keys.map(s => 'Sem '+s);
+  const datos  = keys.map(s => Math.round((sem[s].size/AREAS_RITUALES.length)*100));
   if (graficaRituales) graficaRituales.destroy();
-  graficaRituales=new Chart(ctx,{
-    type:'bar',
-    data:{labels,datasets:[{label:'% Cumplimiento',data:datos,backgroundColor:'#FACC1588',borderColor:'#d97706',borderWidth:2,borderRadius:6}]},
-    options:{responsive:true,scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}}}
+  graficaRituales = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets:[{label:'% Cumplimiento',data:datos,backgroundColor:'#FACC1588',borderColor:'#d97706',borderWidth:2,borderRadius:6}]},
+    options: { responsive:true, scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}}}
   });
 }
 
 async function exportarRitualesExcel() {
-  const snap=await db.collection('rituales').orderBy('fecha','desc').get();
-  let datos=[];
-  snap.forEach(doc=>{
-    const d=doc.data();
-    const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
+  const snap = await db.collection('rituales').orderBy('fecha','desc').get();
+  let datos = [];
+  snap.forEach(doc => {
+    const d = doc.data();
+    const f = d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
     datos.push({numero:d.numero,nombre:d.nombre,area:d.area,semana:d.semana,
       fecha:f?f.toLocaleDateString()+' '+f.toLocaleTimeString():'',imagen:d.imagen});
   });
-  const ws=XLSX.utils.json_to_sheet(datos);
-  const wb=XLSX.utils.book_new();
+  const ws = XLSX.utils.json_to_sheet(datos);
+  const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'Rituales');
   XLSX.writeFile(wb,'rituales.xlsx');
 }
 
 async function subirEmpleadosExcel() {
   try {
-    const estado=document.getElementById('r-estadoExcel');
-    const file=document.getElementById('r-excel').files[0];
+    const estado = document.getElementById('r-estadoExcel');
+    const file   = document.getElementById('r-excel').files[0];
     if (!file) { alert('Selecciona archivo Excel'); return; }
-    estado.innerText='📂 Leyendo...';
-    const data=await file.arrayBuffer();
-    const wb=XLSX.read(data);
-    const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-    let c=0;
+    estado.innerText = '📂 Leyendo...';
+    const data = await file.arrayBuffer();
+    const wb   = XLSX.read(data);
+    const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+    let c = 0;
     for (const row of rows) {
       if (!row.numero||!row.nombre) continue;
       await db.collection('empleados').doc(String(row.numero)).set({nombre:String(row.nombre)});
       c++;
-      estado.innerText='Subiendo: '+c+'/'+rows.length;
+      estado.innerText = 'Subiendo: '+c+'/'+rows.length;
     }
-    estado.innerText='✅ '+c+' empleados cargados';
-    document.getElementById('r-excel').value='';
+    estado.innerText = '✅ '+c+' empleados cargados';
+    document.getElementById('r-excel').value = '';
   } catch(e) { document.getElementById('r-estadoExcel').innerText='❌ Error subiendo Excel'; }
 }
 
 function descargarPlantilla() {
-  const ws=XLSX.utils.json_to_sheet([{numero:'1001',nombre:'Juan Perez'},{numero:'1002',nombre:'Ana Lopez'}]);
-  const wb=XLSX.utils.book_new();
+  const ws = XLSX.utils.json_to_sheet([{numero:'1001',nombre:'Juan Perez'},{numero:'1002',nombre:'Ana Lopez'}]);
+  const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'Empleados');
   XLSX.writeFile(wb,'plantilla_empleados.xlsx');
 }
 
-// ── PSR — NUEVO FLUJO ─────────────────────────────────────────────────────────
+// ── PSR ───────────────────────────────────────────────────────────────────────
 
 const PROYECTOS_DEFAULT = [
   {nombre:"Buy to Make",           tier:""},
@@ -1035,11 +1083,11 @@ async function toggleForoPSR(proyectoId) {
 async function cargarPersonasEnProyecto(proyectoId) {
   const c = document.getElementById('pasistentes-'+proyectoId);
   c.innerHTML = 'Cargando...';
-  const snap = await db.collection('proyectosPSR').doc(proyectoId).collection('personas').orderBy('nombre').get();
+  const snap = await db.collection('proyectosPSR').doc(proyectoId)
+    .collection('personas').orderBy('nombre').get();
   if (snap.empty) {
     c.innerHTML = '<p style="color:var(--texto-suave);font-size:13px;padding:6px 0;">Sin personas registradas. Agrégalas desde ⚙ Admin.</p>';
-    actualizarContadorPSR(proyectoId, 0, 0);
-    return;
+    actualizarContadorPSR(proyectoId,0,0); return;
   }
   c.innerHTML = '';
   let total = 0;
@@ -1055,11 +1103,11 @@ async function cargarPersonasEnProyecto(proyectoId) {
       </div>
     </div>`;
   });
-  actualizarContadorPSR(proyectoId, 0, total);
+  actualizarContadorPSR(proyectoId,0,total);
 }
 
 function actualizarContadorDesdeChk(proyectoId) {
-  const chks     = document.querySelectorAll(`#pasistentes-${proyectoId} input[type="checkbox"]`);
+  const chks      = document.querySelectorAll(`#pasistentes-${proyectoId} input[type="checkbox"]`);
   const presentes = Array.from(chks).filter(c=>c.checked).length;
   actualizarContadorPSR(proyectoId, presentes, chks.length);
 }
@@ -1077,26 +1125,19 @@ function marcarTodosPSR(proyectoId, estado) {
 
 async function guardarAsistenciaProyecto(proyectoId, proyectoNombre, tier) {
   try {
-    const numRegistrador = document.getElementById('p-numero').value;
-    if (!numRegistrador || !nombreRegistradorPSR) {
-      mostrarEstadoPSR(proyectoId,'⚠ Primero ingresa tu número de empleado (Paso 1)','err');
-      window.scrollTo({top:0,behavior:'smooth'});
-      return;
-    }
     const chks = document.querySelectorAll(`#pasistentes-${proyectoId} input[type="checkbox"]`);
     if (!chks.length) {
-      mostrarEstadoPSR(proyectoId,'Sin personas configuradas en este proyecto','err');
-      return;
+      mostrarEstadoPSR(proyectoId,'Sin personas configuradas en este proyecto','err'); return;
     }
     const ahora=new Date(), presentes=[], ausentes=[];
     chks.forEach(chk => {
-      const obj={nombre:chk.dataset.nombre,cargo:chk.dataset.cargo};
-      (chk.checked?presentes:ausentes).push(obj);
+      const obj = {nombre:chk.dataset.nombre, cargo:chk.dataset.cargo};
+      (chk.checked ? presentes : ausentes).push(obj);
     });
     await db.collection('asistenciasPSR').add({
       proyectoId, proyectoNombre, tier,
-      registradorNumero: numRegistrador,
-      registradorNombre: nombreRegistradorPSR,
+      registradorNumero: usuarioActual.numero,
+      registradorNombre: usuarioActual.nombre,
       fecha: ahora,
       fechaStr: ahora.toISOString().split('T')[0],
       presentes, ausentes,
@@ -1266,7 +1307,6 @@ async function agregarPersonaPSR() {
 
 const FOROS_DEFAULT=[
   {nombre:'N3',nivel:'N3'},
-  
   {nombre:'WHS',nivel:'N2'},{nombre:'Boeing',nivel:'N2'},
   {nombre:'A220 F2F',nivel:'N2'},{nombre:'A220 Galleys',nivel:'N2'},
   {nombre:'A220 Ship Loose',nivel:'N2'},{nombre:'AirBus Other',nivel:'N2'},
@@ -1274,7 +1314,6 @@ const FOROS_DEFAULT=[
   {nombre:'Primary Process CNC/Layup/Press',nivel:'N2'},
   {nombre:'Primary Process Metal Works',nivel:'N2'},
   {nombre:'Legacy',nivel:'N2'},{nombre:'A220 LAVS',nivel:'N2'},
-  
   {nombre:'Spares APT',nivel:'N1'},
   {nombre:'A220 Galleys G1 + APT',nivel:'N1'},
   {nombre:'A220 Galleys G2 & G4 + APT',nivel:'N1'},
@@ -1296,7 +1335,6 @@ const FOROS_DEFAULT=[
   {nombre:'Primary Process-Layup',nivel:'N1'},
   {nombre:'Airbus Others A330/A220 Countertops APT',nivel:'N1'},
   {nombre:'Primary Process-Mach Shop APT',nivel:'N1'}
-  
 ];
 
 async function inicializarForosDefault() {
@@ -1380,6 +1418,8 @@ async function guardarAsistenciaForo(foroId,foroNombre,foroNivel) {
     await db.collection('asistenciasQRQC').add({
       foroId,foroNombre,foroNivel,fecha:ahora,
       fechaStr:ahora.toISOString().split('T')[0],
+      registradorNumero: usuarioActual.numero,
+      registradorNombre: usuarioActual.nombre,
       presentes,ausentes,total:chks.length,totalPresentes:presentes.length
     });
     mostrarEstadoForo(foroId,`✅ Guardado — ${presentes.length}/${chks.length} presentes`,'ok');
