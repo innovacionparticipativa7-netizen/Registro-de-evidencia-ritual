@@ -270,12 +270,15 @@ input:focus, select:focus, textarea:focus {
   overflow: hidden; margin-bottom: 14px; transition: .2s;
 }
 .foro-card:hover { border-color: #2563eb44; box-shadow: 0 4px 14px rgba(37,99,235,0.1); }
-.foro-header {
+.foro-tap {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 13px 16px; background: #eff6ff; cursor: pointer;
+  padding: 16px 20px; background: #eff6ff; cursor: pointer;
+  transition: background .15s;
 }
-.foro-header-left { display: flex; align-items: center; gap: 10px; }
-.qrqc-foro-card .foro-header { background: #f5f3ff; }
+.foro-tap:active { background: #dbeafe; }
+.foro-tap-left { display: flex; align-items: center; gap: 10px; }
+.qrqc-foro-card .foro-tap { background: #f5f3ff; }
+.qrqc-foro-card .foro-tap:active { background: #ede9fe; }
 .qrqc-foro-card:hover { border-color: #7c3aed44; box-shadow: 0 4px 14px rgba(124,58,237,0.1); }
 
 .nivel-badge {
@@ -287,20 +290,8 @@ input:focus, select:focus, textarea:focus {
 .nivel-n2 { background: #dbeafe; color: #1e40af; }
 .nivel-n1 { background: #dcfce7; color: #15803d; }
 
-.foro-nombre { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; color: var(--texto); }
-.foro-body { display: none; padding: 16px; }
-.foro-body.abierto { display: block; }
-.chevron { transition: transform .2s; font-size: 16px; color: var(--texto-suave); }
-.chevron.rotado { transform: rotate(180deg); }
-
-.asistente-fila {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 0; border-bottom: 1px solid var(--gris-borde);
-}
-.asistente-fila:last-child { border-bottom: none; }
-.asistente-nombre { flex: 1; font-size: 14px; }
-.asistente-cargo  { font-size: 12px; color: var(--texto-suave); min-width: 80px; }
-input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: #2563eb; }
+.foro-nombre { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; color: var(--texto); }
+.foro-tap-arrow { font-size: 20px; color: var(--texto-suave); }
 
 .tier-badge {
   font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
@@ -311,7 +302,6 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
 .tier-3 { background: #fef9c3; color: #854d0e; }
 .tier-4 { background: #f0fdf4; color: #166534; }
 
-.nombre-hint { font-size: 13px; color: var(--azul-medio); font-weight: 600; margin-top: 4px; min-height: 18px; }
 .scroll-box  { max-height: 480px; overflow-y: auto; }
 
 .modulo-desc {
@@ -335,9 +325,6 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
 .rb-label  { font-size: 11px; color: var(--texto-suave); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
 .rb-nombre { font-size: 14px; font-weight: 700; color: var(--verde); }
 
-.psr-acciones-foro { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
-.psr-contador { margin-left: auto; font-size: 13px; color: var(--texto-suave); font-weight: 600; }
-
 .admin-psr-proyectos-lista { max-height: 260px; overflow-y: auto; }
 .admin-psr-proyecto-row {
   background: var(--gris-fondo); border-radius: 8px;
@@ -359,12 +346,12 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
   box-shadow: 0 24px 60px rgba(0,0,0,0.4);
   animation: popIn .2s ease;
 }
-.modal-box-wide {
-  background: white; border-radius: 20px; padding: 28px 26px;
-  width: 100%; max-width: 520px; margin: 20px;
+.modal-confirm {
+  background: white; border-radius: 20px; padding: 32px 28px;
+  width: 100%; max-width: 400px; margin: 20px;
   box-shadow: 0 24px 60px rgba(0,0,0,0.4);
   animation: popIn .2s ease;
-  max-height: 90vh; overflow-y: auto;
+  text-align: center;
 }
 @keyframes popIn {
   from { transform: scale(.92); opacity: 0; }
@@ -377,14 +364,7 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
   text-align: center; letter-spacing: 1px; margin-bottom: 4px;
 }
 .modal-sub { font-size: 13px; color: var(--texto-suave); text-align: center; margin-bottom: 24px; }
-
-.persona-admin-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 0; border-bottom: 1px solid var(--gris-borde);
-}
-.persona-admin-row:last-child { border-bottom: none; }
-.persona-admin-nombre { flex: 1; font-size: 14px; font-weight: 600; }
-.persona-admin-cargo  { font-size: 12px; color: var(--texto-suave); margin-right: 4px; }
+.nombre-hint { font-size: 13px; color: var(--azul-medio); font-weight: 600; margin-top: 4px; min-height: 18px; }
 
 .admin-subtabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
 .admin-subtab-btn {
@@ -420,14 +400,14 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
       <div class="opcion-icono">📋</div>
       <div>
         <div class="opcion-info-titulo">PSR</div>
-        <div class="opcion-info-desc">Lista de asistencia a revisiones de proyectos por foro</div>
+        <div class="opcion-info-desc">Registra tu asistencia al proyecto PSR seleccionado</div>
       </div>
     </button>
     <button class="opcion-btn qrqc" onclick="entrarModulo('qrqc')">
       <div class="opcion-icono">🔍</div>
       <div>
         <div class="opcion-info-titulo">QRQC</div>
-        <div class="opcion-info-desc">Asistencia en foros N3, N2 y N1 de Quick Response Quality Control</div>
+        <div class="opcion-info-desc">Registra tu asistencia al foro N3, N2 o N1 seleccionado</div>
       </div>
     </button>
   </div>
@@ -452,63 +432,20 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
   </div>
 </div>
 
-<!-- MODAL GESTIÓN DE PERSONAS (PSR) -->
-<div class="modal-overlay" id="modalPersonasPSR">
-  <div class="modal-box-wide">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-      <div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--azul);" id="mpsr-titulo">Gestionar Personas</div>
-        <div style="font-size:12px;color:var(--texto-suave);" id="mpsr-subtitulo"></div>
-      </div>
-      <button class="btn btn-gris btn-sm" onclick="cerrarModalPersonasPSR()">✕ Cerrar</button>
+<!-- MODAL CONFIRMAR ASISTENCIA -->
+<div class="modal-overlay" id="modalConfirmar">
+  <div class="modal-confirm">
+    <div style="font-size:50px;margin-bottom:12px;" id="mc-icono">📋</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--texto);margin-bottom:6px;" id="mc-foro-nombre">Nombre del foro</div>
+    <div id="mc-nivel-badge" style="margin-bottom:16px;"></div>
+    <div style="background:var(--gris-fondo);border-radius:10px;padding:14px;margin-bottom:20px;text-align:left;">
+      <div style="font-size:11px;color:var(--texto-suave);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Registrando asistencia como</div>
+      <div style="font-size:15px;font-weight:700;color:var(--texto);" id="mc-empleado-nombre">—</div>
+      <div style="font-size:12px;color:var(--texto-suave);" id="mc-empleado-numero">—</div>
     </div>
-    <div style="font-size:11px;font-weight:700;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Personas registradas</div>
-    <div id="mpsr-lista" style="max-height:220px;overflow-y:auto;margin-bottom:16px;border:1.5px solid var(--gris-borde);border-radius:10px;padding:4px 12px;"></div>
-    <div style="border-top:2px solid var(--gris-borde);padding-top:14px;margin-top:4px;">
-      <div style="font-size:11px;font-weight:700;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Agregar persona</div>
-      <div class="grid2" style="gap:10px;">
-        <div class="campo" style="margin-bottom:0;">
-          <label>Nombre completo</label>
-          <input type="text" id="mpsr-nombre" placeholder="Nombre completo">
-        </div>
-        <div class="campo" style="margin-bottom:0;">
-          <label>Cargo / Rol</label>
-          <input type="text" id="mpsr-cargo" placeholder="Ej: Supervisor, Champion...">
-        </div>
-      </div>
-      <button class="btn btn-azul btn-full" style="margin-top:10px;" onclick="agregarPersonaDesdeModal()">+ Agregar Persona</button>
-      <div id="mpsr-estado" style="font-size:13px;font-weight:600;margin-top:8px;min-height:18px;"></div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL GESTIÓN DE ASISTENTES (QRQC) -->
-<div class="modal-overlay" id="modalAsistentesQRQC">
-  <div class="modal-box-wide">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-      <div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:#5b21b6;" id="mqrqc-titulo">Gestionar Asistentes</div>
-        <div style="font-size:12px;color:var(--texto-suave);" id="mqrqc-subtitulo"></div>
-      </div>
-      <button class="btn btn-gris btn-sm" onclick="cerrarModalAsistentesQRQC()">✕ Cerrar</button>
-    </div>
-    <div style="font-size:11px;font-weight:700;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Asistentes registrados</div>
-    <div id="mqrqc-lista" style="max-height:220px;overflow-y:auto;margin-bottom:16px;border:1.5px solid var(--gris-borde);border-radius:10px;padding:4px 12px;"></div>
-    <div style="border-top:2px solid var(--gris-borde);padding-top:14px;margin-top:4px;">
-      <div style="font-size:11px;font-weight:700;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Agregar asistente</div>
-      <div class="grid2" style="gap:10px;">
-        <div class="campo" style="margin-bottom:0;">
-          <label>Nombre completo</label>
-          <input type="text" id="mqrqc-nombre" placeholder="Nombre completo">
-        </div>
-        <div class="campo" style="margin-bottom:0;">
-          <label>Cargo / Rol</label>
-          <input type="text" id="mqrqc-cargo" placeholder="Ej: Supervisor, Ingeniero...">
-        </div>
-      </div>
-      <button class="btn btn-morado btn-full" style="margin-top:10px;" onclick="agregarAsistenteDesdeModal()">+ Agregar Asistente</button>
-      <div id="mqrqc-estado" style="font-size:13px;font-weight:600;margin-top:8px;min-height:18px;"></div>
-    </div>
+    <button class="btn btn-verde btn-full" onclick="confirmarAsistencia()" id="mc-btn-confirmar">✅ Confirmar mi Asistencia</button>
+    <button class="btn btn-outline btn-full" style="margin-top:10px;" onclick="cerrarModalConfirmar()">Cancelar</button>
+    <div id="mc-estado" style="margin-top:10px;font-size:13px;font-weight:600;"></div>
   </div>
 </div>
 
@@ -563,10 +500,9 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
       <div id="adminPSR" style="display:none;">
         <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — PSR</div>
         <div class="admin-subtabs">
-          <button class="admin-subtab-btn activo-psr" id="psr-subtab-proyectos" onclick="cambiarSubtabPSR('proyectos')">📁 Proyectos y Personas</button>
+          <button class="admin-subtab-btn activo-psr" id="psr-subtab-proyectos" onclick="cambiarSubtabPSR('proyectos')">📁 Proyectos</button>
           <button class="admin-subtab-btn" id="psr-subtab-historial" onclick="cambiarSubtabPSR('historial')">📅 Historial de Asistencia</button>
         </div>
-
         <div class="admin-seccion activo" id="psr-sec-proyectos">
           <div class="grid2">
             <div>
@@ -594,7 +530,6 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
             </div>
           </div>
         </div>
-
         <div class="admin-seccion" id="psr-sec-historial">
           <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px;">
             <div class="campo" style="margin-bottom:0;min-width:180px;">
@@ -612,10 +547,9 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
       <div id="adminQRQC" style="display:none;">
         <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — QRQC</div>
         <div class="admin-subtabs">
-          <button class="admin-subtab-btn activo-qrqc" id="qrqc-subtab-foros" onclick="cambiarSubtabQRQC('foros')">📁 Foros y Asistentes</button>
+          <button class="admin-subtab-btn activo-qrqc" id="qrqc-subtab-foros" onclick="cambiarSubtabQRQC('foros')">📁 Foros</button>
           <button class="admin-subtab-btn" id="qrqc-subtab-historial" onclick="cambiarSubtabQRQC('historial')">📅 Historial de Asistencia</button>
         </div>
-
         <div class="admin-seccion activo" id="qrqc-sec-foros">
           <div class="grid2">
             <div>
@@ -642,7 +576,6 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
             </div>
           </div>
         </div>
-
         <div class="admin-seccion" id="qrqc-sec-historial">
           <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px;">
             <div class="campo" style="margin-bottom:0;min-width:170px;">
@@ -690,24 +623,15 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
         <label>Área</label>
         <select id="r-area">
           <option value="">Selecciona área</option>
-          <option>LAVS</option>
-          <option>ENVIOS A220</option>
-          <option>GALLEYS & SMALL/MONUMENTOS</option>
-          <option>SHIP LOOSE</option>
-          <option>F2F</option>
-          <option>CASCADAS</option>
-          <option>MAQUINADO Y TROQUELADO</option>
-          <option>AIRBUS</option>
-          <option>BONDEO</option>
-          <option>COMAC</option>
-          <option>DECORADO,PINTURA</option>
-          <option>MANTENIMIENTO</option>
-          <option>ALMACEN</option>
-          <option>INSERTOS A220</option>
-          <option>CNC 3X/5X</option>
-          <option>LIJADO</option>
-          <option>LAMINADO / HORNOS</option>
-          <option>BOEING</option>
+          <option>LAVS</option><option>ENVIOS A220</option>
+          <option>GALLEYS & SMALL/MONUMENTOS</option><option>SHIP LOOSE</option>
+          <option>F2F</option><option>CASCADAS</option>
+          <option>MAQUINADO Y TROQUELADO</option><option>AIRBUS</option>
+          <option>BONDEO</option><option>COMAC</option>
+          <option>DECORADO,PINTURA</option><option>MANTENIMIENTO</option>
+          <option>ALMACEN</option><option>INSERTOS A220</option>
+          <option>CNC 3X/5X</option><option>LIJADO</option>
+          <option>LAMINADO / HORNOS</option><option>BOEING</option>
           <option>MOLDES / PRENSAS</option>
         </select>
       </div>
@@ -742,7 +666,7 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
       <div class="modulo-desc-icon">📋</div>
       <div class="modulo-desc-texto">
         <h3>PSR — Project Status Review</h3>
-        <p>Lista de asistencia por proyecto. Selecciona el foro y marca a los presentes.</p>
+        <p>Toca el proyecto al que asististe para registrar tu asistencia.</p>
       </div>
     </div>
     <div class="registrador-banner">
@@ -753,7 +677,7 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
       </div>
     </div>
     <div class="card">
-      <div class="card-titulo">Seleccionar Proyecto / Foro <span class="badge badge-azul">PSR</span></div>
+      <div class="card-titulo">Seleccionar Proyecto <span class="badge badge-azul">PSR</span></div>
       <div id="p-listaForos"></div>
     </div>
   </div>
@@ -764,7 +688,7 @@ input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-colo
       <div class="modulo-desc-icon">🔍</div>
       <div class="modulo-desc-texto">
         <h3>QRQC — Quick Response Quality Control</h3>
-        <p>Registro de asistencia en foros QRQC por nivel N3, N2 y N1.</p>
+        <p>Toca el foro al que asististe para registrar tu asistencia.</p>
       </div>
     </div>
     <div class="registrador-banner">
@@ -805,12 +729,7 @@ let proyectosPSR      = [];
 let graficaRituales   = null;
 let adminDesbloqueado = false;
 let tabActual         = 'rituales';
-let _modalPSRProyectoId   = "";
-let _modalPSRProyectoNom  = "";
-let _modalQRQCForoId      = "";
-let _modalQRQCForoNom     = "";
-
-// ── LOGIN ─────────────────────────────────────────────────────────────────────
+let _confirmContext   = { tipo:"", id:"", nombre:"", nivel:"", tier:"" };
 
 function entrarModulo(modulo) {
   moduloDestino = modulo;
@@ -855,8 +774,6 @@ async function confirmarLogin() {
 
 function cerrarLogin() { document.getElementById('modalLogin').classList.remove('abierto'); }
 
-// ── NAVEGACIÓN ────────────────────────────────────────────────────────────────
-
 function volverInicio() {
   document.getElementById('appPrincipal').style.display = 'none';
   document.getElementById('pantallaBienvenida').style.display = 'flex';
@@ -894,10 +811,8 @@ function mostrarAdminSeccion(modulo) {
   document.getElementById('adminPSR').style.display      = modulo==='psr'      ? 'block' : 'none';
   document.getElementById('adminQRQC').style.display     = modulo==='qrqc'     ? 'block' : 'none';
   if (modulo==='psr'  && adminDesbloqueado) cargarAdminPSR();
-  if (modulo==='qrqc' && adminDesbloqueado) { cargarForosSelectAdmin(); cargarAdminListaForos(); }
+  if (modulo==='qrqc' && adminDesbloqueado) cargarAdminListaForos();
 }
-
-// ── ADMIN SUBTABS ─────────────────────────────────────────────────────────────
 
 function cambiarSubtabPSR(seccion) {
   ['proyectos','historial'].forEach(s => {
@@ -914,8 +829,6 @@ function cambiarSubtabQRQC(seccion) {
   });
   if (seccion==='historial') verHistorialQRQC();
 }
-
-// ── RITUALES ──────────────────────────────────────────────────────────────────
 
 function getSemanaActual() {
   const hoy=new Date(), ini=new Date(hoy.getFullYear(),0,1);
@@ -1042,8 +955,6 @@ function descargarPlantilla() {
   const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Empleados'); XLSX.writeFile(wb,'plantilla_empleados.xlsx');
 }
 
-// ── PSR ───────────────────────────────────────────────────────────────────────
-
 const PROYECTOS_DEFAULT=[
   {nombre:"Buy to Make",tier:""},{nombre:"DTC",tier:""},
   {nombre:"Material Optimization",tier:""},{nombre:"Resourcing",tier:""},{nombre:"OH Cost Control",tier:""}
@@ -1059,226 +970,26 @@ async function cargarProyectosPSR() {
       proyectosPSR.push({id:ref.id,nombre:p.nombre,tier:p.tier});
     }
   }
-  renderizarForos(proyectosPSR);
+  renderizarProyectosPSR(proyectosPSR);
 }
 
-function renderizarForos(lista) {
+function renderizarProyectosPSR(lista) {
   const contenedor=document.getElementById('p-listaForos');
   contenedor.innerHTML='';
   if (!lista.length) { contenedor.innerHTML='<p style="color:var(--texto-suave);padding:10px;">No hay proyectos</p>'; return; }
   lista.forEach(proyecto=>{
     const tn=proyecto.tier?proyecto.tier.replace('Tier ',''):'';
     const tierBadge=tn?`<span class="tier-badge tier-${tn}">${proyecto.tier}</span>`:'';
-    contenedor.innerHTML+=`<div class="foro-card">
-      <div class="foro-header" onclick="toggleForoPSR('${proyecto.id}')">
-        <div class="foro-header-left">${tierBadge}<span class="foro-nombre">📋 ${proyecto.nombre}</span></div>
-        <span class="chevron" id="pchev-${proyecto.id}">▾</span>
-      </div>
-      <div class="foro-body" id="pbody-${proyecto.id}">
-        <div id="pasistentes-${proyecto.id}">Cargando...</div>
-        <div class="psr-acciones-foro" style="margin-top:12px;">
-          <button class="btn btn-outline btn-sm" onclick="marcarTodosPSR('${proyecto.id}',true)">✅ Marcar todos</button>
-          <button class="btn btn-outline btn-sm" onclick="marcarTodosPSR('${proyecto.id}',false)">☐ Desmarcar todos</button>
-          <span class="psr-contador" id="pcontador-${proyecto.id}"></span>
+    contenedor.innerHTML+=`
+      <div class="foro-card">
+        <div class="foro-tap" onclick="abrirConfirmarAsistencia('psr','${proyecto.id}','${proyecto.nombre.replace(/'/g,"\\'")}','','${proyecto.tier||''}')">
+          <div class="foro-tap-left">${tierBadge}<span class="foro-nombre">📋 ${proyecto.nombre}</span></div>
+          <span class="foro-tap-arrow">→</span>
         </div>
-        <button class="btn btn-azul btn-full" style="margin-top:10px;"
-          onclick="guardarAsistenciaProyecto('${proyecto.id}','${proyecto.nombre}','${proyecto.tier||''}')">
-          📋 Registrar Asistencia
-        </button>
-        <div id="estado-psr-${proyecto.id}" style="margin-top:8px;"></div>
-      </div>
-    </div>`;
+        <div id="estado-psr-tap-${proyecto.id}" style="padding:0 16px 12px;font-size:13px;font-weight:600;display:none;"></div>
+      </div>`;
   });
 }
-
-async function toggleForoPSR(proyectoId) {
-  const body=document.getElementById('pbody-'+proyectoId), chev=document.getElementById('pchev-'+proyectoId);
-  if (body.classList.contains('abierto')) { body.classList.remove('abierto'); chev.classList.remove('rotado'); }
-  else { body.classList.add('abierto'); chev.classList.add('rotado'); await cargarPersonasEnProyecto(proyectoId); }
-}
-
-async function cargarPersonasEnProyecto(proyectoId) {
-  const c=document.getElementById('pasistentes-'+proyectoId);
-  c.innerHTML='Cargando...';
-  const snap=await db.collection('proyectosPSR').doc(proyectoId).collection('personas').orderBy('nombre').get();
-  if (snap.empty) { c.innerHTML='<p style="color:var(--texto-suave);font-size:13px;padding:6px 0;">Sin personas registradas. Agrégalas desde ⚙ Admin.</p>'; actualizarContadorPSR(proyectoId,0,0); return; }
-  c.innerHTML=''; let total=0;
-  snap.forEach(doc=>{ const d=doc.data(); total++;
-    c.innerHTML+=`<div class="asistente-fila">
-      <input type="checkbox" id="pchk-${doc.id}" data-nombre="${d.nombre}" data-cargo="${d.cargo||''}" onchange="actualizarContadorDesdeChk('${proyectoId}')">
-      <div style="flex:1;"><div class="asistente-nombre">${d.nombre}</div>${d.cargo?`<div class="asistente-cargo">${d.cargo}</div>`:''}</div>
-    </div>`;
-  });
-  actualizarContadorPSR(proyectoId,0,total);
-}
-
-function actualizarContadorDesdeChk(proyectoId) {
-  const chks=document.querySelectorAll(`#pasistentes-${proyectoId} input[type="checkbox"]`);
-  actualizarContadorPSR(proyectoId,Array.from(chks).filter(c=>c.checked).length,chks.length);
-}
-
-function actualizarContadorPSR(proyectoId,presentes,total) {
-  const el=document.getElementById('pcontador-'+proyectoId);
-  if (el) el.innerText=total>0?`${presentes} / ${total} marcados`:'';
-}
-
-function marcarTodosPSR(proyectoId,estado) {
-  const chks=document.querySelectorAll(`#pasistentes-${proyectoId} input[type="checkbox"]`);
-  chks.forEach(chk=>chk.checked=estado); actualizarContadorDesdeChk(proyectoId);
-}
-
-async function guardarAsistenciaProyecto(proyectoId,proyectoNombre,tier) {
-  try {
-    const chks=document.querySelectorAll(`#pasistentes-${proyectoId} input[type="checkbox"]`);
-    if (!chks.length) { mostrarEstadoPSR(proyectoId,'Sin personas configuradas en este proyecto','err'); return; }
-    const ahora=new Date(),presentes=[],ausentes=[];
-    chks.forEach(chk=>{ const obj={nombre:chk.dataset.nombre,cargo:chk.dataset.cargo}; (chk.checked?presentes:ausentes).push(obj); });
-    await db.collection('asistenciasPSR').add({ proyectoId,proyectoNombre,tier, registradorNumero:usuarioActual.numero,registradorNombre:usuarioActual.nombre, fecha:ahora,fechaStr:ahora.toISOString().split('T')[0], presentes,ausentes,total:chks.length,totalPresentes:presentes.length });
-    mostrarEstadoPSR(proyectoId,`✅ Asistencia guardada — ${presentes.length}/${chks.length} presentes`,'ok');
-    chks.forEach(chk=>chk.checked=false); actualizarContadorPSR(proyectoId,0,chks.length);
-  } catch(e) { console.error(e); mostrarEstadoPSR(proyectoId,'Error guardando asistencia','err'); }
-}
-
-function mostrarEstadoPSR(proyectoId,msg,tipo) {
-  const el=document.getElementById('estado-psr-'+proyectoId); el.className='status '+tipo; el.innerText=msg;
-}
-
-async function verHistorialPSR() {
-  const historial=document.getElementById('p-historial');
-  const fecha=document.getElementById('p-filtroFecha').value;
-  historial.innerHTML='Cargando...';
-  let query=db.collection('asistenciasPSR').orderBy('fecha','desc');
-  if (fecha) query=query.where('fechaStr','==',fecha);
-  const snap=await query.limit(100).get();
-  historial.innerHTML='';
-  if (snap.empty) { historial.innerHTML='<p style="color:var(--texto-suave)">Sin registros</p>'; return; }
-  snap.forEach(doc=>{
-    const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
-    const tn=d.tier?d.tier.replace('Tier ',''):''; const pct=d.total>0?Math.round((d.totalPresentes/d.total)*100):0;
-    historial.innerHTML+=`<div class="historial-item">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
-        <strong>${d.proyectoNombre}</strong>
-        ${tn?`<span class="tier-badge tier-${tn}">${d.tier}</span>`:''}
-        <span style="font-size:11px;color:var(--texto-suave);margin-left:auto;">${f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''}</span>
-      </div>
-      <div style="font-size:12px;color:var(--texto-suave);margin-bottom:6px;">
-        Registrado por: <strong>${d.registradorNombre||d.registradorNumero||'—'}</strong> · ${d.totalPresentes}/${d.total} presentes (${pct}%)
-      </div>
-      <div>
-        ${(d.presentes||[]).map(p=>`<span style="font-size:11px;background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✓ ${p.nombre}</span>`).join('')}
-        ${(d.ausentes||[]).map(p=>`<span style="font-size:11px;background:#fee2e2;color:#b91c1c;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✗ ${p.nombre}</span>`).join('')}
-      </div>
-    </div>`;
-  });
-}
-
-async function exportarPSRExcel() {
-  const snap=await db.collection('asistenciasPSR').orderBy('fecha','desc').get();
-  let datos=[];
-  snap.forEach(doc=>{ const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
-    datos.push({ proyecto:d.proyectoNombre,tier:d.tier,registrador_numero:d.registradorNumero,registrador_nombre:d.registradorNombre, presentes_total:d.totalPresentes,total:d.total, presentes:(d.presentes||[]).map(p=>p.nombre).join(', '),ausentes:(d.ausentes||[]).map(p=>p.nombre).join(', '), fecha:f?f.toLocaleDateString()+' '+f.toLocaleTimeString():'' }); });
-  const ws=XLSX.utils.json_to_sheet(datos); const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'Asistencias PSR'); XLSX.writeFile(wb,'asistencias_psr.xlsx');
-}
-
-// ── PSR ADMIN ─────────────────────────────────────────────────────────────────
-
-async function cargarAdminPSR() { await renderAdminListaProyectos(); }
-
-async function renderAdminListaProyectos() {
-  const lista=document.getElementById('p-listaProyectosAdmin');
-  lista.innerHTML='Cargando...';
-  const snap=await db.collection('proyectosPSR').orderBy('nombre').get();
-  lista.innerHTML='';
-  if (snap.empty) { lista.innerHTML='<p style="color:var(--texto-suave)">No hay proyectos</p>'; return; }
-  for (const doc of snap.docs) {
-    const d=doc.data(); const tn=d.tier?d.tier.replace('Tier ',''):'';
-    const personasSnap=await db.collection('proyectosPSR').doc(doc.id).collection('personas').get();
-    const numPersonas=personasSnap.size;
-    lista.innerHTML+=`<div class="admin-psr-proyecto-row">
-      <div>
-        <strong>${d.nombre}</strong>
-        <div style="display:flex;gap:6px;align-items:center;margin-top:3px;">
-          ${tn?`<span class="tier-badge tier-${tn}">${d.tier}</span>`:''}
-          <span>${numPersonas} persona${numPersonas!==1?'s':''}</span>
-        </div>
-      </div>
-      <div style="display:flex;gap:6px;">
-        <button class="btn btn-azul btn-sm" onclick="abrirModalPersonasPSR('${doc.id}','${d.nombre.replace(/'/g,"\\'")}')">👥 Gestionar</button>
-        <button class="btn btn-rojo btn-sm" onclick="eliminarProyecto('${doc.id}')">✕</button>
-      </div>
-    </div>`;
-  }
-}
-
-async function agregarProyecto() {
-  const nombre=document.getElementById('p-nuevoProyecto').value.trim();
-  const tier=document.getElementById('p-nuevoTier').value;
-  const estado=document.getElementById('p-estadoProyecto');
-  if (!nombre) { estado.innerText='Ingresa nombre del proyecto'; return; }
-  await db.collection('proyectosPSR').add({nombre,tier,creadoEn:new Date()});
-  estado.innerText='✅ Proyecto agregado';
-  document.getElementById('p-nuevoProyecto').value=''; document.getElementById('p-nuevoTier').value='';
-  await cargarProyectosPSR(); await cargarAdminPSR();
-}
-
-async function eliminarProyecto(id) {
-  if (!confirm('¿Eliminar este proyecto y todas sus personas?')) return;
-  const personasSnap=await db.collection('proyectosPSR').doc(id).collection('personas').get();
-  for (const doc of personasSnap.docs) await doc.ref.delete();
-  await db.collection('proyectosPSR').doc(id).delete();
-  await cargarProyectosPSR(); await cargarAdminPSR();
-}
-
-// ── MODAL PERSONAS PSR ────────────────────────────────────────────────────────
-
-async function abrirModalPersonasPSR(proyectoId, proyectoNombre) {
-  _modalPSRProyectoId=proyectoId; _modalPSRProyectoNom=proyectoNombre;
-  document.getElementById('mpsr-titulo').innerText=proyectoNombre;
-  document.getElementById('mpsr-subtitulo').innerText='Gestión de personas del proyecto';
-  document.getElementById('mpsr-nombre').value=''; document.getElementById('mpsr-cargo').value='';
-  document.getElementById('mpsr-estado').innerText='';
-  document.getElementById('modalPersonasPSR').classList.add('abierto');
-  await cargarListaModalPSR();
-}
-
-function cerrarModalPersonasPSR() {
-  document.getElementById('modalPersonasPSR').classList.remove('abierto');
-  renderAdminListaProyectos();
-}
-
-async function cargarListaModalPSR() {
-  const lista=document.getElementById('mpsr-lista');
-  lista.innerHTML='Cargando...';
-  const snap=await db.collection('proyectosPSR').doc(_modalPSRProyectoId).collection('personas').orderBy('nombre').get();
-  lista.innerHTML='';
-  if (snap.empty) { lista.innerHTML='<p style="color:var(--texto-suave);font-size:13px;padding:10px 0;">Sin personas aún.</p>'; return; }
-  snap.forEach(doc=>{ const d=doc.data();
-    lista.innerHTML+=`<div class="persona-admin-row">
-      <div style="flex:1;"><div class="persona-admin-nombre">${d.nombre}</div>${d.cargo?`<div class="persona-admin-cargo">${d.cargo}</div>`:''}</div>
-      <button class="btn btn-rojo btn-sm" onclick="eliminarPersonaPSR('${doc.id}')">🗑 Eliminar</button>
-    </div>`;
-  });
-}
-
-async function eliminarPersonaPSR(personaId) {
-  if (!confirm('¿Eliminar esta persona?')) return;
-  await db.collection('proyectosPSR').doc(_modalPSRProyectoId).collection('personas').doc(personaId).delete();
-  await cargarListaModalPSR();
-}
-
-async function agregarPersonaDesdeModal() {
-  const nombre=document.getElementById('mpsr-nombre').value.trim();
-  const cargo=document.getElementById('mpsr-cargo').value.trim();
-  const estado=document.getElementById('mpsr-estado');
-  if (!nombre) { estado.style.color='var(--rojo)'; estado.innerText='Ingresa el nombre'; return; }
-  await db.collection('proyectosPSR').doc(_modalPSRProyectoId).collection('personas').add({nombre,cargo,creadoEn:new Date()});
-  estado.style.color='var(--verde)'; estado.innerText='✅ Persona agregada';
-  document.getElementById('mpsr-nombre').value=''; document.getElementById('mpsr-cargo').value='';
-  await cargarListaModalPSR();
-}
-
-// ── QRQC ──────────────────────────────────────────────────────────────────────
 
 const FOROS_DEFAULT=[
   {nombre:'N3',nivel:'N3'},
@@ -1322,69 +1033,164 @@ function filtrarForos() {
   if (!lista.length) { contenedor.innerHTML='<p style="color:var(--texto-suave);padding:10px;">No hay foros</p>'; return; }
   lista.forEach(foro=>{
     const nc='nivel-'+foro.nivel.toLowerCase();
-    contenedor.innerHTML+=`<div class="foro-card qrqc-foro-card">
-      <div class="foro-header" style="background:#f5f3ff;" onclick="toggleForo('${foro.id}')">
-        <div class="foro-header-left">
-          <span class="nivel-badge ${nc}">${foro.nivel}</span>
-          <span class="foro-nombre">${foro.nombre}</span>
+    contenedor.innerHTML+=`
+      <div class="foro-card qrqc-foro-card">
+        <div class="foro-tap" style="background:#f5f3ff;"
+          onclick="abrirConfirmarAsistencia('qrqc','${foro.id}','${foro.nombre.replace(/'/g,"\\'")}','${foro.nivel}','')">
+          <div class="foro-tap-left">
+            <span class="nivel-badge ${nc}">${foro.nivel}</span>
+            <span class="foro-nombre">${foro.nombre}</span>
+          </div>
+          <span class="foro-tap-arrow">→</span>
         </div>
-        <span class="chevron" id="chev-${foro.id}">▾</span>
-      </div>
-      <div class="foro-body" id="body-${foro.id}">
-        <div id="asistentes-${foro.id}">Cargando...</div>
-        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn btn-morado btn-sm" onclick="guardarAsistenciaForo('${foro.id}','${foro.nombre.replace(/'/g,"\\'")}','${foro.nivel}')">✅ Guardar Asistencia</button>
-        </div>
-        <div id="estado-foro-${foro.id}" style="margin-top:8px;"></div>
-      </div>
-    </div>`;
+        <div id="estado-qrqc-tap-${foro.id}" style="padding:0 16px 12px;font-size:13px;font-weight:600;display:none;"></div>
+      </div>`;
   });
 }
 
-async function toggleForo(foroId) {
-  const body=document.getElementById('body-'+foroId), chev=document.getElementById('chev-'+foroId);
-  if (body.classList.contains('abierto')) { body.classList.remove('abierto'); chev.classList.remove('rotado'); }
-  else { body.classList.add('abierto'); chev.classList.add('rotado'); await cargarAsistentesEnForo(foroId); }
+function abrirConfirmarAsistencia(tipo, id, nombre, nivel, tier) {
+  _confirmContext = { tipo, id, nombre, nivel, tier };
+  document.getElementById('mc-icono').innerText = tipo==='qrqc' ? '🔍' : '📋';
+  document.getElementById('mc-foro-nombre').innerText = nombre;
+  const badgeEl = document.getElementById('mc-nivel-badge');
+  if (tipo === 'qrqc' && nivel) {
+    const nc='nivel-'+nivel.toLowerCase();
+    badgeEl.innerHTML=`<span class="nivel-badge ${nc}" style="font-size:14px;">${nivel}</span>`;
+  } else if (tipo === 'psr' && tier) {
+    const tn=tier.replace('Tier ','');
+    badgeEl.innerHTML=`<span class="tier-badge tier-${tn}">${tier}</span>`;
+  } else { badgeEl.innerHTML=''; }
+  document.getElementById('mc-empleado-nombre').innerText = usuarioActual.nombre;
+  document.getElementById('mc-empleado-numero').innerText = '# ' + usuarioActual.numero;
+  document.getElementById('mc-estado').innerText = '';
+  const btn = document.getElementById('mc-btn-confirmar');
+  btn.disabled = false; btn.innerText = '✅ Confirmar mi Asistencia';
+  document.getElementById('modalConfirmar').classList.add('abierto');
 }
 
-async function cargarAsistentesEnForo(foroId) {
-  const c=document.getElementById('asistentes-'+foroId);
-  c.innerHTML='Cargando...';
-  const snap=await db.collection('forosQRQC').doc(foroId).collection('asistentes').orderBy('nombre').get();
-  if (snap.empty) { c.innerHTML='<p style="color:var(--texto-suave);font-size:13px;padding:6px 0;">Sin asistentes. Agrégalos desde ⚙ Admin.</p>'; return; }
-  c.innerHTML='';
-  snap.forEach(doc=>{ const d=doc.data();
-    c.innerHTML+=`<div class="asistente-fila">
-      <input type="checkbox" id="chk-${doc.id}" data-id="${doc.id}" data-nombre="${d.nombre}" data-cargo="${d.cargo||''}" style="accent-color:#7c3aed;">
-      <div style="flex:1;"><div class="asistente-nombre">${d.nombre}</div>${d.cargo?`<div class="asistente-cargo">${d.cargo}</div>`:''}</div>
-    </div>`;
-  });
+function cerrarModalConfirmar() {
+  document.getElementById('modalConfirmar').classList.remove('abierto');
 }
 
-async function guardarAsistenciaForo(foroId,foroNombre,foroNivel) {
+async function confirmarAsistencia() {
+  const { tipo, id, nombre, nivel, tier } = _confirmContext;
+  const btn = document.getElementById('mc-btn-confirmar');
+  const estadoEl = document.getElementById('mc-estado');
+  btn.disabled = true; btn.innerText = 'Guardando...'; estadoEl.innerText = '';
   try {
-    const chks=document.querySelectorAll(`#asistentes-${foroId} input[type="checkbox"]`);
-    if (!chks.length) { mostrarEstadoForo(foroId,'Sin asistentes configurados','err'); return; }
-    const ahora=new Date(),presentes=[],ausentes=[];
-    chks.forEach(chk=>{ const o={nombre:chk.dataset.nombre,cargo:chk.dataset.cargo}; (chk.checked?presentes:ausentes).push(o); });
-    await db.collection('asistenciasQRQC').add({ foroId,foroNombre,foroNivel,fecha:ahora, fechaStr:ahora.toISOString().split('T')[0], registradorNumero:usuarioActual.numero,registradorNombre:usuarioActual.nombre, presentes,ausentes,total:chks.length,totalPresentes:presentes.length });
-    mostrarEstadoForo(foroId,`✅ Guardado — ${presentes.length}/${chks.length} presentes`,'ok');
-    chks.forEach(chk=>chk.checked=false);
-  } catch(e) { console.error(e); mostrarEstadoForo(foroId,'Error guardando','err'); }
+    const ahora = new Date();
+    const fechaStr = ahora.toISOString().split('T')[0];
+    if (tipo === 'qrqc') {
+      const dup = await db.collection('asistenciasQRQC')
+        .where('foroId','==',id).where('numeroEmpleado','==',String(usuarioActual.numero)).where('fechaStr','==',fechaStr).get();
+      if (!dup.empty) {
+        estadoEl.style.color='var(--rojo)'; estadoEl.innerText='⚠ Ya registraste asistencia en este foro hoy.';
+        btn.disabled=false; btn.innerText='✅ Confirmar mi Asistencia'; return;
+      }
+      await db.collection('asistenciasQRQC').add({
+        foroId:id, foroNombre:nombre, foroNivel:nivel,
+        numeroEmpleado:String(usuarioActual.numero), nombreEmpleado:usuarioActual.nombre,
+        fecha:ahora, fechaStr:fechaStr
+      });
+      const tapEl=document.getElementById('estado-qrqc-tap-'+id);
+      if (tapEl) { tapEl.style.display='block'; tapEl.style.color='var(--verde)'; tapEl.innerText='✅ Asistencia registrada'; }
+    } else {
+      const dup = await db.collection('asistenciasPSR')
+        .where('proyectoId','==',id).where('numeroEmpleado','==',String(usuarioActual.numero)).where('fechaStr','==',fechaStr).get();
+      if (!dup.empty) {
+        estadoEl.style.color='var(--rojo)'; estadoEl.innerText='⚠ Ya registraste asistencia en este proyecto hoy.';
+        btn.disabled=false; btn.innerText='✅ Confirmar mi Asistencia'; return;
+      }
+      await db.collection('asistenciasPSR').add({
+        proyectoId:id, proyectoNombre:nombre, tier:tier,
+        numeroEmpleado:String(usuarioActual.numero), nombreEmpleado:usuarioActual.nombre,
+        fecha:ahora, fechaStr:fechaStr
+      });
+      const tapEl=document.getElementById('estado-psr-tap-'+id);
+      if (tapEl) { tapEl.style.display='block'; tapEl.style.color='var(--verde)'; tapEl.innerText='✅ Asistencia registrada'; }
+    }
+    estadoEl.style.color='var(--verde)'; estadoEl.innerText='✅ ¡Asistencia guardada correctamente!';
+    btn.innerText='✅ Registrado';
+    setTimeout(() => cerrarModalConfirmar(), 1200);
+  } catch(e) {
+    console.error(e);
+    estadoEl.style.color='var(--rojo)'; estadoEl.innerText='❌ Error al guardar. Intenta de nuevo.';
+    btn.disabled=false; btn.innerText='✅ Confirmar mi Asistencia';
+  }
 }
 
-function mostrarEstadoForo(foroId,msg,tipo) {
-  const el=document.getElementById('estado-foro-'+foroId); el.className='status '+tipo; el.innerText=msg;
+async function cargarAdminPSR() { await renderAdminListaProyectos(); }
+
+async function renderAdminListaProyectos() {
+  const lista=document.getElementById('p-listaProyectosAdmin');
+  lista.innerHTML='Cargando...';
+  const snap=await db.collection('proyectosPSR').orderBy('nombre').get();
+  lista.innerHTML='';
+  if (snap.empty) { lista.innerHTML='<p style="color:var(--texto-suave)">No hay proyectos</p>'; return; }
+  snap.docs.forEach(doc=>{
+    const d=doc.data(); const tn=d.tier?d.tier.replace('Tier ',''):'';
+    lista.innerHTML+=`<div class="admin-psr-proyecto-row">
+      <div><strong>${d.nombre}</strong>
+        <div style="display:flex;gap:6px;align-items:center;margin-top:3px;">${tn?`<span class="tier-badge tier-${tn}">${d.tier}</span>`:''}</div>
+      </div>
+      <button class="btn btn-rojo btn-sm" onclick="eliminarProyecto('${doc.id}')">✕ Eliminar</button>
+    </div>`;
+  });
 }
 
-// ── QRQC ADMIN ────────────────────────────────────────────────────────────────
+async function agregarProyecto() {
+  const nombre=document.getElementById('p-nuevoProyecto').value.trim();
+  const tier=document.getElementById('p-nuevoTier').value;
+  const estado=document.getElementById('p-estadoProyecto');
+  if (!nombre) { estado.innerText='Ingresa nombre del proyecto'; return; }
+  await db.collection('proyectosPSR').add({nombre,tier,creadoEn:new Date()});
+  estado.innerText='✅ Proyecto agregado';
+  document.getElementById('p-nuevoProyecto').value=''; document.getElementById('p-nuevoTier').value='';
+  await cargarProyectosPSR(); await cargarAdminPSR();
+}
 
-async function cargarForosSelectAdmin() {
-  const select=document.getElementById('q-foroDestino');
-  if (!select) return;
-  select.innerHTML='<option value="">Selecciona foro</option>';
-  const snap=await db.collection('forosQRQC').orderBy('nivel').get();
-  snap.forEach(doc=>{ const d=doc.data(); const opt=document.createElement('option'); opt.value=doc.id; opt.textContent=`[${d.nivel}] ${d.nombre}`; select.appendChild(opt); });
+async function eliminarProyecto(id) {
+  if (!confirm('¿Eliminar este proyecto?')) return;
+  await db.collection('proyectosPSR').doc(id).delete();
+  await cargarProyectosPSR(); await cargarAdminPSR();
+}
+
+async function verHistorialPSR() {
+  const historial=document.getElementById('p-historial');
+  const fecha=document.getElementById('p-filtroFecha').value;
+  historial.innerHTML='Cargando...';
+  let query=db.collection('asistenciasPSR').orderBy('fecha','desc');
+  if (fecha) query=query.where('fechaStr','==',fecha);
+  const snap=await query.limit(200).get();
+  historial.innerHTML='';
+  if (snap.empty) { historial.innerHTML='<p style="color:var(--texto-suave)">Sin registros</p>'; return; }
+  snap.forEach(doc=>{
+    const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
+    const tn=d.tier?d.tier.replace('Tier ',''):'';
+    historial.innerHTML+=`<div class="historial-item" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:160px;">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <strong>${d.proyectoNombre}</strong>${tn?`<span class="tier-badge tier-${tn}">${d.tier}</span>`:''}
+        </div>
+        <div style="font-size:12px;color:var(--texto-suave);margin-top:3px;">${f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:13px;font-weight:700;color:var(--texto);">${d.nombreEmpleado||'—'}</div>
+        <div style="font-size:12px;color:var(--texto-suave);"># ${d.numeroEmpleado||'—'}</div>
+      </div>
+    </div>`;
+  });
+}
+
+async function exportarPSRExcel() {
+  const snap=await db.collection('asistenciasPSR').orderBy('fecha','desc').get();
+  let datos=[];
+  snap.forEach(doc=>{
+    const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
+    datos.push({ fecha:f?f.toLocaleDateString():'', hora:f?f.toLocaleTimeString():'', proyecto:d.proyectoNombre, tier:d.tier||'', numero_empleado:d.numeroEmpleado, nombre_empleado:d.nombreEmpleado });
+  });
+  const ws=XLSX.utils.json_to_sheet(datos); const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Asistencias PSR'); XLSX.writeFile(wb,'asistencias_psr.xlsx');
 }
 
 async function cargarAdminListaForos() {
@@ -1394,21 +1200,13 @@ async function cargarAdminListaForos() {
   const snap=await db.collection('forosQRQC').orderBy('nivel').get();
   lista.innerHTML='';
   if (snap.empty) { lista.innerHTML='<p style="color:var(--texto-suave)">No hay foros</p>'; return; }
-  for (const doc of snap.docs) {
+  snap.docs.forEach(doc=>{
     const d=doc.data(); const nc='nivel-'+d.nivel.toLowerCase();
-    const asSnap=await db.collection('forosQRQC').doc(doc.id).collection('asistentes').get();
     lista.innerHTML+=`<div class="admin-psr-proyecto-row">
-      <div>
-        <span class="nivel-badge ${nc}">${d.nivel}</span>
-        <strong style="margin-left:6px;">${d.nombre}</strong>
-        <div style="font-size:12px;color:var(--texto-suave);margin-top:3px;">${asSnap.size} asistente${asSnap.size!==1?'s':''}</div>
-      </div>
-      <div style="display:flex;gap:6px;">
-        <button class="btn btn-morado btn-sm" onclick="abrirModalAsistentesQRQC('${doc.id}','${d.nombre.replace(/'/g,"\\'")}','${d.nivel}')">👥 Gestionar</button>
-        <button class="btn btn-rojo btn-sm" onclick="eliminarForo('${doc.id}')">✕</button>
-      </div>
+      <div><span class="nivel-badge ${nc}">${d.nivel}</span><strong style="margin-left:6px;">${d.nombre}</strong></div>
+      <button class="btn btn-rojo btn-sm" onclick="eliminarForo('${doc.id}')">✕ Eliminar</button>
     </div>`;
-  }
+  });
 }
 
 async function agregarForo() {
@@ -1419,67 +1217,14 @@ async function agregarForo() {
   await db.collection('forosQRQC').add({nombre,nivel,creadoEn:new Date()});
   estado.innerText='✅ Foro agregado';
   document.getElementById('q-nuevoNombre').value='';
-  await cargarForosQRQC(); await cargarAdminListaForos(); await cargarForosSelectAdmin();
-}
-
-async function eliminarForo(foroId) {
-  if (!confirm('¿Eliminar este foro y todos sus asistentes?')) return;
-  const asSnap=await db.collection('forosQRQC').doc(foroId).collection('asistentes').get();
-  for (const doc of asSnap.docs) await doc.ref.delete();
-  await db.collection('forosQRQC').doc(foroId).delete();
   await cargarForosQRQC(); await cargarAdminListaForos();
 }
 
-// ── MODAL ASISTENTES QRQC ─────────────────────────────────────────────────────
-
-async function abrirModalAsistentesQRQC(foroId,foroNombre,foroNivel) {
-  _modalQRQCForoId=foroId; _modalQRQCForoNom=foroNombre;
-  const nc='nivel-'+foroNivel.toLowerCase();
-  document.getElementById('mqrqc-titulo').innerHTML=`<span class="nivel-badge ${nc}" style="font-size:14px;">${foroNivel}</span> ${foroNombre}`;
-  document.getElementById('mqrqc-subtitulo').innerText='Gestión de asistentes del foro';
-  document.getElementById('mqrqc-nombre').value=''; document.getElementById('mqrqc-cargo').value='';
-  document.getElementById('mqrqc-estado').innerText='';
-  document.getElementById('modalAsistentesQRQC').classList.add('abierto');
-  await cargarListaModalQRQC();
+async function eliminarForo(foroId) {
+  if (!confirm('¿Eliminar este foro?')) return;
+  await db.collection('forosQRQC').doc(foroId).delete();
+  await cargarForosQRQC(); await cargarAdminListaForos();
 }
-
-function cerrarModalAsistentesQRQC() {
-  document.getElementById('modalAsistentesQRQC').classList.remove('abierto');
-  cargarAdminListaForos();
-}
-
-async function cargarListaModalQRQC() {
-  const lista=document.getElementById('mqrqc-lista');
-  lista.innerHTML='Cargando...';
-  const snap=await db.collection('forosQRQC').doc(_modalQRQCForoId).collection('asistentes').orderBy('nombre').get();
-  lista.innerHTML='';
-  if (snap.empty) { lista.innerHTML='<p style="color:var(--texto-suave);font-size:13px;padding:10px 0;">Sin asistentes aún.</p>'; return; }
-  snap.forEach(doc=>{ const d=doc.data();
-    lista.innerHTML+=`<div class="persona-admin-row">
-      <div style="flex:1;"><div class="persona-admin-nombre">${d.nombre}</div>${d.cargo?`<div class="persona-admin-cargo">${d.cargo}</div>`:''}</div>
-      <button class="btn btn-rojo btn-sm" onclick="eliminarAsistenteQRQC('${doc.id}')">🗑 Eliminar</button>
-    </div>`;
-  });
-}
-
-async function eliminarAsistenteQRQC(asistenteId) {
-  if (!confirm('¿Eliminar este asistente?')) return;
-  await db.collection('forosQRQC').doc(_modalQRQCForoId).collection('asistentes').doc(asistenteId).delete();
-  await cargarListaModalQRQC();
-}
-
-async function agregarAsistenteDesdeModal() {
-  const nombre=document.getElementById('mqrqc-nombre').value.trim();
-  const cargo=document.getElementById('mqrqc-cargo').value.trim();
-  const estado=document.getElementById('mqrqc-estado');
-  if (!nombre) { estado.style.color='var(--rojo)'; estado.innerText='Ingresa el nombre'; return; }
-  await db.collection('forosQRQC').doc(_modalQRQCForoId).collection('asistentes').add({nombre,cargo,creadoEn:new Date()});
-  estado.style.color='var(--verde)'; estado.innerText='✅ Asistente agregado';
-  document.getElementById('mqrqc-nombre').value=''; document.getElementById('mqrqc-cargo').value='';
-  await cargarListaModalQRQC();
-}
-
-// ── HISTORIAL QRQC ────────────────────────────────────────────────────────────
 
 async function verHistorialQRQC() {
   const historial=document.getElementById('q-historial');
@@ -1489,24 +1234,22 @@ async function verHistorialQRQC() {
   let query=db.collection('asistenciasQRQC').orderBy('fecha','desc');
   if (fecha) query=query.where('fechaStr','==',fecha);
   if (nivel) query=query.where('foroNivel','==',nivel);
-  const snap=await query.limit(100).get();
+  const snap=await query.limit(200).get();
   historial.innerHTML='';
   if (snap.empty) { historial.innerHTML='<p style="color:var(--texto-suave)">Sin registros</p>'; return; }
   snap.forEach(doc=>{
     const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
     const nc='nivel-'+(d.foroNivel||'').toLowerCase();
-    const pct=d.total>0?Math.round((d.totalPresentes/d.total)*100):0;
-    historial.innerHTML+=`<div class="historial-item">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-        <span class="nivel-badge ${nc}">${d.foroNivel}</span><strong>${d.foroNombre}</strong>
-        <span style="font-size:11px;color:var(--texto-suave);margin-left:auto;">${f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''}</span>
+    historial.innerHTML+=`<div class="historial-item" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:160px;">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span class="nivel-badge ${nc}">${d.foroNivel}</span><strong>${d.foroNombre}</strong>
+        </div>
+        <div style="font-size:12px;color:var(--texto-suave);margin-top:3px;">${f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''}</div>
       </div>
-      <div style="font-size:12px;color:var(--texto-suave);">
-        ${d.totalPresentes}/${d.total} presentes (${pct}%) · Registrado por: <strong>${d.registradorNombre||d.registradorNumero||'—'}</strong>
-      </div>
-      <div style="margin-top:5px;">
-        ${(d.presentes||[]).map(p=>`<span style="font-size:11px;background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✓ ${p.nombre}</span>`).join('')}
-        ${(d.ausentes||[]).map(p=>`<span style="font-size:11px;background:#fee2e2;color:#b91c1c;border-radius:4px;padding:2px 7px;margin:2px;display:inline-block;">✗ ${p.nombre}</span>`).join('')}
+      <div style="text-align:right;">
+        <div style="font-size:13px;font-weight:700;color:var(--texto);">${d.nombreEmpleado||'—'}</div>
+        <div style="font-size:12px;color:var(--texto-suave);"># ${d.numeroEmpleado||'—'}</div>
       </div>
     </div>`;
   });
@@ -1515,8 +1258,10 @@ async function verHistorialQRQC() {
 async function exportarQRQCExcel() {
   const snap=await db.collection('asistenciasQRQC').orderBy('fecha','desc').get();
   let datos=[];
-  snap.forEach(doc=>{ const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
-    datos.push({foro:d.foroNombre,nivel:d.foroNivel,presentes_total:d.totalPresentes,total:d.total, presentes:(d.presentes||[]).map(p=>p.nombre).join(', '),ausentes:(d.ausentes||[]).map(p=>p.nombre).join(', '),fecha:f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''}); });
+  snap.forEach(doc=>{
+    const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
+    datos.push({ fecha:f?f.toLocaleDateString():'', hora:f?f.toLocaleTimeString():'', foro:d.foroNombre, nivel:d.foroNivel, numero_empleado:d.numeroEmpleado, nombre_empleado:d.nombreEmpleado });
+  });
   const ws=XLSX.utils.json_to_sheet(datos); const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'Asistencias QRQC'); XLSX.writeFile(wb,'asistencias_qrqc.xlsx');
 }
