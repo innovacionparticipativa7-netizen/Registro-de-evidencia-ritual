@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Generador de QR — Registro de Asistencia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#1e3a8a;--azul-medio:#2563eb;--amarillo:#FACC15;--verde:#16a34a;--gris-fondo:#f1f5f9;--gris-borde:#e2e8f0;--texto:#0f172a;--texto-suave:#64748b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Barlow',sans-serif;background:var(--gris-fondo);min-height:100vh;}
+.header{background:linear-gradient(135deg,var(--azul) 0%,#1e40af 100%);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+.header-logo{width:38px;height:38px;background:var(--amarillo);border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--azul);}
+.header-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;color:white;letter-spacing:1px;}
+.header-sub{font-size:11px;color:rgba(255,255,255,0.45);margin-top:1px;}
+.container{max-width:1200px;margin:0 auto;padding:24px 20px;}
+.filtros{background:white;border-radius:14px;padding:18px 22px;box-shadow:0 2px 12px rgba(0,0,0,0.07);margin-bottom:24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.filtros label{font-size:11px;font-weight:700;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.5px;}
+select,input[type="text"]{padding:9px 13px;border:1.5px solid var(--gris-borde);border-radius:9px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--texto);background:white;}
+select:focus,input:focus{outline:none;border-color:var(--azul-medio);}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border:none;border-radius:9px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;text-transform:uppercase;letter-spacing:.5px;}
+.btn-azul{background:var(--azul-medio);color:white;}.btn-azul:hover{background:var(--azul);}
+.btn-verde{background:var(--verde);color:white;}.btn-verde:hover{background:#15803d;}
+.btn-outline{background:transparent;border:2px solid var(--gris-borde);color:var(--texto-suave);}.btn-outline:hover{border-color:var(--azul-medio);color:var(--azul-medio);}
+.grid-qr{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
+.qr-card{background:white;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:20px;text-align:center;border:2px solid var(--gris-borde);transition:.2s;}
+.qr-card:hover{border-color:var(--azul-medio);box-shadow:0 4px 18px rgba(37,99,235,0.12);}
+.qr-card.qrqc-card:hover{border-color:#7c3aed;}
+.nivel-badge{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;text-transform:uppercase;display:inline-block;margin-bottom:8px;}
+.nivel-n3{background:#fef3c7;color:#92400e;}
+.nivel-n2{background:#dbeafe;color:#1e40af;}
+.nivel-n1{background:#dcfce7;color:#15803d;}
+.nivel-psr{background:#ede9fe;color:#5b21b6;}
+.qr-foro-nombre{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--texto);margin-bottom:14px;min-height:40px;display:flex;align-items:center;justify-content:center;}
+.qr-canvas-wrap{display:flex;justify-content:center;margin-bottom:14px;}
+.qr-canvas-wrap canvas,.qr-canvas-wrap img{border-radius:6px;}
+.qr-url{font-size:10px;color:var(--texto-suave);word-break:break-all;margin-bottom:12px;background:var(--gris-fondo);border-radius:6px;padding:6px 8px;text-align:left;}
+.qr-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.cargando{text-align:center;padding:60px 20px;font-family:'Barlow Condensed',sans-serif;font-size:18px;color:var(--texto-suave);letter-spacing:1px;}
+@media print{.header,.filtros,.no-print{display:none !important;}body{background:white;}.container{padding:0;}.grid-qr{grid-template-columns:repeat(3,1fr);gap:12px;}.qr-card{break-inside:avoid;box-shadow:none;border:1.5px solid #ddd;}.qr-btns,.qr-url{display:none;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="header-logo">RA</div>
+    <div><div class="header-title">GENERADOR DE QR</div><div class="header-sub">Registro de Asistencia · QRQC & PSR</div></div>
+  </div>
+  <div style="display:flex;gap:10px;" class="no-print">
+    <button class="btn btn-verde" onclick="imprimirTodo()">🖨️ Imprimir Todo</button>
+    <a href="index.html" class="btn btn-outline" style="text-decoration:none;">← Volver</a>
+  </div>
+</div>
+<div class="container">
+  <div class="filtros no-print">
+    <div><label>Módulo</label><br><select id="filtroModulo" onchange="aplicarFiltros()"><option value="">Todos</option><option value="qrqc">QRQC</option><option value="psr">PSR</option></select></div>
+    <div><label>Nivel QRQC</label><br><select id="filtroNivel" onchange="aplicarFiltros()"><option value="">Todos</option><option value="N3">N3</option><option value="N2">N2</option><option value="N1">N1</option></select></div>
+    <div><label>Buscar nombre</label><br><input type="text" id="filtroBuscar" placeholder="Escribe para filtrar..." oninput="aplicarFiltros()"></div>
+    <div style="margin-left:auto;"><label>&nbsp;</label><br><button class="btn btn-outline" onclick="limpiarFiltros()">✕ Limpiar</button></div>
+  </div>
+  <div style="font-size:13px;color:var(--texto-suave);margin-bottom:16px;" id="contador" class="no-print"></div>
+  <div id="gridQR" class="grid-qr"><div class="cargando">⏳ Cargando foros desde Firebase...</div></div>
+</div>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",projectId:"registro-de-evidencia-ip"});
+const db=firebase.firestore();
+const BASE_URL="https://innovacionparticipativa7-netizen.github.io/Registro-de-evidencia-ritual/";
+let todosLosItems=[];
+
+async function cargarTodo(){
+  const[snapQRQC,snapPSR]=await Promise.all([db.collection('forosQRQC').orderBy('nivel').get(),db.collection('proyectosPSR').orderBy('nombre').get()]);
+  todosLosItems=[];
+  snapQRQC.forEach(doc=>{const d=doc.data();todosLosItems.push({tipo:'qrqc',id:doc.id,nombre:d.nombre,nivel:d.nivel,tier:''});});
+  snapPSR.forEach(doc=>{const d=doc.data();todosLosItems.push({tipo:'psr',id:doc.id,nombre:d.nombre,nivel:'',tier:d.tier||''});});
+  aplicarFiltros();
+}
+
+function aplicarFiltros(){
+  const modulo=document.getElementById('filtroModulo').value;
+  const nivel=document.getElementById('filtroNivel').value;
+  const buscar=document.getElementById('filtroBuscar').value.toLowerCase();
+  let lista=todosLosItems.filter(item=>{
+    if(modulo&&item.tipo!==modulo)return false;
+    if(nivel&&item.nivel!==nivel)return false;
+    if(buscar&&!item.nombre.toLowerCase().includes(buscar))return false;
+    return true;
+  });
+  document.getElementById('contador').innerText=`Mostrando ${lista.length} de ${todosLosItems.length} elementos`;
+  renderizarGrid(lista);
+}
+
+function limpiarFiltros(){document.getElementById('filtroModulo').value='';document.getElementById('filtroNivel').value='';document.getElementById('filtroBuscar').value='';aplicarFiltros();}
+
+function renderizarGrid(lista){
+  const grid=document.getElementById('gridQR');grid.innerHTML='';
+  if(!lista.length){grid.innerHTML='<div class="cargando">Sin resultados</div>';return;}
+  lista.forEach(item=>{
+    const url=construirURL(item);
+    const card=document.createElement('div');
+    card.className='qr-card'+(item.tipo==='qrqc'?' qrqc-card':'');
+    card.id='card-'+item.id;
+    const badgeClass=item.tipo==='psr'?'nivel-psr':'nivel-'+item.nivel.toLowerCase();
+    const badgeText=item.tipo==='psr'?(item.tier||'PSR'):item.nivel;
+    const modIco=item.tipo==='psr'?'📋':'🔍';
+    card.innerHTML=`<span class="nivel-badge ${badgeClass}">${modIco} ${badgeText}</span><div class="qr-foro-nombre">${item.nombre}</div><div class="qr-canvas-wrap" id="qr-${item.id}"></div><div class="qr-url">${url}</div><div class="qr-btns no-print"><button class="btn btn-azul" style="font-size:12px;padding:7px 12px;" onclick="descargarQR('${item.id}','${item.nombre.replace(/'/g,"\\'")}')">⬇ Descargar</button><button class="btn btn-outline" style="font-size:12px;padding:7px 12px;" onclick="imprimirQR('${item.id}')">🖨️ Imprimir</button></div>`;
+    grid.appendChild(card);
+    new QRCode(document.getElementById('qr-'+item.id),{text:url,width:180,height:180,colorDark:'#0f172a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+  });
+}
+
+function construirURL(item){
+  if(item.tipo==='qrqc')return`${BASE_URL}?modulo=qrqc&foroId=${item.id}&foroNombre=${encodeURIComponent(item.nombre)}&foroNivel=${encodeURIComponent(item.nivel)}`;
+  return`${BASE_URL}?modulo=psr&proyectoId=${item.id}&proyectoNombre=${encodeURIComponent(item.nombre)}&tier=${encodeURIComponent(item.tier)}`;
+}
+
+function descargarQR(id,nombre){
+  const wrap=document.getElementById('qr-'+id);const canvas=wrap.querySelector('canvas');
+  if(!canvas){alert('QR no generado aún');return;}
+  const link=document.createElement('a');link.download='QR_'+nombre.replace(/[^a-zA-Z0-9]/g,'_')+'.png';link.href=canvas.toDataURL('image/png');link.click();
+}
+
+function imprimirQR(id){
+  const card=document.getElementById('card-'+id);
+  const wrap=card.querySelector('.qr-canvas-wrap');const canvas=wrap.querySelector('canvas');
+  if(!canvas){alert('QR no generado aún');return;}
+  const nombre=card.querySelector('.qr-foro-nombre').innerText;
+  const badgeHtml=card.querySelector('.nivel-badge').outerHTML;
+  const imgSrc=canvas.toDataURL('image/png');
+  const urlText=card.querySelector('.qr-url').innerText;
+  const w=window.open('','_blank','width=400,height=520');
+  w.document.write(`<!DOCTYPE html><html><head><style>body{font-family:Arial,sans-serif;text-align:center;padding:30px;}.badge{display:inline-block;font-size:13px;font-weight:700;padding:4px 12px;border-radius:6px;margin-bottom:10px;}.nombre{font-size:17px;font-weight:700;margin-bottom:14px;}img{border-radius:8px;}.url{font-size:9px;color:#888;margin-top:10px;word-break:break-all;}.footer{margin-top:16px;font-size:11px;color:#aaa;}</style></head><body>${badgeHtml}<div class="nombre">${nombre}</div><img src="${imgSrc}" width="200" height="200"><div class="url">${urlText}</div><div class="footer">Escanea para registrar tu asistencia</div><script>window.onload=()=>{window.print();}<\/script></body></html>`);
+  w.document.close();
+}
+
+function imprimirTodo(){window.print();}
+cargarTodo();
+</script>
+</body>
+</html>
