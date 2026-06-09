@@ -24,198 +24,93 @@
   --texto: #0f172a;
   --texto-suave: #64748b;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Barlow', sans-serif;
-  background: var(--gris-fondo);
-  min-height: 100vh;
-}
-
+body { font-family: 'Barlow', sans-serif; background: var(--gris-fondo); min-height: 100vh; }
 #pantallaBienvenida {
   min-height: 100vh;
   background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1e40af 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 30px 20px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px 20px;
 }
-
 .bienvenida-logo {
-  width: 72px; height: 72px;
-  background: var(--amarillo);
-  border-radius: 18px;
+  width: 72px; height: 72px; background: var(--amarillo); border-radius: 18px;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900; font-size: 32px; color: var(--azul);
-  margin-bottom: 20px;
-  box-shadow: 0 8px 30px rgba(250,204,21,0.4);
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 32px; color: var(--azul);
+  margin-bottom: 20px; box-shadow: 0 8px 30px rgba(250,204,21,0.4);
 }
-
 .bienvenida-titulo {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 30px; font-weight: 900;
-  color: white; text-align: center;
-  letter-spacing: 2px; text-transform: uppercase;
-  margin-bottom: 6px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 900;
+  color: white; text-align: center; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px;
 }
-
-.bienvenida-sub {
-  font-size: 14px; color: rgba(255,255,255,0.45);
-  text-align: center; margin-bottom: 50px;
-  letter-spacing: 1px;
-}
-
+.bienvenida-sub { font-size: 14px; color: rgba(255,255,255,0.45); text-align: center; margin-bottom: 50px; letter-spacing: 1px; }
 .bienvenida-pregunta {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 17px; font-weight: 600;
-  color: rgba(255,255,255,0.6);
-  text-align: center; margin-bottom: 24px;
-  text-transform: uppercase; letter-spacing: 1px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 600;
+  color: rgba(255,255,255,0.6); text-align: center; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px;
 }
-
-.bienvenida-opciones {
-  display: flex; flex-direction: column;
-  gap: 14px; width: 100%; max-width: 420px;
-}
-
+.bienvenida-opciones { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 420px; }
 .opcion-btn {
-  display: flex; align-items: center; gap: 18px;
-  padding: 20px 24px; border-radius: 16px;
-  border: 2px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.06);
-  cursor: pointer; transition: all .25s;
-  text-align: left; backdrop-filter: blur(6px);
+  display: flex; align-items: center; gap: 18px; padding: 20px 24px; border-radius: 16px;
+  border: 2px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.06);
+  cursor: pointer; transition: all .25s; text-align: left; backdrop-filter: blur(6px);
 }
-.opcion-btn:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.12);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
+.opcion-btn:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 .opcion-btn.rituales:hover { border-color: #facc15; box-shadow: 0 10px 30px rgba(250,204,21,0.2); }
 .opcion-btn.psr:hover      { border-color: #60a5fa; box-shadow: 0 10px 30px rgba(96,165,250,0.2); }
 .opcion-btn.qrqc:hover     { border-color: #a78bfa; box-shadow: 0 10px 30px rgba(167,139,250,0.2); }
-
 .opcion-icono { font-size: 30px; flex-shrink: 0; }
-.opcion-info-titulo {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 19px; font-weight: 700; color: white; letter-spacing: .5px;
-}
+.opcion-info-titulo { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 700; color: white; letter-spacing: .5px; }
 .opcion-info-desc { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 3px; }
-
 #appPrincipal { display: none; }
-
 .app-header {
   background: linear-gradient(135deg, var(--azul) 0%, #1e40af 100%);
-  padding: 13px 20px;
-  display: flex; align-items: center; justify-content: space-between;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  padding: 13px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 .header-left { display: flex; align-items: center; gap: 12px; }
 .header-logo {
-  width: 38px; height: 38px;
-  background: var(--amarillo); border-radius: 9px;
+  width: 38px; height: 38px; background: var(--amarillo); border-radius: 9px;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900; font-size: 18px; color: var(--azul);
-  cursor: pointer; flex-shrink: 0;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 18px; color: var(--azul); cursor: pointer; flex-shrink: 0;
 }
 .header-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 17px; color: white; letter-spacing: 1px; }
 .header-sub   { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 1px; }
-
 .btn-admin-discreto {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.5);
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; font-weight: 600;
-  padding: 7px 14px; border-radius: 8px;
-  cursor: pointer; letter-spacing: .5px; text-transform: uppercase;
-  transition: .2s; display: flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5);
+  font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600;
+  padding: 7px 14px; border-radius: 8px; cursor: pointer; letter-spacing: .5px; text-transform: uppercase; transition: .2s; display: flex; align-items: center; gap: 5px;
 }
 .btn-admin-discreto:hover { background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.3); }
-
-.tabs-nav {
-  background: white; display: flex;
-  border-bottom: 3px solid var(--gris-borde);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  overflow-x: auto;
-}
+.tabs-nav { background: white; display: flex; border-bottom: 3px solid var(--gris-borde); box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow-x: auto; }
 .tab-btn {
-  flex: 1; min-width: 110px; padding: 14px 20px;
-  border: none; background: none;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 15px; font-weight: 700; letter-spacing: 1px;
-  color: var(--texto-suave); cursor: pointer;
-  border-bottom: 3px solid transparent; margin-bottom: -3px;
-  transition: all .2s; text-transform: uppercase;
+  flex: 1; min-width: 110px; padding: 14px 20px; border: none; background: none;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 1px;
+  color: var(--texto-suave); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -3px; transition: all .2s; text-transform: uppercase;
 }
 .tab-btn:hover { color: var(--texto); background: var(--gris-fondo); }
 .tab-btn.active-rituales { color: #92400e; border-bottom-color: var(--amarillo); background: #fffbeb; }
 .tab-btn.active-psr      { color: var(--azul); border-bottom-color: var(--azul-medio); background: #eff6ff; }
 .tab-btn.active-qrqc     { color: #5b21b6; border-bottom-color: #7c3aed; background: #f5f3ff; }
-
 .admin-panel-outer { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
 .admin-panel-body {
-  display: none; background: white;
-  border: 1.5px solid var(--gris-borde);
-  border-radius: 0 0 12px 12px; border-top: none;
-  padding: 20px 24px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-  margin-bottom: 4px;
+  display: none; background: white; border: 1.5px solid var(--gris-borde);
+  border-radius: 0 0 12px 12px; border-top: none; padding: 20px 24px; box-shadow: 0 6px 16px rgba(0,0,0,0.08); margin-bottom: 4px;
 }
 .admin-panel-body.abierto { display: block; }
-
 .modulo { display: none; padding: 22px 20px; max-width: 1300px; margin: 0 auto; }
 .modulo.activo { display: block; }
-
-.card {
-  background: white; border-radius: 14px; padding: 22px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 20px;
-}
-.card-titulo {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 19px; font-weight: 700; color: var(--texto);
-  margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
-}
-
-.badge {
-  font-size: 11px; font-weight: 700; font-family: 'Barlow', sans-serif;
-  padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: .5px;
-}
+.card { background: white; border-radius: 14px; padding: 22px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 20px; }
+.card-titulo { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 700; color: var(--texto); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.badge { font-size: 11px; font-weight: 700; font-family: 'Barlow', sans-serif; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: .5px; }
 .badge-amarillo { background: #fef3c7; color: #92400e; }
 .badge-azul     { background: #dbeafe; color: var(--azul); }
 .badge-morado   { background: #ede9fe; color: #5b21b6; }
 .badge-verde    { background: #dcfce7; color: #15803d; }
-
 .campo { margin-bottom: 14px; }
-.campo label {
-  display: block; font-size: 11px; font-weight: 600;
-  color: var(--texto-suave); text-transform: uppercase;
-  letter-spacing: .5px; margin-bottom: 6px;
+.campo label { display: block; font-size: 11px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+input[type="text"], input[type="number"], input[type="file"], input[type="date"], select, textarea {
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--gris-borde); border-radius: 9px;
+  font-family: 'Barlow', sans-serif; font-size: 14px; color: var(--texto); background: white; transition: .2s;
 }
-input[type="text"], input[type="number"], input[type="file"],
-input[type="date"], select, textarea {
-  width: 100%; padding: 11px 14px;
-  border: 1.5px solid var(--gris-borde); border-radius: 9px;
-  font-family: 'Barlow', sans-serif; font-size: 14px;
-  color: var(--texto); background: white; transition: .2s;
-}
-input:focus, select:focus, textarea:focus {
-  outline: none; border-color: var(--azul-medio);
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
-}
-
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 12px 22px; border: none; border-radius: 10px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 15px; font-weight: 700; letter-spacing: .5px;
-  cursor: pointer; transition: .2s; text-transform: uppercase;
-}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--azul-medio); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 22px; border: none; border-radius: 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: .5px; cursor: pointer; transition: .2s; text-transform: uppercase; }
 .btn-full { width: 100%; }
 .btn-amarillo { background: var(--amarillo); color: #78350f; }
 .btn-amarillo:hover { background: #f59e0b; }
@@ -232,147 +127,68 @@ input:focus, select:focus, textarea:focus {
 .btn-outline { background: transparent; border: 2px solid var(--gris-borde); color: var(--texto-suave); }
 .btn-outline:hover { border-color: var(--azul-medio); color: var(--azul-medio); }
 .btn-sm { padding: 7px 14px; font-size: 13px; }
-
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
 @media(max-width:760px) { .grid2,.grid3 { grid-template-columns: 1fr; } }
-
 .status { margin-top: 12px; font-weight: 600; font-size: 14px; text-align: center; padding: 10px; border-radius: 8px; }
 .status.ok   { background: #dcfce7; color: #15803d; }
 .status.err  { background: #fee2e2; color: #b91c1c; }
 .status.info { background: #dbeafe; color: var(--azul); }
-
-.semaforo-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 9px 12px; border-bottom: 1px solid var(--gris-borde); font-size: 14px;
-}
+.semaforo-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; border-bottom: 1px solid var(--gris-borde); font-size: 14px; }
 .semaforo-item:last-child { border-bottom: none; }
 .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 .dot-verde { background: #16a34a; box-shadow: 0 0 6px #16a34a88; }
 .dot-rojo  { background: #dc2626; box-shadow: 0 0 6px #dc262688; }
-
 .barra-progreso { background: #e2e8f0; border-radius: 99px; overflow: hidden; height: 18px; margin: 10px 0; }
-.barra-fill {
-  height: 100%; background: var(--verde);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; color: white;
-  border-radius: 99px; transition: width .5s;
-}
-
+.barra-fill { height: 100%; background: var(--verde); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; border-radius: 99px; transition: width .5s; }
 .ritual-item { background: var(--gris-fondo); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; }
 .ritual-item img { width: 100%; border-radius: 8px; margin-top: 8px; }
-
 .historial-item { background: var(--gris-fondo); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; font-size: 13px; }
-
-.foro-card {
-  background: white; border-radius: 12px;
-  border: 2px solid var(--gris-borde);
-  overflow: hidden; margin-bottom: 14px; transition: .2s;
-}
+.foro-card { background: white; border-radius: 12px; border: 2px solid var(--gris-borde); overflow: hidden; margin-bottom: 14px; transition: .2s; }
 .foro-card:hover { border-color: #2563eb44; box-shadow: 0 4px 14px rgba(37,99,235,0.1); }
-.foro-tap {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 20px; background: #eff6ff; cursor: pointer;
-  transition: background .15s;
-}
+.foro-tap { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: #eff6ff; cursor: pointer; transition: background .15s; }
 .foro-tap:active { background: #dbeafe; }
 .foro-tap-left { display: flex; align-items: center; gap: 10px; }
 .qrqc-foro-card .foro-tap { background: #f5f3ff; }
 .qrqc-foro-card .foro-tap:active { background: #ede9fe; }
 .qrqc-foro-card:hover { border-color: #7c3aed44; box-shadow: 0 4px 14px rgba(124,58,237,0.1); }
-
-.nivel-badge {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; font-weight: 700;
-  padding: 3px 9px; border-radius: 6px; text-transform: uppercase;
-}
+.nivel-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 6px; text-transform: uppercase; }
 .nivel-n3 { background: #fef3c7; color: #92400e; }
 .nivel-n2 { background: #dbeafe; color: #1e40af; }
 .nivel-n1 { background: #dcfce7; color: #15803d; }
-
 .foro-nombre { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; color: var(--texto); }
 .foro-tap-arrow { font-size: 20px; color: var(--texto-suave); }
-
-.tier-badge {
-  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
-  font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase;
-}
+.tier-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; }
 .tier-1 { background: #fee2e2; color: #b91c1c; }
 .tier-2 { background: #ffedd5; color: #c2410c; }
 .tier-3 { background: #fef9c3; color: #854d0e; }
 .tier-4 { background: #f0fdf4; color: #166534; }
-
 .scroll-box  { max-height: 480px; overflow-y: auto; }
-
-.modulo-desc {
-  background: white; border-radius: 12px; padding: 13px 18px;
-  margin-bottom: 16px; border-left: 5px solid;
-  display: flex; align-items: center; gap: 14px;
-}
+.modulo-desc { background: white; border-radius: 12px; padding: 13px 18px; margin-bottom: 16px; border-left: 5px solid; display: flex; align-items: center; gap: 14px; }
 .modulo-desc.rituales { border-left-color: var(--amarillo); }
 .modulo-desc.psr      { border-left-color: var(--azul-medio); }
 .modulo-desc.qrqc     { border-left-color: #7c3aed; }
 .modulo-desc-icon { font-size: 24px; }
 .modulo-desc-texto h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; }
 .modulo-desc-texto p  { font-size: 12px; color: var(--texto-suave); margin-top: 2px; }
-
-.registrador-banner {
-  background: #f0fdf4; border: 1.5px solid #bbf7d0;
-  border-radius: 10px; padding: 10px 16px;
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 20px;
-}
+.registrador-banner { background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: 10px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .rb-label  { font-size: 11px; color: var(--texto-suave); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
 .rb-nombre { font-size: 14px; font-weight: 700; color: var(--verde); }
-
 .admin-psr-proyectos-lista { max-height: 260px; overflow-y: auto; }
-.admin-psr-proyecto-row {
-  background: var(--gris-fondo); border-radius: 8px;
-  padding: 8px 12px; margin-bottom: 6px;
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
-}
+.admin-psr-proyecto-row { background: var(--gris-fondo); border-radius: 8px; padding: 8px 12px; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .admin-psr-proyecto-row strong { font-size: 13px; }
 .admin-psr-proyecto-row span  { font-size: 12px; color: var(--texto-suave); }
-
-.modal-overlay {
-  display: none; position: fixed; inset: 0; z-index: 9999;
-  background: rgba(0,0,0,0.65); backdrop-filter: blur(5px);
-  align-items: center; justify-content: center;
-}
+.modal-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.65); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
 .modal-overlay.abierto { display: flex; }
-.modal-box {
-  background: white; border-radius: 20px; padding: 36px 30px;
-  width: 100%; max-width: 380px; margin: 20px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.4);
-  animation: popIn .2s ease;
-}
-.modal-confirm {
-  background: white; border-radius: 20px; padding: 32px 28px;
-  width: 100%; max-width: 400px; margin: 20px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.4);
-  animation: popIn .2s ease;
-  text-align: center;
-}
-@keyframes popIn {
-  from { transform: scale(.92); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
-}
+.modal-box { background: white; border-radius: 20px; padding: 36px 30px; width: 100%; max-width: 380px; margin: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.4); animation: popIn .2s ease; }
+.modal-confirm { background: white; border-radius: 20px; padding: 32px 28px; width: 100%; max-width: 400px; margin: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.4); animation: popIn .2s ease; text-align: center; }
+@keyframes popIn { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .modal-icono  { font-size: 40px; text-align: center; margin-bottom: 10px; }
-.modal-titulo {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 24px; font-weight: 900; color: var(--azul);
-  text-align: center; letter-spacing: 1px; margin-bottom: 4px;
-}
+.modal-titulo { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; color: var(--azul); text-align: center; letter-spacing: 1px; margin-bottom: 4px; }
 .modal-sub { font-size: 13px; color: var(--texto-suave); text-align: center; margin-bottom: 24px; }
 .nombre-hint { font-size: 13px; color: var(--azul-medio); font-weight: 600; margin-top: 4px; min-height: 18px; }
-
 .admin-subtabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-.admin-subtab-btn {
-  padding: 8px 16px; border-radius: 8px; border: 2px solid var(--gris-borde);
-  background: none; cursor: pointer; font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
-  color: var(--texto-suave); transition: .2s;
-}
+.admin-subtab-btn { padding: 8px 16px; border-radius: 8px; border: 2px solid var(--gris-borde); background: none; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--texto-suave); transition: .2s; }
 .admin-subtab-btn:hover { border-color: var(--azul-medio); color: var(--azul-medio); }
 .admin-subtab-btn.activo-psr  { background: #eff6ff; border-color: var(--azul-medio); color: var(--azul); }
 .admin-subtab-btn.activo-qrqc { background: #f5f3ff; border-color: #7c3aed; color: #5b21b6; }
@@ -382,7 +198,6 @@ input:focus, select:focus, textarea:focus {
 </head>
 <body>
 
-<!-- PANTALLA BIENVENIDA -->
 <div id="pantallaBienvenida">
   <div class="bienvenida-logo">RA</div>
   <div class="bienvenida-titulo">Registro de Asistencia</div>
@@ -391,29 +206,19 @@ input:focus, select:focus, textarea:focus {
   <div class="bienvenida-opciones">
     <button class="opcion-btn rituales" onclick="entrarModulo('rituales')">
       <div class="opcion-icono">⚡</div>
-      <div>
-        <div class="opcion-info-titulo">Rituales</div>
-        <div class="opcion-info-desc">Registro semanal de rituales por área con evidencia fotográfica</div>
-      </div>
+      <div><div class="opcion-info-titulo">Rituales</div><div class="opcion-info-desc">Registro semanal de rituales por área con evidencia fotográfica</div></div>
     </button>
     <button class="opcion-btn psr" onclick="entrarModulo('psr')">
       <div class="opcion-icono">📋</div>
-      <div>
-        <div class="opcion-info-titulo">PSR</div>
-        <div class="opcion-info-desc">Registra tu asistencia al proyecto PSR seleccionado</div>
-      </div>
+      <div><div class="opcion-info-titulo">PSR</div><div class="opcion-info-desc">Registra tu asistencia al proyecto PSR seleccionado</div></div>
     </button>
     <button class="opcion-btn qrqc" onclick="entrarModulo('qrqc')">
       <div class="opcion-icono">🔍</div>
-      <div>
-        <div class="opcion-info-titulo">QRQC</div>
-        <div class="opcion-info-desc">Registra tu asistencia al foro N3, N2 o N1 seleccionado</div>
-      </div>
+      <div><div class="opcion-info-titulo">QRQC</div><div class="opcion-info-desc">Registra tu asistencia al foro N3, N2 o N1 seleccionado</div></div>
     </button>
   </div>
 </div>
 
-<!-- MODAL LOGIN -->
 <div class="modal-overlay" id="modalLogin">
   <div class="modal-box">
     <div class="modal-icono">🔐</div>
@@ -432,7 +237,6 @@ input:focus, select:focus, textarea:focus {
   </div>
 </div>
 
-<!-- MODAL CONFIRMAR ASISTENCIA -->
 <div class="modal-overlay" id="modalConfirmar">
   <div class="modal-confirm">
     <div style="font-size:50px;margin-bottom:12px;" id="mc-icono">📋</div>
@@ -449,54 +253,37 @@ input:focus, select:focus, textarea:focus {
   </div>
 </div>
 
-<!-- APP PRINCIPAL -->
 <div id="appPrincipal">
-
   <div class="app-header">
     <div class="header-left">
       <div class="header-logo" onclick="volverInicio()" title="Volver al inicio">RA</div>
-      <div>
-        <div class="header-title">CONTROL OPERACIONAL</div>
-        <div class="header-sub">Rituales · PSR · QRQC</div>
-      </div>
+      <div><div class="header-title">CONTROL OPERACIONAL</div><div class="header-sub">Rituales · PSR · QRQC</div></div>
     </div>
     <button class="btn-admin-discreto" onclick="toggleAdminPanel()">⚙ Admin</button>
   </div>
-
   <div class="tabs-nav">
     <button class="tab-btn" id="tab-rituales" onclick="cambiarTab('rituales')">⚡ Rituales</button>
     <button class="tab-btn" id="tab-psr"      onclick="cambiarTab('psr')">📋 PSR</button>
     <button class="tab-btn" id="tab-qrqc"     onclick="cambiarTab('qrqc')">🔍 QRQC</button>
   </div>
-
   <div class="admin-panel-outer">
     <div class="admin-panel-body" id="adminPanelGlobal">
-
-      <!-- Admin Rituales -->
       <div id="adminRituales">
         <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — Rituales</div>
         <div class="grid2">
           <div>
-            <div class="campo">
-              <label>Filtrar por semana</label>
-              <input type="number" id="r-filtroSemana" placeholder="Ej: 12">
-            </div>
+            <div class="campo"><label>Filtrar por semana</label><input type="number" id="r-filtroSemana" placeholder="Ej: 12"></div>
             <button class="btn btn-azul btn-full" onclick="verDashboardRituales()">Ver Semana</button>
             <button class="btn btn-verde btn-full" style="margin-top:8px;" onclick="exportarRitualesExcel()">Exportar Excel</button>
           </div>
           <div>
-            <div class="campo" style="margin-bottom:8px;">
-              <label>Subir Empleados (Excel)</label>
-              <input type="file" id="r-excel" accept=".xlsx,.xls">
-            </div>
+            <div class="campo" style="margin-bottom:8px;"><label>Subir Empleados (Excel)</label><input type="file" id="r-excel" accept=".xlsx,.xls"></div>
             <button class="btn btn-gris btn-full" onclick="subirEmpleadosExcel()">Subir Empleados</button>
             <button class="btn btn-outline btn-full" style="margin-top:8px;" onclick="descargarPlantilla()">Descargar Plantilla</button>
             <div id="r-estadoExcel" style="margin-top:8px;font-size:13px;"></div>
           </div>
         </div>
       </div>
-
-      <!-- Admin PSR -->
       <div id="adminPSR" style="display:none;">
         <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — PSR</div>
         <div class="admin-subtabs">
@@ -507,18 +294,8 @@ input:focus, select:focus, textarea:focus {
           <div class="grid2">
             <div>
               <div style="font-size:12px;font-weight:700;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Agregar Proyecto</div>
-              <div class="campo">
-                <label>Nombre del Proyecto</label>
-                <input type="text" id="p-nuevoProyecto" placeholder="Ej: Buy to Make">
-              </div>
-              <div class="campo">
-                <label>Tier por default</label>
-                <select id="p-nuevoTier">
-                  <option value="">Sin Tier</option>
-                  <option>Tier 1</option><option>Tier 2</option>
-                  <option>Tier 3</option><option>Tier 4</option>
-                </select>
-              </div>
+              <div class="campo"><label>Nombre del Proyecto</label><input type="text" id="p-nuevoProyecto" placeholder="Ej: Buy to Make"></div>
+              <div class="campo"><label>Tier por default</label><select id="p-nuevoTier"><option value="">Sin Tier</option><option>Tier 1</option><option>Tier 2</option><option>Tier 3</option><option>Tier 4</option></select></div>
               <button class="btn btn-verde btn-full" onclick="agregarProyecto()">+ Agregar Proyecto</button>
               <div id="p-estadoProyecto" style="margin-top:8px;font-size:13px;"></div>
               <div style="border-top:2px solid var(--gris-borde);margin:18px 0 14px;"></div>
@@ -532,18 +309,13 @@ input:focus, select:focus, textarea:focus {
         </div>
         <div class="admin-seccion" id="psr-sec-historial">
           <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px;">
-            <div class="campo" style="margin-bottom:0;min-width:180px;">
-              <label>Filtrar por fecha</label>
-              <input type="date" id="p-filtroFecha">
-            </div>
+            <div class="campo" style="margin-bottom:0;min-width:180px;"><label>Filtrar por fecha</label><input type="date" id="p-filtroFecha"></div>
             <button class="btn btn-azul btn-sm" onclick="verHistorialPSR()">Ver Historial</button>
             <button class="btn btn-outline btn-sm" onclick="document.getElementById('p-filtroFecha').value='';verHistorialPSR()">Todos</button>
           </div>
           <div class="scroll-box" id="p-historial"></div>
         </div>
       </div>
-
-      <!-- Admin QRQC -->
       <div id="adminQRQC" style="display:none;">
         <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — QRQC</div>
         <div class="admin-subtabs">
@@ -553,18 +325,8 @@ input:focus, select:focus, textarea:focus {
         <div class="admin-seccion activo" id="qrqc-sec-foros">
           <div class="grid2">
             <div>
-              <div class="campo">
-                <label>Nombre del Foro</label>
-                <input type="text" id="q-nuevoNombre" placeholder="Nombre del foro">
-              </div>
-              <div class="campo">
-                <label>Nivel</label>
-                <select id="q-nuevoNivel">
-                  <option value="N3">N3</option>
-                  <option value="N2">N2</option>
-                  <option value="N1">N1</option>
-                </select>
-              </div>
+              <div class="campo"><label>Nombre del Foro</label><input type="text" id="q-nuevoNombre" placeholder="Nombre del foro"></div>
+              <div class="campo"><label>Nivel</label><select id="q-nuevoNivel"><option value="N3">N3</option><option value="N2">N2</option><option value="N1">N1</option></select></div>
               <button class="btn btn-morado btn-full" onclick="agregarForo()">+ Agregar Foro</button>
               <div id="q-estadoForo" style="margin-top:8px;font-size:13px;"></div>
               <div style="border-top:2px solid var(--gris-borde);margin:16px 0 12px;"></div>
@@ -578,141 +340,51 @@ input:focus, select:focus, textarea:focus {
         </div>
         <div class="admin-seccion" id="qrqc-sec-historial">
           <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px;">
-            <div class="campo" style="margin-bottom:0;min-width:170px;">
-              <label>Filtrar por fecha</label>
-              <input type="date" id="q-filtroFecha">
-            </div>
-            <div class="campo" style="margin-bottom:0;min-width:130px;">
-              <label>Filtrar por nivel</label>
-              <select id="q-filtroHistorialNivel">
-                <option value="">Todos</option>
-                <option value="N3">N3</option>
-                <option value="N2">N2</option>
-                <option value="N1">N1</option>
-              </select>
-            </div>
+            <div class="campo" style="margin-bottom:0;min-width:170px;"><label>Filtrar por fecha</label><input type="date" id="q-filtroFecha"></div>
+            <div class="campo" style="margin-bottom:0;min-width:130px;"><label>Filtrar por nivel</label><select id="q-filtroHistorialNivel"><option value="">Todos</option><option value="N3">N3</option><option value="N2">N2</option><option value="N1">N1</option></select></div>
             <button class="btn btn-morado btn-sm" onclick="verHistorialQRQC()">Ver Historial</button>
             <button class="btn btn-outline btn-sm" onclick="document.getElementById('q-filtroFecha').value='';document.getElementById('q-filtroHistorialNivel').value='';verHistorialQRQC()">Todos</button>
           </div>
           <div class="scroll-box" id="q-historial"></div>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- MÓDULO RITUALES -->
   <div class="modulo" id="modulo-rituales">
-    <div class="modulo-desc rituales">
-      <div class="modulo-desc-icon">⚡</div>
-      <div class="modulo-desc-texto">
-        <h3>Registro de Rituales</h3>
-        <p>Registra el ritual semanal de cada área con evidencia fotográfica.</p>
-      </div>
-    </div>
-    <div class="registrador-banner">
-      <span style="font-size:20px;">👤</span>
-      <div>
-        <div class="rb-label">Registrando como</div>
-        <div class="rb-nombre" id="banner-nombre-rituales"></div>
-      </div>
-    </div>
+    <div class="modulo-desc rituales"><div class="modulo-desc-icon">⚡</div><div class="modulo-desc-texto"><h3>Registro de Rituales</h3><p>Registra el ritual semanal de cada área con evidencia fotográfica.</p></div></div>
+    <div class="registrador-banner"><span style="font-size:20px;">👤</span><div><div class="rb-label">Registrando como</div><div class="rb-nombre" id="banner-nombre-rituales"></div></div></div>
     <div class="card" style="max-width:500px;">
       <div class="card-titulo">Nuevo Ritual <span class="badge badge-amarillo">Semanal</span></div>
-      <div class="campo">
-        <label>Área</label>
-        <select id="r-area">
-          <option value="">Selecciona área</option>
-          <option>LAVS</option><option>ENVIOS A220</option>
-          <option>GALLEYS & SMALL/MONUMENTOS</option><option>SHIP LOOSE</option>
-          <option>F2F</option><option>CASCADAS</option>
-          <option>MAQUINADO Y TROQUELADO</option><option>AIRBUS</option>
-          <option>BONDEO</option><option>COMAC</option>
-          <option>DECORADO,PINTURA</option><option>MANTENIMIENTO</option>
-          <option>ALMACEN</option><option>INSERTOS A220</option>
-          <option>CNC 3X/5X</option><option>LIJADO</option>
-          <option>LAMINADO / HORNOS</option><option>BOEING</option>
-          <option>MOLDES / PRENSAS</option>
-        </select>
-      </div>
-      <div class="campo">
-        <label>Foto de Evidencia</label>
-        <input type="file" id="r-foto" accept="image/*" capture="environment">
-      </div>
+      <div class="campo"><label>Área</label><select id="r-area"><option value="">Selecciona área</option><option>LAVS</option><option>ENVIOS A220</option><option>GALLEYS & SMALL/MONUMENTOS</option><option>SHIP LOOSE</option><option>F2F</option><option>CASCADAS</option><option>MAQUINADO Y TROQUELADO</option><option>AIRBUS</option><option>BONDEO</option><option>COMAC</option><option>DECORADO,PINTURA</option><option>MANTENIMIENTO</option><option>ALMACEN</option><option>INSERTOS A220</option><option>CNC 3X/5X</option><option>LIJADO</option><option>LAMINADO / HORNOS</option><option>BOEING</option><option>MOLDES / PRENSAS</option></select></div>
+      <div class="campo"><label>Foto de Evidencia</label><input type="file" id="r-foto" accept="image/*" capture="environment"></div>
       <button class="btn btn-amarillo btn-full" onclick="registrarRitual()">⚡ Registrar Ritual</button>
       <div id="r-estado"></div>
     </div>
     <div id="dashboardRituales" style="display:none;">
       <div class="grid2">
-        <div class="card">
-          <div class="card-titulo">📋 Rituales Registrados</div>
-          <div class="scroll-box" id="r-lista"></div>
-        </div>
-        <div class="card">
-          <div class="card-titulo">🚦 Semáforo de Áreas</div>
-          <div id="r-dashboard"></div>
-        </div>
+        <div class="card"><div class="card-titulo">📋 Rituales Registrados</div><div class="scroll-box" id="r-lista"></div></div>
+        <div class="card"><div class="card-titulo">🚦 Semáforo de Áreas</div><div id="r-dashboard"></div></div>
       </div>
-      <div class="card">
-        <div class="card-titulo">📈 Histórico de Cumplimiento</div>
-        <canvas id="r-graficaSemanal" height="80"></canvas>
-      </div>
+      <div class="card"><div class="card-titulo">📈 Histórico de Cumplimiento</div><canvas id="r-graficaSemanal" height="80"></canvas></div>
     </div>
   </div>
 
-  <!-- MÓDULO PSR -->
   <div class="modulo" id="modulo-psr">
-    <div class="modulo-desc psr">
-      <div class="modulo-desc-icon">📋</div>
-      <div class="modulo-desc-texto">
-        <h3>PSR — Project Status Review</h3>
-        <p>Toca el proyecto al que asististe para registrar tu asistencia.</p>
-      </div>
-    </div>
-    <div class="registrador-banner">
-      <span style="font-size:20px;">👤</span>
-      <div>
-        <div class="rb-label">Registrando como</div>
-        <div class="rb-nombre" id="banner-nombre-psr"></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-titulo">Seleccionar Proyecto <span class="badge badge-azul">PSR</span></div>
-      <div id="p-listaForos"></div>
-    </div>
+    <div class="modulo-desc psr"><div class="modulo-desc-icon">📋</div><div class="modulo-desc-texto"><h3>PSR — Project Status Review</h3><p>Toca el proyecto al que asististe para registrar tu asistencia.</p></div></div>
+    <div class="registrador-banner"><span style="font-size:20px;">👤</span><div><div class="rb-label">Registrando como</div><div class="rb-nombre" id="banner-nombre-psr"></div></div></div>
+    <div class="card"><div class="card-titulo">Seleccionar Proyecto <span class="badge badge-azul">PSR</span></div><div id="p-listaForos"></div></div>
   </div>
 
-  <!-- MÓDULO QRQC -->
   <div class="modulo" id="modulo-qrqc">
-    <div class="modulo-desc qrqc">
-      <div class="modulo-desc-icon">🔍</div>
-      <div class="modulo-desc-texto">
-        <h3>QRQC — Quick Response Quality Control</h3>
-        <p>Toca el foro al que asististe para registrar tu asistencia.</p>
-      </div>
-    </div>
-    <div class="registrador-banner">
-      <span style="font-size:20px;">👤</span>
-      <div>
-        <div class="rb-label">Registrando como</div>
-        <div class="rb-nombre" id="banner-nombre-qrqc"></div>
-      </div>
-    </div>
+    <div class="modulo-desc qrqc"><div class="modulo-desc-icon">🔍</div><div class="modulo-desc-texto"><h3>QRQC — Quick Response Quality Control</h3><p>Toca el foro al que asististe para registrar tu asistencia.</p></div></div>
+    <div class="registrador-banner"><span style="font-size:20px;">👤</span><div><div class="rb-label">Registrando como</div><div class="rb-nombre" id="banner-nombre-qrqc"></div></div></div>
     <div class="card">
       <div class="card-titulo">Seleccionar Foro <span class="badge badge-morado">QRQC</span></div>
-      <div class="campo" style="max-width:300px;">
-        <label>Filtrar por Nivel</label>
-        <select id="q-filtroNivel" onchange="filtrarForos()">
-          <option value="">Todos los niveles</option>
-          <option value="N3">N3</option>
-          <option value="N2">N2</option>
-          <option value="N1">N1</option>
-        </select>
-      </div>
+      <div class="campo" style="max-width:300px;"><label>Filtrar por Nivel</label><select id="q-filtroNivel" onchange="filtrarForos()"><option value="">Todos los niveles</option><option value="N3">N3</option><option value="N2">N2</option><option value="N1">N1</option></select></div>
       <div id="q-listaForos"></div>
     </div>
   </div>
-
 </div>
 
 <script>
@@ -722,549 +394,364 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 
-let usuarioActual     = { numero:"", nombre:"" };
-let moduloDestino     = "";
-let forosQRQC         = [];
-let proyectosPSR      = [];
-let graficaRituales   = null;
-let adminDesbloqueado = false;
-let tabActual         = 'rituales';
-let _confirmContext   = { tipo:"", id:"", nombre:"", nivel:"", tier:"" };
+let usuarioActual={numero:"",nombre:""}, moduloDestino="", forosQRQC=[], proyectosPSR=[], graficaRituales=null, adminDesbloqueado=false, tabActual='rituales';
+let _confirmContext={tipo:"",id:"",nombre:"",nivel:"",tier:""};
+let _qrParams=null;
 
-function entrarModulo(modulo) {
-  moduloDestino = modulo;
-  const etiquetas = { rituales:'⚡ Rituales', psr:'📋 PSR — Project Status Review', qrqc:'🔍 QRQC — Quick Response Quality Control' };
-  document.getElementById('login-modulo-label').innerText = 'Accediendo a: ' + etiquetas[modulo];
-  document.getElementById('login-numero').value = '';
-  document.getElementById('login-hint').innerText = '';
-  document.getElementById('login-estado').innerText = '';
+function detectarQR(){
+  const params=new URLSearchParams(window.location.search);
+  const modulo=params.get('modulo');
+  if(!modulo)return;
+  const id=params.get('foroId')||params.get('proyectoId')||'';
+  const nombre=decodeURIComponent(params.get('foroNombre')||params.get('proyectoNombre')||'');
+  const nivel=decodeURIComponent(params.get('foroNivel')||'');
+  const tier=decodeURIComponent(params.get('tier')||'');
+  if(!id||!nombre)return;
+  _qrParams={tipo:modulo,id,nombre,nivel,tier};
+  document.getElementById('pantallaBienvenida').style.display='none';
+  const iconos={qrqc:'🔍',psr:'📋'};
+  const nb=nivel?`<span class="nivel-badge nivel-${nivel.toLowerCase()}" style="margin-left:6px;">${nivel}</span>`:'';
+  document.getElementById('login-modulo-label').innerHTML=`<span style="font-size:12px;color:var(--texto-suave);">Registrar asistencia en:</span><br><strong style="font-size:16px;color:var(--texto);">${iconos[modulo]||''} ${nombre}</strong>${nb}`;
+  document.getElementById('login-numero').value='';
+  document.getElementById('login-hint').innerText='';
+  document.getElementById('login-estado').innerText='';
   document.getElementById('modalLogin').classList.add('abierto');
-  setTimeout(() => document.getElementById('login-numero').focus(), 150);
+  document.querySelector('#modalLogin .btn-outline').onclick=()=>{window.location.href=window.location.pathname;};
+  setTimeout(()=>document.getElementById('login-numero').focus(),200);
 }
 
-async function buscarEmpleadoLogin() {
-  const numero = document.getElementById('login-numero').value;
-  const hint   = document.getElementById('login-hint');
-  document.getElementById('login-estado').innerText = '';
-  if (!numero || numero.length < 3) { hint.innerText = ''; return; }
-  try {
-    const doc = await db.collection('empleados').doc(String(numero)).get();
-    hint.innerText = doc.exists ? '👤 ' + doc.data().nombre : '';
-  } catch(e) { hint.innerText = 'Error de conexión'; }
+function mostrarPantallaResultadoQR(icono,titulo,detalle,esExito){
+  let p=document.getElementById('pantallaResultadoQR');
+  if(!p){p=document.createElement('div');p.id='pantallaResultadoQR';p.style.cssText='position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 60%,#1e40af 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;text-align:center;';document.body.appendChild(p);}
+  const color=esExito?'#4ade80':titulo.includes('registrado')?'#fbbf24':'#93c5fd';
+  p.innerHTML=`<div style="font-size:70px;margin-bottom:16px;">${icono}</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:${color};letter-spacing:1px;margin-bottom:16px;">${titulo}</div>
+    <div style="background:rgba(255,255,255,0.08);border-radius:16px;padding:20px 28px;max-width:340px;width:100%;color:white;font-size:15px;line-height:1.7;margin-bottom:28px;">${detalle}</div>
+    <button onclick="window.location.href=window.location.pathname" style="background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.25);color:white;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;padding:12px 28px;border-radius:12px;cursor:pointer;letter-spacing:.5px;">← Volver al inicio</button>`;
 }
 
-async function confirmarLogin() {
-  const numero = document.getElementById('login-numero').value;
-  const estado = document.getElementById('login-estado');
-  if (!numero) { estado.style.color='var(--rojo)'; estado.innerText='⚠ Ingresa tu número de empleado'; return; }
-  estado.style.color = 'var(--azul)'; estado.innerText = 'Verificando...';
-  try {
-    const doc = await db.collection('empleados').doc(String(numero)).get();
-    if (!doc.exists) { estado.style.color='var(--rojo)'; estado.innerText='❌ Empleado no encontrado en el sistema'; return; }
-    usuarioActual.numero = numero;
-    usuarioActual.nombre = doc.data().nombre;
+async function registrarAsistenciaQR(){
+  const{tipo,id,nombre,nivel,tier}=_qrParams;
+  const ahora=new Date(), fechaStr=ahora.toISOString().split('T')[0];
+  mostrarPantallaResultadoQR('⏳','Registrando...','Por favor espera...',false);
+  try{
+    if(tipo==='qrqc'){
+      const dup=await db.collection('asistenciasQRQC').where('foroId','==',id).where('numeroEmpleado','==',String(usuarioActual.numero)).where('fechaStr','==',fechaStr).get();
+      if(!dup.empty){mostrarPantallaResultadoQR('⚠️','Ya registrado',`Ya tienes asistencia en<br><strong>${nombre}</strong><br>el día de hoy.`,false);return;}
+      await db.collection('asistenciasQRQC').add({foroId:id,foroNombre:nombre,foroNivel:nivel,numeroEmpleado:String(usuarioActual.numero),nombreEmpleado:usuarioActual.nombre,fecha:ahora,fechaStr:fechaStr});
+    }else{
+      const dup=await db.collection('asistenciasPSR').where('proyectoId','==',id).where('numeroEmpleado','==',String(usuarioActual.numero)).where('fechaStr','==',fechaStr).get();
+      if(!dup.empty){mostrarPantallaResultadoQR('⚠️','Ya registrado',`Ya tienes asistencia en<br><strong>${nombre}</strong><br>el día de hoy.`,false);return;}
+      await db.collection('asistenciasPSR').add({proyectoId:id,proyectoNombre:nombre,tier:tier,numeroEmpleado:String(usuarioActual.numero),nombreEmpleado:usuarioActual.nombre,fecha:ahora,fechaStr:fechaStr});
+    }
+    const nb=nivel?`<span class="nivel-badge nivel-${nivel.toLowerCase()}" style="display:inline-block;margin-bottom:6px;">${nivel}</span><br>`:'';
+    mostrarPantallaResultadoQR('✅','¡Asistencia Registrada!',`<strong>${usuarioActual.nombre}</strong><br><span style="color:rgba(255,255,255,0.6);font-size:13px;"># ${usuarioActual.numero}</span><br><br>${nb}<strong>${nombre}</strong><br><span style="color:rgba(255,255,255,0.6);font-size:13px;">${ahora.toLocaleDateString()} ${ahora.toLocaleTimeString()}</span>`,true);
+  }catch(e){console.error(e);mostrarPantallaResultadoQR('❌','Error al guardar','No se pudo registrar. Intenta de nuevo.',false);}
+}
+
+function entrarModulo(modulo){
+  moduloDestino=modulo;
+  const etiquetas={rituales:'⚡ Rituales',psr:'📋 PSR — Project Status Review',qrqc:'🔍 QRQC — Quick Response Quality Control'};
+  document.getElementById('login-modulo-label').innerText='Accediendo a: '+etiquetas[modulo];
+  document.getElementById('login-numero').value='';
+  document.getElementById('login-hint').innerText='';
+  document.getElementById('login-estado').innerText='';
+  document.getElementById('modalLogin').classList.add('abierto');
+  setTimeout(()=>document.getElementById('login-numero').focus(),150);
+}
+
+async function buscarEmpleadoLogin(){
+  const numero=document.getElementById('login-numero').value;
+  const hint=document.getElementById('login-hint');
+  document.getElementById('login-estado').innerText='';
+  if(!numero||numero.length<3){hint.innerText='';return;}
+  try{const doc=await db.collection('empleados').doc(String(numero)).get();hint.innerText=doc.exists?'👤 '+doc.data().nombre:'';}
+  catch(e){hint.innerText='Error de conexión';}
+}
+
+async function confirmarLogin(){
+  const numero=document.getElementById('login-numero').value;
+  const estado=document.getElementById('login-estado');
+  if(!numero){estado.style.color='var(--rojo)';estado.innerText='⚠ Ingresa tu número de empleado';return;}
+  estado.style.color='var(--azul)';estado.innerText='Verificando...';
+  try{
+    const doc=await db.collection('empleados').doc(String(numero)).get();
+    if(!doc.exists){estado.style.color='var(--rojo)';estado.innerText='❌ Empleado no encontrado en el sistema';return;}
+    usuarioActual.numero=numero;
+    usuarioActual.nombre=doc.data().nombre;
     document.getElementById('modalLogin').classList.remove('abierto');
-    document.getElementById('pantallaBienvenida').style.display = 'none';
-    document.getElementById('appPrincipal').style.display = 'block';
-    const texto = usuarioActual.nombre + ' · #' + usuarioActual.numero;
-    ['rituales','psr','qrqc'].forEach(m => { const el=document.getElementById('banner-nombre-'+m); if(el) el.innerText=texto; });
+    if(_qrParams){await registrarAsistenciaQR();return;}
+    document.getElementById('pantallaBienvenida').style.display='none';
+    document.getElementById('appPrincipal').style.display='block';
+    const texto=usuarioActual.nombre+' · #'+usuarioActual.numero;
+    ['rituales','psr','qrqc'].forEach(m=>{const el=document.getElementById('banner-nombre-'+m);if(el)el.innerText=texto;});
     cambiarTab(moduloDestino);
-  } catch(e) { estado.style.color='var(--rojo)'; estado.innerText='Error de conexión con la base de datos'; }
+  }catch(e){estado.style.color='var(--rojo)';estado.innerText='Error de conexión con la base de datos';}
 }
 
-function cerrarLogin() { document.getElementById('modalLogin').classList.remove('abierto'); }
+function cerrarLogin(){document.getElementById('modalLogin').classList.remove('abierto');}
 
-function volverInicio() {
-  document.getElementById('appPrincipal').style.display = 'none';
-  document.getElementById('pantallaBienvenida').style.display = 'flex';
+function volverInicio(){
+  document.getElementById('appPrincipal').style.display='none';
+  document.getElementById('pantallaBienvenida').style.display='flex';
   document.getElementById('adminPanelGlobal').classList.remove('abierto');
-  adminDesbloqueado = false;
-  usuarioActual = { numero:"", nombre:"" };
-  moduloDestino = "";
+  adminDesbloqueado=false;usuarioActual={numero:"",nombre:""};moduloDestino="";
 }
 
-function cambiarTab(modulo) {
-  tabActual = modulo;
-  document.querySelectorAll('.modulo').forEach(m => m.classList.remove('activo'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.className = 'tab-btn');
-  document.getElementById('modulo-' + modulo).classList.add('activo');
-  document.getElementById('tab-' + modulo).classList.add('active-' + modulo);
-  if (adminDesbloqueado) mostrarAdminSeccion(modulo);
-  if (modulo === 'qrqc') cargarForosQRQC();
-  if (modulo === 'psr')  cargarProyectosPSR();
+function cambiarTab(modulo){
+  tabActual=modulo;
+  document.querySelectorAll('.modulo').forEach(m=>m.classList.remove('activo'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.className='tab-btn');
+  document.getElementById('modulo-'+modulo).classList.add('activo');
+  document.getElementById('tab-'+modulo).classList.add('active-'+modulo);
+  if(adminDesbloqueado)mostrarAdminSeccion(modulo);
+  if(modulo==='qrqc')cargarForosQRQC();
+  if(modulo==='psr')cargarProyectosPSR();
 }
 
-function toggleAdminPanel() {
-  if (!adminDesbloqueado) {
-    const pass = prompt('Contraseña de administrador:');
-    if (pass !== '1234') { alert('Contraseña incorrecta'); return; }
-    adminDesbloqueado = true;
-    document.getElementById('dashboardRituales').style.display = 'block';
-  }
-  const panel = document.getElementById('adminPanelGlobal');
-  panel.classList.toggle('abierto');
-  mostrarAdminSeccion(tabActual);
+function toggleAdminPanel(){
+  if(!adminDesbloqueado){const pass=prompt('Contraseña de administrador:');if(pass!=='1234'){alert('Contraseña incorrecta');return;}adminDesbloqueado=true;document.getElementById('dashboardRituales').style.display='block';}
+  const panel=document.getElementById('adminPanelGlobal');panel.classList.toggle('abierto');mostrarAdminSeccion(tabActual);
 }
 
-function mostrarAdminSeccion(modulo) {
-  document.getElementById('adminRituales').style.display = modulo==='rituales' ? 'block' : 'none';
-  document.getElementById('adminPSR').style.display      = modulo==='psr'      ? 'block' : 'none';
-  document.getElementById('adminQRQC').style.display     = modulo==='qrqc'     ? 'block' : 'none';
-  if (modulo==='psr'  && adminDesbloqueado) cargarAdminPSR();
-  if (modulo==='qrqc' && adminDesbloqueado) cargarAdminListaForos();
+function mostrarAdminSeccion(modulo){
+  document.getElementById('adminRituales').style.display=modulo==='rituales'?'block':'none';
+  document.getElementById('adminPSR').style.display=modulo==='psr'?'block':'none';
+  document.getElementById('adminQRQC').style.display=modulo==='qrqc'?'block':'none';
+  if(modulo==='psr'&&adminDesbloqueado)cargarAdminPSR();
+  if(modulo==='qrqc'&&adminDesbloqueado)cargarAdminListaForos();
 }
 
-function cambiarSubtabPSR(seccion) {
-  ['proyectos','historial'].forEach(s => {
-    document.getElementById('psr-sec-'+s).classList.toggle('activo', s===seccion);
-    document.getElementById('psr-subtab-'+s).classList.toggle('activo-psr', s===seccion);
-  });
-  if (seccion==='historial') verHistorialPSR();
+function cambiarSubtabPSR(seccion){
+  ['proyectos','historial'].forEach(s=>{document.getElementById('psr-sec-'+s).classList.toggle('activo',s===seccion);document.getElementById('psr-subtab-'+s).classList.toggle('activo-psr',s===seccion);});
+  if(seccion==='historial')verHistorialPSR();
 }
 
-function cambiarSubtabQRQC(seccion) {
-  ['foros','historial'].forEach(s => {
-    document.getElementById('qrqc-sec-'+s).classList.toggle('activo', s===seccion);
-    document.getElementById('qrqc-subtab-'+s).classList.toggle('activo-qrqc', s===seccion);
-  });
-  if (seccion==='historial') verHistorialQRQC();
+function cambiarSubtabQRQC(seccion){
+  ['foros','historial'].forEach(s=>{document.getElementById('qrqc-sec-'+s).classList.toggle('activo',s===seccion);document.getElementById('qrqc-subtab-'+s).classList.toggle('activo-qrqc',s===seccion);});
+  if(seccion==='historial')verHistorialQRQC();
 }
 
-function getSemanaActual() {
-  const hoy=new Date(), ini=new Date(hoy.getFullYear(),0,1);
-  return Math.ceil((((hoy-ini)/86400000)+ini.getDay()+1)/7);
-}
+function getSemanaActual(){const hoy=new Date(),ini=new Date(hoy.getFullYear(),0,1);return Math.ceil((((hoy-ini)/86400000)+ini.getDay()+1)/7);}
+function mostrarEstado(id,msg,tipo){const el=document.getElementById(id);el.className='status '+tipo;el.innerText=msg;}
 
-function mostrarEstado(id, msg, tipo) {
-  const el=document.getElementById(id); el.className='status '+tipo; el.innerText=msg;
-}
+const AREAS_RITUALES=["LAVS","ENVIOS A220","GALLEYS & SMALL/MONUMENTOS","SHIP LOOSE","F2F","CASCADAS","MAQUINADO Y TROQUELADO","AIRBUS","BONDEO","COMAC","DECORADO,PINTURA","MANTENIMIENTO","ALMACEN","INSERTOS A220","CNC 3X/5X","LIJADO","LAMINADO / HORNOS","BOEING","MOLDES / PRENSAS"];
 
-const AREAS_RITUALES = [
-  "LAVS","ENVIOS A220","GALLEYS & SMALL/MONUMENTOS","SHIP LOOSE","F2F",
-  "CASCADAS","MAQUINADO Y TROQUELADO","AIRBUS","BONDEO","COMAC",
-  "DECORADO,PINTURA","MANTENIMIENTO","ALMACEN","INSERTOS A220",
-  "CNC 3X/5X","LIJADO","LAMINADO / HORNOS","BOEING","MOLDES / PRENSAS"
-];
-
-async function registrarRitual() {
-  try {
-    const area=document.getElementById('r-area').value;
-    const foto=document.getElementById('r-foto').files[0];
-    const semana=getSemanaActual();
-    if (!area||!foto) { mostrarEstado('r-estado','Selecciona área y agrega foto de evidencia','err'); return; }
+async function registrarRitual(){
+  try{
+    const area=document.getElementById('r-area').value, foto=document.getElementById('r-foto').files[0], semana=getSemanaActual();
+    if(!area||!foto){mostrarEstado('r-estado','Selecciona área y agrega foto de evidencia','err');return;}
     mostrarEstado('r-estado','Validando semana...','info');
     const existe=await db.collection('rituales').where('area','==',area).where('semana','==',semana).get();
-    if (!existe.empty) { mostrarEstado('r-estado','⚠ Esta área ya registró ritual esta semana','err'); return; }
+    if(!existe.empty){mostrarEstado('r-estado','⚠ Esta área ya registró ritual esta semana','err');return;}
     mostrarEstado('r-estado','Subiendo imagen...','info');
-    const formData=new FormData();
-    formData.append('file',foto); formData.append('upload_preset','rituales');
+    const formData=new FormData();formData.append('file',foto);formData.append('upload_preset','rituales');
     const res=await fetch('https://api.cloudinary.com/v1_1/dc9wxwria/image/upload',{method:'POST',body:formData});
     const data=await res.json();
-    if (!data.secure_url) { mostrarEstado('r-estado','Error subiendo imagen','err'); return; }
-    await db.collection('rituales').add({ numero:usuarioActual.numero, nombre:usuarioActual.nombre, area, imagen:data.secure_url, semana, fecha:new Date() });
+    if(!data.secure_url){mostrarEstado('r-estado','Error subiendo imagen','err');return;}
+    await db.collection('rituales').add({numero:usuarioActual.numero,nombre:usuarioActual.nombre,area,imagen:data.secure_url,semana,fecha:new Date()});
     mostrarEstado('r-estado','✅ Ritual registrado correctamente','ok');
-    document.getElementById('r-foto').value=''; document.getElementById('r-area').value='';
-  } catch(e) { console.error(e); mostrarEstado('r-estado','Error registrando ritual','err'); }
+    document.getElementById('r-foto').value='';document.getElementById('r-area').value='';
+  }catch(e){console.error(e);mostrarEstado('r-estado','Error registrando ritual','err');}
 }
 
-async function verDashboardRituales() {
+async function verDashboardRituales(){
   const semana=document.getElementById('r-filtroSemana').value;
-  if (!semana) { alert('Ingresa número de semana'); return; }
-  await verRitualesSemana(Number(semana));
-  await dashboardSemaforoRituales(Number(semana));
-  await generarGraficaRituales();
+  if(!semana){alert('Ingresa número de semana');return;}
+  await verRitualesSemana(Number(semana));await dashboardSemaforoRituales(Number(semana));await generarGraficaRituales();
 }
 
-async function verRitualesSemana(semana) {
-  const lista=document.getElementById('r-lista');
-  lista.innerHTML='<p style="color:var(--texto-suave)">Cargando...</p>';
-  const snap=await db.collection('rituales').where('semana','==',semana).get();
-  lista.innerHTML='';
-  if (snap.empty) { lista.innerHTML='<p>No hay rituales en semana '+semana+'</p>'; return; }
-  snap.forEach(doc=>{
-    const d=doc.data();
-    lista.innerHTML+=`<div class="ritual-item"><strong>${d.nombre}</strong><br>
-      <span style="color:var(--texto-suave);font-size:13px;">${d.area} · Sem ${d.semana}</span>
-      ${d.imagen?`<img src="${d.imagen}" loading="lazy">`:''}
-    </div>`;
-  });
+async function verRitualesSemana(semana){
+  const lista=document.getElementById('r-lista');lista.innerHTML='<p style="color:var(--texto-suave)">Cargando...</p>';
+  const snap=await db.collection('rituales').where('semana','==',semana).get();lista.innerHTML='';
+  if(snap.empty){lista.innerHTML='<p>No hay rituales en semana '+semana+'</p>';return;}
+  snap.forEach(doc=>{const d=doc.data();lista.innerHTML+=`<div class="ritual-item"><strong>${d.nombre}</strong><br><span style="color:var(--texto-suave);font-size:13px;">${d.area} · Sem ${d.semana}</span>${d.imagen?`<img src="${d.imagen}" loading="lazy">`:''}:</div>`;});
 }
 
-async function dashboardSemaforoRituales(semana) {
-  const dashboard=document.getElementById('r-dashboard');
-  dashboard.innerHTML='<p style="color:var(--texto-suave)">Cargando...</p>';
-  const snap=await db.collection('rituales').where('semana','==',semana).get();
-  let reg={};
-  snap.forEach(doc=>{ reg[doc.data().area]=true; });
-  const total=AREAS_RITUALES.length, cnt=Object.keys(reg).length, pct=Math.round((cnt/total)*100);
-  dashboard.innerHTML=`<div style="margin-bottom:14px;">
-    <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-      <span style="font-size:13px;color:var(--texto-suave)">Cumplimiento Sem ${semana}</span><strong>${pct}%</strong>
-    </div>
-    <div class="barra-progreso"><div class="barra-fill" style="width:${pct}%">${pct}%</div></div>
-    <p style="font-size:13px;color:var(--texto-suave);margin-top:5px;"><strong>${cnt}</strong> de <strong>${total}</strong> áreas</p>
-  </div>`;
-  AREAS_RITUALES.forEach(a=>{
-    dashboard.innerHTML+=`<div class="semaforo-item"><span style="font-size:13px;">${a}</span><div class="dot ${reg[a]?'dot-verde':'dot-rojo'}"></div></div>`;
-  });
+async function dashboardSemaforoRituales(semana){
+  const dashboard=document.getElementById('r-dashboard');dashboard.innerHTML='<p style="color:var(--texto-suave)">Cargando...</p>';
+  const snap=await db.collection('rituales').where('semana','==',semana).get();let reg={};
+  snap.forEach(doc=>{reg[doc.data().area]=true;});
+  const total=AREAS_RITUALES.length,cnt=Object.keys(reg).length,pct=Math.round((cnt/total)*100);
+  dashboard.innerHTML=`<div style="margin-bottom:14px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:var(--texto-suave)">Cumplimiento Sem ${semana}</span><strong>${pct}%</strong></div><div class="barra-progreso"><div class="barra-fill" style="width:${pct}%">${pct}%</div></div><p style="font-size:13px;color:var(--texto-suave);margin-top:5px;"><strong>${cnt}</strong> de <strong>${total}</strong> áreas</p></div>`;
+  AREAS_RITUALES.forEach(a=>{dashboard.innerHTML+=`<div class="semaforo-item"><span style="font-size:13px;">${a}</span><div class="dot ${reg[a]?'dot-verde':'dot-rojo'}"></div></div>`;});
 }
 
-async function generarGraficaRituales() {
+async function generarGraficaRituales(){
   const ctx=document.getElementById('r-graficaSemanal').getContext('2d');
-  const snap=await db.collection('rituales').get();
-  let sem={};
-  snap.forEach(doc=>{ const d=doc.data(); if(!sem[d.semana]) sem[d.semana]=new Set(); sem[d.semana].add(d.area); });
+  const snap=await db.collection('rituales').get();let sem={};
+  snap.forEach(doc=>{const d=doc.data();if(!sem[d.semana])sem[d.semana]=new Set();sem[d.semana].add(d.area);});
   const keys=Object.keys(sem).sort((a,b)=>a-b);
-  if (graficaRituales) graficaRituales.destroy();
-  graficaRituales=new Chart(ctx,{
-    type:'bar',
-    data:{labels:keys.map(s=>'Sem '+s),datasets:[{label:'% Cumplimiento',data:keys.map(s=>Math.round((sem[s].size/AREAS_RITUALES.length)*100)),backgroundColor:'#FACC1588',borderColor:'#d97706',borderWidth:2,borderRadius:6}]},
-    options:{responsive:true,scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}}}
-  });
+  if(graficaRituales)graficaRituales.destroy();
+  graficaRituales=new Chart(ctx,{type:'bar',data:{labels:keys.map(s=>'Sem '+s),datasets:[{label:'% Cumplimiento',data:keys.map(s=>Math.round((sem[s].size/AREAS_RITUALES.length)*100)),backgroundColor:'#FACC1588',borderColor:'#d97706',borderWidth:2,borderRadius:6}]},options:{responsive:true,scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}}}});
 }
 
-async function exportarRitualesExcel() {
-  const snap=await db.collection('rituales').orderBy('fecha','desc').get();
-  let datos=[];
-  snap.forEach(doc=>{ const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null; datos.push({numero:d.numero,nombre:d.nombre,area:d.area,semana:d.semana,fecha:f?f.toLocaleDateString()+' '+f.toLocaleTimeString():'',imagen:d.imagen}); });
-  const ws=XLSX.utils.json_to_sheet(datos); const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'Rituales'); XLSX.writeFile(wb,'rituales.xlsx');
+async function exportarRitualesExcel(){
+  const snap=await db.collection('rituales').orderBy('fecha','desc').get();let datos=[];
+  snap.forEach(doc=>{const d=doc.data();const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;datos.push({numero:d.numero,nombre:d.nombre,area:d.area,semana:d.semana,fecha:f?f.toLocaleDateString()+' '+f.toLocaleTimeString():'',imagen:d.imagen});});
+  const ws=XLSX.utils.json_to_sheet(datos);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Rituales');XLSX.writeFile(wb,'rituales.xlsx');
 }
 
-async function subirEmpleadosExcel() {
-  try {
-    const estado=document.getElementById('r-estadoExcel');
-    const file=document.getElementById('r-excel').files[0];
-    if (!file) { alert('Selecciona archivo Excel'); return; }
-    estado.innerText='📂 Leyendo...';
-    const data=await file.arrayBuffer(); const wb=XLSX.read(data);
-    const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-    let c=0;
-    for (const row of rows) {
-      if (!row.numero||!row.nombre) continue;
-      await db.collection('empleados').doc(String(row.numero)).set({nombre:String(row.nombre)});
-      c++; estado.innerText='Subiendo: '+c+'/'+rows.length;
-    }
-    estado.innerText='✅ '+c+' empleados cargados';
-    document.getElementById('r-excel').value='';
-  } catch(e) { document.getElementById('r-estadoExcel').innerText='❌ Error subiendo Excel'; }
+async function subirEmpleadosExcel(){
+  try{
+    const estado=document.getElementById('r-estadoExcel'),file=document.getElementById('r-excel').files[0];
+    if(!file){alert('Selecciona archivo Excel');return;}estado.innerText='📂 Leyendo...';
+    const data=await file.arrayBuffer();const wb=XLSX.read(data);const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);let c=0;
+    for(const row of rows){if(!row.numero||!row.nombre)continue;await db.collection('empleados').doc(String(row.numero)).set({nombre:String(row.nombre)});c++;estado.innerText='Subiendo: '+c+'/'+rows.length;}
+    estado.innerText='✅ '+c+' empleados cargados';document.getElementById('r-excel').value='';
+  }catch(e){document.getElementById('r-estadoExcel').innerText='❌ Error subiendo Excel';}
 }
 
-function descargarPlantilla() {
+function descargarPlantilla(){
   const ws=XLSX.utils.json_to_sheet([{numero:'1001',nombre:'Juan Perez'},{numero:'1002',nombre:'Ana Lopez'}]);
-  const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Empleados'); XLSX.writeFile(wb,'plantilla_empleados.xlsx');
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Empleados');XLSX.writeFile(wb,'plantilla_empleados.xlsx');
 }
 
-const PROYECTOS_DEFAULT=[
-  {nombre:"Buy to Make",tier:""},{nombre:"DTC",tier:""},
-  {nombre:"Material Optimization",tier:""},{nombre:"Resourcing",tier:""},{nombre:"OH Cost Control",tier:""}
-];
+const PROYECTOS_DEFAULT=[{nombre:"Buy to Make",tier:""},{nombre:"DTC",tier:""},{nombre:"Material Optimization",tier:""},{nombre:"Resourcing",tier:""},{nombre:"OH Cost Control",tier:""}];
 
-async function cargarProyectosPSR() {
-  const snap=await db.collection('proyectosPSR').get();
-  proyectosPSR=[];
+async function cargarProyectosPSR(){
+  const snap=await db.collection('proyectosPSR').get();proyectosPSR=[];
   snap.forEach(doc=>proyectosPSR.push({id:doc.id,...doc.data()}));
-  if (snap.empty) {
-    for (const p of PROYECTOS_DEFAULT) {
-      const ref=await db.collection('proyectosPSR').add({nombre:p.nombre,tier:p.tier,creadoEn:new Date()});
-      proyectosPSR.push({id:ref.id,nombre:p.nombre,tier:p.tier});
-    }
-  }
+  if(snap.empty){for(const p of PROYECTOS_DEFAULT){const ref=await db.collection('proyectosPSR').add({nombre:p.nombre,tier:p.tier,creadoEn:new Date()});proyectosPSR.push({id:ref.id,nombre:p.nombre,tier:p.tier});}}
   renderizarProyectosPSR(proyectosPSR);
 }
 
-function renderizarProyectosPSR(lista) {
-  const contenedor=document.getElementById('p-listaForos');
-  contenedor.innerHTML='';
-  if (!lista.length) { contenedor.innerHTML='<p style="color:var(--texto-suave);padding:10px;">No hay proyectos</p>'; return; }
+function renderizarProyectosPSR(lista){
+  const contenedor=document.getElementById('p-listaForos');contenedor.innerHTML='';
+  if(!lista.length){contenedor.innerHTML='<p style="color:var(--texto-suave);padding:10px;">No hay proyectos</p>';return;}
   lista.forEach(proyecto=>{
     const tn=proyecto.tier?proyecto.tier.replace('Tier ',''):'';
     const tierBadge=tn?`<span class="tier-badge tier-${tn}">${proyecto.tier}</span>`:'';
-    contenedor.innerHTML+=`
-      <div class="foro-card">
-        <div class="foro-tap" onclick="abrirConfirmarAsistencia('psr','${proyecto.id}','${proyecto.nombre.replace(/'/g,"\\'")}','','${proyecto.tier||''}')">
-          <div class="foro-tap-left">${tierBadge}<span class="foro-nombre">📋 ${proyecto.nombre}</span></div>
-          <span class="foro-tap-arrow">→</span>
-        </div>
-        <div id="estado-psr-tap-${proyecto.id}" style="padding:0 16px 12px;font-size:13px;font-weight:600;display:none;"></div>
-      </div>`;
+    contenedor.innerHTML+=`<div class="foro-card"><div class="foro-tap" onclick="abrirConfirmarAsistencia('psr','${proyecto.id}','${proyecto.nombre.replace(/'/g,"\\'")}','','${proyecto.tier||''}')"><div class="foro-tap-left">${tierBadge}<span class="foro-nombre">📋 ${proyecto.nombre}</span></div><span class="foro-tap-arrow">→</span></div><div id="estado-psr-tap-${proyecto.id}" style="padding:0 16px 12px;font-size:13px;font-weight:600;display:none;"></div></div>`;
   });
 }
 
-const FOROS_DEFAULT=[
-  {nombre:'N3',nivel:'N3'},
-  {nombre:'WHS',nivel:'N2'},{nombre:'Boeing',nivel:'N2'},{nombre:'A220 F2F',nivel:'N2'},
-  {nombre:'A220 Galleys',nivel:'N2'},{nombre:'A220 Ship Loose',nivel:'N2'},{nombre:'AirBus Other',nivel:'N2'},
-  {nombre:'COMAC',nivel:'N2'},{nombre:'A320 Cascades',nivel:'N2'},
-  {nombre:'Primary Process CNC/Layup/Press',nivel:'N2'},{nombre:'Primary Process Metal Works',nivel:'N2'},
-  {nombre:'Legacy',nivel:'N2'},{nombre:'A220 LAVS',nivel:'N2'},
-  {nombre:'Spares APT',nivel:'N1'},{nombre:'A220 Galleys G1 + APT',nivel:'N1'},
-  {nombre:'A220 Galleys G2 & G4 + APT',nivel:'N1'},{nombre:'Boeing 787 - Secondary APT',nivel:'N1'},
-  {nombre:'A220 Galleys / Small Mnts APT',nivel:'N1'},{nombre:'A320 Cascades APT',nivel:'N1'},
-  {nombre:'A220 LAVS Dual APT',nivel:'N1'},{nombre:'Airbus Others A350 APT',nivel:'N1'},
-  {nombre:'Comac APT',nivel:'N1'},{nombre:'CNC 3x & 5x APT',nivel:'N1'},
-  {nombre:'Boeing 787-Final APT',nivel:'N1'},{nombre:'A220-Ship loose APT',nivel:'N1'},
-  {nombre:'Ducts / Upholstery APT',nivel:'N1'},{nombre:'A220-Fill & Fair Decor APT',nivel:'N1'},
-  {nombre:'A220-F2F Secundary (Insert,Bonding) APT',nivel:'N1'},{nombre:'A220-Secundary (Insert,Bonding) APT',nivel:'N1'},
-  {nombre:'Admin-Whs Incoming Insp APT',nivel:'N1'},{nombre:'Admin-Whs Recive APT',nivel:'N1'},
-  {nombre:'Primary Process-Layup',nivel:'N1'},{nombre:'Airbus Others A330/A220 Countertops APT',nivel:'N1'},
-  {nombre:'Primary Process-Mach Shop APT',nivel:'N1'}
-];
+const FOROS_DEFAULT=[{nombre:'N3',nivel:'N3'},{nombre:'WHS',nivel:'N2'},{nombre:'Boeing',nivel:'N2'},{nombre:'A220 F2F',nivel:'N2'},{nombre:'A220 Galleys',nivel:'N2'},{nombre:'A220 Ship Loose',nivel:'N2'},{nombre:'AirBus Other',nivel:'N2'},{nombre:'COMAC',nivel:'N2'},{nombre:'A320 Cascades',nivel:'N2'},{nombre:'Primary Process CNC/Layup/Press',nivel:'N2'},{nombre:'Primary Process Metal Works',nivel:'N2'},{nombre:'Legacy',nivel:'N2'},{nombre:'A220 LAVS',nivel:'N2'},{nombre:'Spares APT',nivel:'N1'},{nombre:'A220 Galleys G1 + APT',nivel:'N1'},{nombre:'A220 Galleys G2 & G4 + APT',nivel:'N1'},{nombre:'Boeing 787 - Secondary APT',nivel:'N1'},{nombre:'A220 Galleys / Small Mnts APT',nivel:'N1'},{nombre:'A320 Cascades APT',nivel:'N1'},{nombre:'A220 LAVS Dual APT',nivel:'N1'},{nombre:'Airbus Others A350 APT',nivel:'N1'},{nombre:'Comac APT',nivel:'N1'},{nombre:'CNC 3x & 5x APT',nivel:'N1'},{nombre:'Boeing 787-Final APT',nivel:'N1'},{nombre:'A220-Ship loose APT',nivel:'N1'},{nombre:'Ducts / Upholstery APT',nivel:'N1'},{nombre:'A220-Fill & Fair Decor APT',nivel:'N1'},{nombre:'A220-F2F Secundary (Insert,Bonding) APT',nivel:'N1'},{nombre:'A220-Secundary (Insert,Bonding) APT',nivel:'N1'},{nombre:'Admin-Whs Incoming Insp APT',nivel:'N1'},{nombre:'Admin-Whs Recive APT',nivel:'N1'},{nombre:'Primary Process-Layup',nivel:'N1'},{nombre:'Airbus Others A330/A220 Countertops APT',nivel:'N1'},{nombre:'Primary Process-Mach Shop APT',nivel:'N1'}];
 
-async function inicializarForosDefault() {
-  const snap=await db.collection('forosQRQC').get();
-  if (!snap.empty) return;
-  for (const f of FOROS_DEFAULT) await db.collection('forosQRQC').add({nombre:f.nombre,nivel:f.nivel,creadoEn:new Date()});
-}
+async function inicializarForosDefault(){const snap=await db.collection('forosQRQC').get();if(!snap.empty)return;for(const f of FOROS_DEFAULT)await db.collection('forosQRQC').add({nombre:f.nombre,nivel:f.nivel,creadoEn:new Date()});}
 
-async function cargarForosQRQC() {
+async function cargarForosQRQC(){
   await inicializarForosDefault();
-  const snap=await db.collection('forosQRQC').orderBy('nivel').get();
-  forosQRQC=[];
-  snap.forEach(doc=>forosQRQC.push({id:doc.id,...doc.data()}));
-  filtrarForos();
+  const snap=await db.collection('forosQRQC').orderBy('nivel').get();forosQRQC=[];
+  snap.forEach(doc=>forosQRQC.push({id:doc.id,...doc.data()}));filtrarForos();
 }
 
-function filtrarForos() {
+function filtrarForos(){
   const filtro=document.getElementById('q-filtroNivel').value;
-  const contenedor=document.getElementById('q-listaForos');
-  contenedor.innerHTML='';
+  const contenedor=document.getElementById('q-listaForos');contenedor.innerHTML='';
   const lista=filtro?forosQRQC.filter(f=>f.nivel===filtro):forosQRQC;
-  if (!lista.length) { contenedor.innerHTML='<p style="color:var(--texto-suave);padding:10px;">No hay foros</p>'; return; }
+  if(!lista.length){contenedor.innerHTML='<p style="color:var(--texto-suave);padding:10px;">No hay foros</p>';return;}
   lista.forEach(foro=>{
     const nc='nivel-'+foro.nivel.toLowerCase();
-    contenedor.innerHTML+=`
-      <div class="foro-card qrqc-foro-card">
-        <div class="foro-tap" style="background:#f5f3ff;"
-          onclick="abrirConfirmarAsistencia('qrqc','${foro.id}','${foro.nombre.replace(/'/g,"\\'")}','${foro.nivel}','')">
-          <div class="foro-tap-left">
-            <span class="nivel-badge ${nc}">${foro.nivel}</span>
-            <span class="foro-nombre">${foro.nombre}</span>
-          </div>
-          <span class="foro-tap-arrow">→</span>
-        </div>
-        <div id="estado-qrqc-tap-${foro.id}" style="padding:0 16px 12px;font-size:13px;font-weight:600;display:none;"></div>
-      </div>`;
+    contenedor.innerHTML+=`<div class="foro-card qrqc-foro-card"><div class="foro-tap" style="background:#f5f3ff;" onclick="abrirConfirmarAsistencia('qrqc','${foro.id}','${foro.nombre.replace(/'/g,"\\'")}','${foro.nivel}','')"><div class="foro-tap-left"><span class="nivel-badge ${nc}">${foro.nivel}</span><span class="foro-nombre">${foro.nombre}</span></div><span class="foro-tap-arrow">→</span></div><div id="estado-qrqc-tap-${foro.id}" style="padding:0 16px 12px;font-size:13px;font-weight:600;display:none;"></div></div>`;
   });
 }
 
-function abrirConfirmarAsistencia(tipo, id, nombre, nivel, tier) {
-  _confirmContext = { tipo, id, nombre, nivel, tier };
-  document.getElementById('mc-icono').innerText = tipo==='qrqc' ? '🔍' : '📋';
-  document.getElementById('mc-foro-nombre').innerText = nombre;
-  const badgeEl = document.getElementById('mc-nivel-badge');
-  if (tipo === 'qrqc' && nivel) {
-    const nc='nivel-'+nivel.toLowerCase();
-    badgeEl.innerHTML=`<span class="nivel-badge ${nc}" style="font-size:14px;">${nivel}</span>`;
-  } else if (tipo === 'psr' && tier) {
-    const tn=tier.replace('Tier ','');
-    badgeEl.innerHTML=`<span class="tier-badge tier-${tn}">${tier}</span>`;
-  } else { badgeEl.innerHTML=''; }
-  document.getElementById('mc-empleado-nombre').innerText = usuarioActual.nombre;
-  document.getElementById('mc-empleado-numero').innerText = '# ' + usuarioActual.numero;
-  document.getElementById('mc-estado').innerText = '';
-  const btn = document.getElementById('mc-btn-confirmar');
-  btn.disabled = false; btn.innerText = '✅ Confirmar mi Asistencia';
+function abrirConfirmarAsistencia(tipo,id,nombre,nivel,tier){
+  _confirmContext={tipo,id,nombre,nivel,tier};
+  document.getElementById('mc-icono').innerText=tipo==='qrqc'?'🔍':'📋';
+  document.getElementById('mc-foro-nombre').innerText=nombre;
+  const badgeEl=document.getElementById('mc-nivel-badge');
+  if(tipo==='qrqc'&&nivel){const nc='nivel-'+nivel.toLowerCase();badgeEl.innerHTML=`<span class="nivel-badge ${nc}" style="font-size:14px;">${nivel}</span>`;}
+  else if(tipo==='psr'&&tier){const tn=tier.replace('Tier ','');badgeEl.innerHTML=`<span class="tier-badge tier-${tn}">${tier}</span>`;}
+  else{badgeEl.innerHTML='';}
+  document.getElementById('mc-empleado-nombre').innerText=usuarioActual.nombre;
+  document.getElementById('mc-empleado-numero').innerText='# '+usuarioActual.numero;
+  document.getElementById('mc-estado').innerText='';
+  const btn=document.getElementById('mc-btn-confirmar');btn.disabled=false;btn.innerText='✅ Confirmar mi Asistencia';
   document.getElementById('modalConfirmar').classList.add('abierto');
 }
 
-function cerrarModalConfirmar() {
-  document.getElementById('modalConfirmar').classList.remove('abierto');
-}
+function cerrarModalConfirmar(){document.getElementById('modalConfirmar').classList.remove('abierto');}
 
-async function confirmarAsistencia() {
-  const { tipo, id, nombre, nivel, tier } = _confirmContext;
-  const btn = document.getElementById('mc-btn-confirmar');
-  const estadoEl = document.getElementById('mc-estado');
-  btn.disabled = true; btn.innerText = 'Guardando...'; estadoEl.innerText = '';
-  try {
-    const ahora = new Date();
-    const fechaStr = ahora.toISOString().split('T')[0];
-    if (tipo === 'qrqc') {
-      const dup = await db.collection('asistenciasQRQC')
-        .where('foroId','==',id).where('numeroEmpleado','==',String(usuarioActual.numero)).where('fechaStr','==',fechaStr).get();
-      if (!dup.empty) {
-        estadoEl.style.color='var(--rojo)'; estadoEl.innerText='⚠ Ya registraste asistencia en este foro hoy.';
-        btn.disabled=false; btn.innerText='✅ Confirmar mi Asistencia'; return;
-      }
-      await db.collection('asistenciasQRQC').add({
-        foroId:id, foroNombre:nombre, foroNivel:nivel,
-        numeroEmpleado:String(usuarioActual.numero), nombreEmpleado:usuarioActual.nombre,
-        fecha:ahora, fechaStr:fechaStr
-      });
-      const tapEl=document.getElementById('estado-qrqc-tap-'+id);
-      if (tapEl) { tapEl.style.display='block'; tapEl.style.color='var(--verde)'; tapEl.innerText='✅ Asistencia registrada'; }
-    } else {
-      const dup = await db.collection('asistenciasPSR')
-        .where('proyectoId','==',id).where('numeroEmpleado','==',String(usuarioActual.numero)).where('fechaStr','==',fechaStr).get();
-      if (!dup.empty) {
-        estadoEl.style.color='var(--rojo)'; estadoEl.innerText='⚠ Ya registraste asistencia en este proyecto hoy.';
-        btn.disabled=false; btn.innerText='✅ Confirmar mi Asistencia'; return;
-      }
-      await db.collection('asistenciasPSR').add({
-        proyectoId:id, proyectoNombre:nombre, tier:tier,
-        numeroEmpleado:String(usuarioActual.numero), nombreEmpleado:usuarioActual.nombre,
-        fecha:ahora, fechaStr:fechaStr
-      });
-      const tapEl=document.getElementById('estado-psr-tap-'+id);
-      if (tapEl) { tapEl.style.display='block'; tapEl.style.color='var(--verde)'; tapEl.innerText='✅ Asistencia registrada'; }
+async function confirmarAsistencia(){
+  const{tipo,id,nombre,nivel,tier}=_confirmContext;
+  const btn=document.getElementById('mc-btn-confirmar');const estadoEl=document.getElementById('mc-estado');
+  btn.disabled=true;btn.innerText='Guardando...';estadoEl.innerText='';
+  try{
+    const ahora=new Date(),fechaStr=ahora.toISOString().split('T')[0];
+    if(tipo==='qrqc'){
+      const dup=await db.collection('asistenciasQRQC').where('foroId','==',id).where('numeroEmpleado','==',String(usuarioActual.numero)).where('fechaStr','==',fechaStr).get();
+      if(!dup.empty){estadoEl.style.color='var(--rojo)';estadoEl.innerText='⚠ Ya registraste asistencia en este foro hoy.';btn.disabled=false;btn.innerText='✅ Confirmar mi Asistencia';return;}
+      await db.collection('asistenciasQRQC').add({foroId:id,foroNombre:nombre,foroNivel:nivel,numeroEmpleado:String(usuarioActual.numero),nombreEmpleado:usuarioActual.nombre,fecha:ahora,fechaStr:fechaStr});
+      const tapEl=document.getElementById('estado-qrqc-tap-'+id);if(tapEl){tapEl.style.display='block';tapEl.style.color='var(--verde)';tapEl.innerText='✅ Asistencia registrada';}
+    }else{
+      const dup=await db.collection('asistenciasPSR').where('proyectoId','==',id).where('numeroEmpleado','==',String(usuarioActual.numero)).where('fechaStr','==',fechaStr).get();
+      if(!dup.empty){estadoEl.style.color='var(--rojo)';estadoEl.innerText='⚠ Ya registraste asistencia en este proyecto hoy.';btn.disabled=false;btn.innerText='✅ Confirmar mi Asistencia';return;}
+      await db.collection('asistenciasPSR').add({proyectoId:id,proyectoNombre:nombre,tier:tier,numeroEmpleado:String(usuarioActual.numero),nombreEmpleado:usuarioActual.nombre,fecha:ahora,fechaStr:fechaStr});
+      const tapEl=document.getElementById('estado-psr-tap-'+id);if(tapEl){tapEl.style.display='block';tapEl.style.color='var(--verde)';tapEl.innerText='✅ Asistencia registrada';}
     }
-    estadoEl.style.color='var(--verde)'; estadoEl.innerText='✅ ¡Asistencia guardada correctamente!';
-    btn.innerText='✅ Registrado';
-    setTimeout(() => cerrarModalConfirmar(), 1200);
-  } catch(e) {
-    console.error(e);
-    estadoEl.style.color='var(--rojo)'; estadoEl.innerText='❌ Error al guardar. Intenta de nuevo.';
-    btn.disabled=false; btn.innerText='✅ Confirmar mi Asistencia';
-  }
+    estadoEl.style.color='var(--verde)';estadoEl.innerText='✅ ¡Asistencia guardada correctamente!';btn.innerText='✅ Registrado';
+    setTimeout(()=>cerrarModalConfirmar(),1200);
+  }catch(e){console.error(e);estadoEl.style.color='var(--rojo)';estadoEl.innerText='❌ Error al guardar. Intenta de nuevo.';btn.disabled=false;btn.innerText='✅ Confirmar mi Asistencia';}
 }
 
-async function cargarAdminPSR() { await renderAdminListaProyectos(); }
+async function cargarAdminPSR(){await renderAdminListaProyectos();}
 
-async function renderAdminListaProyectos() {
-  const lista=document.getElementById('p-listaProyectosAdmin');
-  lista.innerHTML='Cargando...';
-  const snap=await db.collection('proyectosPSR').orderBy('nombre').get();
-  lista.innerHTML='';
-  if (snap.empty) { lista.innerHTML='<p style="color:var(--texto-suave)">No hay proyectos</p>'; return; }
-  snap.docs.forEach(doc=>{
-    const d=doc.data(); const tn=d.tier?d.tier.replace('Tier ',''):'';
-    lista.innerHTML+=`<div class="admin-psr-proyecto-row">
-      <div><strong>${d.nombre}</strong>
-        <div style="display:flex;gap:6px;align-items:center;margin-top:3px;">${tn?`<span class="tier-badge tier-${tn}">${d.tier}</span>`:''}</div>
-      </div>
-      <button class="btn btn-rojo btn-sm" onclick="eliminarProyecto('${doc.id}')">✕ Eliminar</button>
-    </div>`;
-  });
+async function renderAdminListaProyectos(){
+  const lista=document.getElementById('p-listaProyectosAdmin');lista.innerHTML='Cargando...';
+  const snap=await db.collection('proyectosPSR').orderBy('nombre').get();lista.innerHTML='';
+  if(snap.empty){lista.innerHTML='<p style="color:var(--texto-suave)">No hay proyectos</p>';return;}
+  snap.docs.forEach(doc=>{const d=doc.data();const tn=d.tier?d.tier.replace('Tier ',''):'';lista.innerHTML+=`<div class="admin-psr-proyecto-row"><div><strong>${d.nombre}</strong><div style="display:flex;gap:6px;align-items:center;margin-top:3px;">${tn?`<span class="tier-badge tier-${tn}">${d.tier}</span>`:''}</div></div><button class="btn btn-rojo btn-sm" onclick="eliminarProyecto('${doc.id}')">✕ Eliminar</button></div>`;});
 }
 
-async function agregarProyecto() {
-  const nombre=document.getElementById('p-nuevoProyecto').value.trim();
-  const tier=document.getElementById('p-nuevoTier').value;
-  const estado=document.getElementById('p-estadoProyecto');
-  if (!nombre) { estado.innerText='Ingresa nombre del proyecto'; return; }
-  await db.collection('proyectosPSR').add({nombre,tier,creadoEn:new Date()});
-  estado.innerText='✅ Proyecto agregado';
-  document.getElementById('p-nuevoProyecto').value=''; document.getElementById('p-nuevoTier').value='';
-  await cargarProyectosPSR(); await cargarAdminPSR();
+async function agregarProyecto(){
+  const nombre=document.getElementById('p-nuevoProyecto').value.trim(),tier=document.getElementById('p-nuevoTier').value,estado=document.getElementById('p-estadoProyecto');
+  if(!nombre){estado.innerText='Ingresa nombre del proyecto';return;}
+  await db.collection('proyectosPSR').add({nombre,tier,creadoEn:new Date()});estado.innerText='✅ Proyecto agregado';
+  document.getElementById('p-nuevoProyecto').value='';document.getElementById('p-nuevoTier').value='';
+  await cargarProyectosPSR();await cargarAdminPSR();
 }
 
-async function eliminarProyecto(id) {
-  if (!confirm('¿Eliminar este proyecto?')) return;
-  await db.collection('proyectosPSR').doc(id).delete();
-  await cargarProyectosPSR(); await cargarAdminPSR();
+async function eliminarProyecto(id){if(!confirm('¿Eliminar este proyecto?'))return;await db.collection('proyectosPSR').doc(id).delete();await cargarProyectosPSR();await cargarAdminPSR();}
+
+async function verHistorialPSR(){
+  const historial=document.getElementById('p-historial'),fecha=document.getElementById('p-filtroFecha').value;
+  historial.innerHTML='Cargando...';let query=db.collection('asistenciasPSR').orderBy('fecha','desc');
+  if(fecha)query=query.where('fechaStr','==',fecha);
+  const snap=await query.limit(200).get();historial.innerHTML='';
+  if(snap.empty){historial.innerHTML='<p style="color:var(--texto-suave)">Sin registros</p>';return;}
+  snap.forEach(doc=>{const d=doc.data();const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;const tn=d.tier?d.tier.replace('Tier ',''):'';historial.innerHTML+=`<div class="historial-item" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;"><div style="flex:1;min-width:160px;"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><strong>${d.proyectoNombre}</strong>${tn?`<span class="tier-badge tier-${tn}">${d.tier}</span>`:''}</div><div style="font-size:12px;color:var(--texto-suave);margin-top:3px;">${f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''}</div></div><div style="text-align:right;"><div style="font-size:13px;font-weight:700;color:var(--texto);">${d.nombreEmpleado||'—'}</div><div style="font-size:12px;color:var(--texto-suave);"># ${d.numeroEmpleado||'—'}</div></div></div>`;});
 }
 
-async function verHistorialPSR() {
-  const historial=document.getElementById('p-historial');
-  const fecha=document.getElementById('p-filtroFecha').value;
-  historial.innerHTML='Cargando...';
-  let query=db.collection('asistenciasPSR').orderBy('fecha','desc');
-  if (fecha) query=query.where('fechaStr','==',fecha);
-  const snap=await query.limit(200).get();
-  historial.innerHTML='';
-  if (snap.empty) { historial.innerHTML='<p style="color:var(--texto-suave)">Sin registros</p>'; return; }
-  snap.forEach(doc=>{
-    const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
-    const tn=d.tier?d.tier.replace('Tier ',''):'';
-    historial.innerHTML+=`<div class="historial-item" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <div style="flex:1;min-width:160px;">
-        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-          <strong>${d.proyectoNombre}</strong>${tn?`<span class="tier-badge tier-${tn}">${d.tier}</span>`:''}
-        </div>
-        <div style="font-size:12px;color:var(--texto-suave);margin-top:3px;">${f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''}</div>
-      </div>
-      <div style="text-align:right;">
-        <div style="font-size:13px;font-weight:700;color:var(--texto);">${d.nombreEmpleado||'—'}</div>
-        <div style="font-size:12px;color:var(--texto-suave);"># ${d.numeroEmpleado||'—'}</div>
-      </div>
-    </div>`;
-  });
+async function exportarPSRExcel(){
+  const snap=await db.collection('asistenciasPSR').orderBy('fecha','desc').get();let datos=[];
+  snap.forEach(doc=>{const d=doc.data();const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;datos.push({fecha:f?f.toLocaleDateString():'',hora:f?f.toLocaleTimeString():'',proyecto:d.proyectoNombre,tier:d.tier||'',numero_empleado:d.numeroEmpleado,nombre_empleado:d.nombreEmpleado});});
+  const ws=XLSX.utils.json_to_sheet(datos);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Asistencias PSR');XLSX.writeFile(wb,'asistencias_psr.xlsx');
 }
 
-async function exportarPSRExcel() {
-  const snap=await db.collection('asistenciasPSR').orderBy('fecha','desc').get();
-  let datos=[];
-  snap.forEach(doc=>{
-    const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
-    datos.push({ fecha:f?f.toLocaleDateString():'', hora:f?f.toLocaleTimeString():'', proyecto:d.proyectoNombre, tier:d.tier||'', numero_empleado:d.numeroEmpleado, nombre_empleado:d.nombreEmpleado });
-  });
-  const ws=XLSX.utils.json_to_sheet(datos); const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'Asistencias PSR'); XLSX.writeFile(wb,'asistencias_psr.xlsx');
+async function cargarAdminListaForos(){
+  const lista=document.getElementById('q-listaForosAdmin');if(!lista)return;lista.innerHTML='Cargando...';
+  const snap=await db.collection('forosQRQC').orderBy('nivel').get();lista.innerHTML='';
+  if(snap.empty){lista.innerHTML='<p style="color:var(--texto-suave)">No hay foros</p>';return;}
+  snap.docs.forEach(doc=>{const d=doc.data();const nc='nivel-'+d.nivel.toLowerCase();lista.innerHTML+=`<div class="admin-psr-proyecto-row"><div><span class="nivel-badge ${nc}">${d.nivel}</span><strong style="margin-left:6px;">${d.nombre}</strong></div><button class="btn btn-rojo btn-sm" onclick="eliminarForo('${doc.id}')">✕ Eliminar</button></div>`;});
 }
 
-async function cargarAdminListaForos() {
-  const lista=document.getElementById('q-listaForosAdmin');
-  if (!lista) return;
-  lista.innerHTML='Cargando...';
-  const snap=await db.collection('forosQRQC').orderBy('nivel').get();
-  lista.innerHTML='';
-  if (snap.empty) { lista.innerHTML='<p style="color:var(--texto-suave)">No hay foros</p>'; return; }
-  snap.docs.forEach(doc=>{
-    const d=doc.data(); const nc='nivel-'+d.nivel.toLowerCase();
-    lista.innerHTML+=`<div class="admin-psr-proyecto-row">
-      <div><span class="nivel-badge ${nc}">${d.nivel}</span><strong style="margin-left:6px;">${d.nombre}</strong></div>
-      <button class="btn btn-rojo btn-sm" onclick="eliminarForo('${doc.id}')">✕ Eliminar</button>
-    </div>`;
-  });
+async function agregarForo(){
+  const nombre=document.getElementById('q-nuevoNombre').value.trim(),nivel=document.getElementById('q-nuevoNivel').value,estado=document.getElementById('q-estadoForo');
+  if(!nombre||!nivel){estado.innerText='Completa nombre y nivel';return;}
+  await db.collection('forosQRQC').add({nombre,nivel,creadoEn:new Date()});estado.innerText='✅ Foro agregado';
+  document.getElementById('q-nuevoNombre').value='';await cargarForosQRQC();await cargarAdminListaForos();
 }
 
-async function agregarForo() {
-  const nombre=document.getElementById('q-nuevoNombre').value.trim();
-  const nivel=document.getElementById('q-nuevoNivel').value;
-  const estado=document.getElementById('q-estadoForo');
-  if (!nombre||!nivel) { estado.innerText='Completa nombre y nivel'; return; }
-  await db.collection('forosQRQC').add({nombre,nivel,creadoEn:new Date()});
-  estado.innerText='✅ Foro agregado';
-  document.getElementById('q-nuevoNombre').value='';
-  await cargarForosQRQC(); await cargarAdminListaForos();
+async function eliminarForo(foroId){if(!confirm('¿Eliminar este foro?'))return;await db.collection('forosQRQC').doc(foroId).delete();await cargarForosQRQC();await cargarAdminListaForos();}
+
+async function verHistorialQRQC(){
+  const historial=document.getElementById('q-historial'),fecha=document.getElementById('q-filtroFecha').value,nivel=document.getElementById('q-filtroHistorialNivel').value;
+  historial.innerHTML='Cargando...';let query=db.collection('asistenciasQRQC').orderBy('fecha','desc');
+  if(fecha)query=query.where('fechaStr','==',fecha);if(nivel)query=query.where('foroNivel','==',nivel);
+  const snap=await query.limit(200).get();historial.innerHTML='';
+  if(snap.empty){historial.innerHTML='<p style="color:var(--texto-suave)">Sin registros</p>';return;}
+  snap.forEach(doc=>{const d=doc.data();const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;const nc='nivel-'+(d.foroNivel||'').toLowerCase();historial.innerHTML+=`<div class="historial-item" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;"><div style="flex:1;min-width:160px;"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><span class="nivel-badge ${nc}">${d.foroNivel}</span><strong>${d.foroNombre}</strong></div><div style="font-size:12px;color:var(--texto-suave);margin-top:3px;">${f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''}</div></div><div style="text-align:right;"><div style="font-size:13px;font-weight:700;color:var(--texto);">${d.nombreEmpleado||'—'}</div><div style="font-size:12px;color:var(--texto-suave);"># ${d.numeroEmpleado||'—'}</div></div></div>`;});
 }
 
-async function eliminarForo(foroId) {
-  if (!confirm('¿Eliminar este foro?')) return;
-  await db.collection('forosQRQC').doc(foroId).delete();
-  await cargarForosQRQC(); await cargarAdminListaForos();
+async function exportarQRQCExcel(){
+  const snap=await db.collection('asistenciasQRQC').orderBy('fecha','desc').get();let datos=[];
+  snap.forEach(doc=>{const d=doc.data();const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;datos.push({fecha:f?f.toLocaleDateString():'',hora:f?f.toLocaleTimeString():'',foro:d.foroNombre,nivel:d.foroNivel,numero_empleado:d.numeroEmpleado,nombre_empleado:d.nombreEmpleado});});
+  const ws=XLSX.utils.json_to_sheet(datos);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Asistencias QRQC');XLSX.writeFile(wb,'asistencias_qrqc.xlsx');
 }
 
-async function verHistorialQRQC() {
-  const historial=document.getElementById('q-historial');
-  const fecha=document.getElementById('q-filtroFecha').value;
-  const nivel=document.getElementById('q-filtroHistorialNivel').value;
-  historial.innerHTML='Cargando...';
-  let query=db.collection('asistenciasQRQC').orderBy('fecha','desc');
-  if (fecha) query=query.where('fechaStr','==',fecha);
-  if (nivel) query=query.where('foroNivel','==',nivel);
-  const snap=await query.limit(200).get();
-  historial.innerHTML='';
-  if (snap.empty) { historial.innerHTML='<p style="color:var(--texto-suave)">Sin registros</p>'; return; }
-  snap.forEach(doc=>{
-    const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
-    const nc='nivel-'+(d.foroNivel||'').toLowerCase();
-    historial.innerHTML+=`<div class="historial-item" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <div style="flex:1;min-width:160px;">
-        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-          <span class="nivel-badge ${nc}">${d.foroNivel}</span><strong>${d.foroNombre}</strong>
-        </div>
-        <div style="font-size:12px;color:var(--texto-suave);margin-top:3px;">${f?f.toLocaleDateString()+' '+f.toLocaleTimeString():''}</div>
-      </div>
-      <div style="text-align:right;">
-        <div style="font-size:13px;font-weight:700;color:var(--texto);">${d.nombreEmpleado||'—'}</div>
-        <div style="font-size:12px;color:var(--texto-suave);"># ${d.numeroEmpleado||'—'}</div>
-      </div>
-    </div>`;
-  });
-}
-
-async function exportarQRQCExcel() {
-  const snap=await db.collection('asistenciasQRQC').orderBy('fecha','desc').get();
-  let datos=[];
-  snap.forEach(doc=>{
-    const d=doc.data(); const f=d.fecha?(d.fecha.toDate?d.fecha.toDate():new Date(d.fecha)):null;
-    datos.push({ fecha:f?f.toLocaleDateString():'', hora:f?f.toLocaleTimeString():'', foro:d.foroNombre, nivel:d.foroNivel, numero_empleado:d.numeroEmpleado, nombre_empleado:d.nombreEmpleado });
-  });
-  const ws=XLSX.utils.json_to_sheet(datos); const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'Asistencias QRQC'); XLSX.writeFile(wb,'asistencias_qrqc.xlsx');
-}
+window.addEventListener("DOMContentLoaded", detectarQR);
 </script>
 </body>
 </html>
