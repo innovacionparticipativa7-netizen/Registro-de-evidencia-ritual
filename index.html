@@ -402,6 +402,20 @@ function detectarQR(){
   const params=new URLSearchParams(window.location.search);
   const modulo=params.get('modulo');
   if(!modulo)return;
+  if(modulo==='rituales'){
+    const area=decodeURIComponent(params.get('area')||'');
+    if(!area)return;
+    _qrParams={tipo:'rituales',area};
+    document.getElementById('pantallaBienvenida').style.display='none';
+    document.getElementById('login-modulo-label').innerHTML=`<span style="font-size:12px;color:var(--texto-suave);">Registrar Ritual - Área:</span><br><strong style="font-size:16px;color:var(--texto);">⚡ ${area}</strong>`;
+    document.getElementById('login-numero').value='';
+    document.getElementById('login-hint').innerText='';
+    document.getElementById('login-estado').innerText='';
+    document.getElementById('modalLogin').classList.add('abierto');
+    document.querySelector('#modalLogin .btn-outline').onclick=()=>{window.location.href=window.location.pathname;};
+    setTimeout(()=>document.getElementById('login-numero').focus(),200);
+    return;
+  }
   const id=params.get('foroId')||params.get('proyectoId')||'';
   const nombre=decodeURIComponent(params.get('foroNombre')||params.get('proyectoNombre')||'');
   const nivel=decodeURIComponent(params.get('foroNivel')||'');
@@ -419,7 +433,6 @@ function detectarQR(){
   document.querySelector('#modalLogin .btn-outline').onclick=()=>{window.location.href=window.location.pathname;};
   setTimeout(()=>document.getElementById('login-numero').focus(),200);
 }
-
 function mostrarPantallaResultadoQR(icono,titulo,detalle,esExito){
   let p=document.getElementById('pantallaResultadoQR');
   if(!p){p=document.createElement('div');p.id='pantallaResultadoQR';p.style.cssText='position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 60%,#1e40af 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;text-align:center;';document.body.appendChild(p);}
@@ -428,6 +441,17 @@ function mostrarPantallaResultadoQR(icono,titulo,detalle,esExito){
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:${color};letter-spacing:1px;margin-bottom:16px;">${titulo}</div>
     <div style="background:rgba(255,255,255,0.08);border-radius:16px;padding:20px 28px;max-width:340px;width:100%;color:white;font-size:15px;line-height:1.7;margin-bottom:28px;">${detalle}</div>
     <button onclick="window.location.href=window.location.pathname" style="background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.25);color:white;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;padding:12px 28px;border-radius:12px;cursor:pointer;letter-spacing:.5px;">← Volver al inicio</button>`;
+}
+  async function abrirRitualDesdeQR(){
+  document.getElementById('pantallaBienvenida').style.display='none';
+  document.getElementById('appPrincipal').style.display='block';
+  const texto=usuarioActual.nombre+' · #'+usuarioActual.numero;
+  ['rituales','psr','qrqc'].forEach(m=>{const el=document.getElementById('banner-nombre-'+m);if(el)el.innerText=texto;});
+  cambiarTab('rituales');
+  const sel=document.getElementById('r-area');
+  sel.value=_qrParams.area;
+  sel.disabled=true;
+  mostrarEstado('r-estado','📷 Toma o sube la foto de evidencia y presiona "Registrar Ritual"','info');
 }
 
 async function registrarAsistenciaQR(){
@@ -480,7 +504,10 @@ async function confirmarLogin(){
     usuarioActual.numero=numero;
     usuarioActual.nombre=doc.data().nombre;
     document.getElementById('modalLogin').classList.remove('abierto');
-    if(_qrParams){await registrarAsistenciaQR();return;}
+    if(_qrParams){
+      if(_qrParams.tipo==='rituales'){await abrirRitualDesdeQR();return;}
+      await registrarAsistenciaQR();return;
+    }
     document.getElementById('pantallaBienvenida').style.display='none';
     document.getElementById('appPrincipal').style.display='block';
     const texto=usuarioActual.nombre+' · #'+usuarioActual.numero;
