@@ -34,6 +34,7 @@ select:focus,input:focus{outline:none;border-color:var(--azul-medio);}
 .nivel-n2{background:#dbeafe;color:#1e40af;}
 .nivel-n1{background:#dcfce7;color:#15803d;}
 .nivel-psr{background:#ede9fe;color:#5b21b6;}
+.nivel-rituales{background:#fef3c7;color:#92400e;}
 .qr-foro-nombre{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--texto);margin-bottom:14px;min-height:40px;display:flex;align-items:center;justify-content:center;}
 .qr-canvas-wrap{display:flex;justify-content:center;margin-bottom:14px;}
 .qr-canvas-wrap canvas,.qr-canvas-wrap img{border-radius:6px;}
@@ -56,7 +57,7 @@ select:focus,input:focus{outline:none;border-color:var(--azul-medio);}
 </div>
 <div class="container">
   <div class="filtros no-print">
-    <div><label>Módulo</label><br><select id="filtroModulo" onchange="aplicarFiltros()"><option value="">Todos</option><option value="qrqc">QRQC</option><option value="psr">PSR</option></select></div>
+    <div><label>Módulo</label><br><select id="filtroModulo" onchange="aplicarFiltros()"><option value="">Todos</option><option value="qrqc">QRQC</option><option value="psr">PSR</option><option value="rituales">Rituales (IP)</option></select></div>
     <div><label>Nivel QRQC</label><br><select id="filtroNivel" onchange="aplicarFiltros()"><option value="">Todos</option><option value="N3">N3</option><option value="N2">N2</option><option value="N1">N1</option></select></div>
     <div><label>Buscar nombre</label><br><input type="text" id="filtroBuscar" placeholder="Escribe para filtrar..." oninput="aplicarFiltros()"></div>
     <div style="margin-left:auto;"><label>&nbsp;</label><br><button class="btn btn-outline" onclick="limpiarFiltros()">✕ Limpiar</button></div>
@@ -69,12 +70,15 @@ firebase.initializeApp({apiKey:"AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",project
 const db=firebase.firestore();
 const BASE_URL="https://innovacionparticipativa7-netizen.github.io/Registro-de-evidencia-ritual/";
 let todosLosItems=[];
+const AREAS_RITUALES=["LAVS","ENVIOS A220","GALLEYS & SMALL/MONUMENTOS","SHIP LOOSE","F2F","CASCADAS","MAQUINADO Y TROQUELADO","AIRBUS","BONDEO","COMAC","DECORADO,PINTURA","MANTENIMIENTO","ALMACEN","INSERTOS A220","CNC 3X/5X","LIJADO","LAMINADO / HORNOS","BOEING","MOLDES / PRENSAS"];
+function slugify(str){return str.replace(/[^a-zA-Z0-9]+/g,'_');}
 
 async function cargarTodo(){
   const[snapQRQC,snapPSR]=await Promise.all([db.collection('forosQRQC').orderBy('nivel').get(),db.collection('proyectosPSR').orderBy('nombre').get()]);
   todosLosItems=[];
   snapQRQC.forEach(doc=>{const d=doc.data();todosLosItems.push({tipo:'qrqc',id:doc.id,nombre:d.nombre,nivel:d.nivel,tier:''});});
   snapPSR.forEach(doc=>{const d=doc.data();todosLosItems.push({tipo:'psr',id:doc.id,nombre:d.nombre,nivel:'',tier:d.tier||''});});
+  AREAS_RITUALES.forEach(area=>{todosLosItems.push({tipo:'rituales',id:slugify(area),nombre:area,nivel:'',tier:''});});
   aplicarFiltros();
 }
 
@@ -102,9 +106,9 @@ function renderizarGrid(lista){
     const card=document.createElement('div');
     card.className='qr-card'+(item.tipo==='qrqc'?' qrqc-card':'');
     card.id='card-'+item.id;
-    const badgeClass=item.tipo==='psr'?'nivel-psr':'nivel-'+item.nivel.toLowerCase();
-    const badgeText=item.tipo==='psr'?(item.tier||'PSR'):item.nivel;
-    const modIco=item.tipo==='psr'?'📋':'🔍';
+    const badgeClass=item.tipo==='psr'?'nivel-psr':item.tipo==='rituales'?'nivel-rituales':'nivel-'+item.nivel.toLowerCase();
+    const badgeText=item.tipo==='psr'?(item.tier||'PSR'):item.tipo==='rituales'?'RITUAL':item.nivel;
+    const modIco=item.tipo==='psr'?'📋':item.tipo==='rituales'?'⚡':'🔍';
     card.innerHTML=`<span class="nivel-badge ${badgeClass}">${modIco} ${badgeText}</span><div class="qr-foro-nombre">${item.nombre}</div><div class="qr-canvas-wrap" id="qr-${item.id}"></div><div class="qr-url">${url}</div><div class="qr-btns no-print"><button class="btn btn-azul" style="font-size:12px;padding:7px 12px;" onclick="descargarQR('${item.id}','${item.nombre.replace(/'/g,"\\'")}')">⬇ Descargar</button><button class="btn btn-outline" style="font-size:12px;padding:7px 12px;" onclick="imprimirQR('${item.id}')">🖨️ Imprimir</button></div>`;
     grid.appendChild(card);
     new QRCode(document.getElementById('qr-'+item.id),{text:url,width:180,height:180,colorDark:'#0f172a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
@@ -113,9 +117,9 @@ function renderizarGrid(lista){
 
 function construirURL(item){
   if(item.tipo==='qrqc')return`${BASE_URL}?modulo=qrqc&foroId=${item.id}&foroNombre=${encodeURIComponent(item.nombre)}&foroNivel=${encodeURIComponent(item.nivel)}`;
+  if(item.tipo==='rituales')return`${BASE_URL}?modulo=rituales&area=${encodeURIComponent(item.nombre)}`;
   return`${BASE_URL}?modulo=psr&proyectoId=${item.id}&proyectoNombre=${encodeURIComponent(item.nombre)}&tier=${encodeURIComponent(item.tier)}`;
 }
-
 function descargarQR(id,nombre){
   const wrap=document.getElementById('qr-'+id);const canvas=wrap.querySelector('canvas');
   if(!canvas){alert('QR no generado aún');return;}
