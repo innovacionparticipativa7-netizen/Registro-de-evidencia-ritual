@@ -231,6 +231,10 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
         onkeydown="if(event.key==='Enter') confirmarLogin()">
       <div class="nombre-hint" id="login-hint"></div>
     </div>
+    <div class="campo" id="login-foto-campo" style="display:none;">
+      <label>Foto de Evidencia</label>
+      <input type="file" id="login-foto" accept="image/*" capture="environment">
+    </div>
     <div id="login-estado" style="font-size:13px;font-weight:600;min-height:18px;margin-bottom:14px;"></div>
     <button class="btn btn-azul btn-full" onclick="confirmarLogin()">✅ Confirmar e Ingresar</button>
     <button class="btn btn-outline btn-full" style="margin-top:10px;" onclick="cerrarLogin()">Cancelar</button>
@@ -411,6 +415,8 @@ function detectarQR(){
     document.getElementById('login-numero').value='';
     document.getElementById('login-hint').innerText='';
     document.getElementById('login-estado').innerText='';
+    document.getElementById('login-foto-campo').style.display='block';
+    document.getElementById('login-foto').value='';
     document.getElementById('modalLogin').classList.add('abierto');
     document.querySelector('#modalLogin .btn-outline').onclick=()=>{window.location.href=window.location.pathname;};
     setTimeout(()=>document.getElementById('login-numero').focus(),200);
@@ -454,22 +460,20 @@ function mostrarPantallaResultadoQR(icono,titulo,detalle,esExito){
   mostrarEstado('r-estado','📷 Toma o sube la foto de evidencia y presiona "Registrar Ritual"','info');
 }
 
-async function registrarAsistenciaQR(){
-  const{tipo,id,nombre,nivel,tier}=_qrParams;
-  const ahora=new Date(), fechaStr=ahora.toISOString().split('T')[0];
-  mostrarPantallaResultadoQR('⏳','Registrando...','Por favor espera...',false);
+async function registrarRitualDesdeQR(){
+  const area=_qrParams.area;
+  const foto=document.getElementById('login-foto').files[0];
+  const semana=getSemanaActual();
+  mostrarPantallaResultadoQR('⏳','Registrando...','Subiendo evidencia, por favor espera...',false);
   try{
-    if(tipo==='qrqc'){
-      const dup=await db.collection('asistenciasQRQC').where('foroId','==',id).where('numeroEmpleado','==',String(usuarioActual.numero)).where('fechaStr','==',fechaStr).get();
-      if(!dup.empty){mostrarPantallaResultadoQR('⚠️','Ya registrado',`Ya tienes asistencia en<br><strong>${nombre}</strong><br>el día de hoy.`,false);return;}
-      await db.collection('asistenciasQRQC').add({foroId:id,foroNombre:nombre,foroNivel:nivel,numeroEmpleado:String(usuarioActual.numero),nombreEmpleado:usuarioActual.nombre,fecha:ahora,fechaStr:fechaStr});
-    }else{
-      const dup=await db.collection('asistenciasPSR').where('proyectoId','==',id).where('numeroEmpleado','==',String(usuarioActual.numero)).where('fechaStr','==',fechaStr).get();
-      if(!dup.empty){mostrarPantallaResultadoQR('⚠️','Ya registrado',`Ya tienes asistencia en<br><strong>${nombre}</strong><br>el día de hoy.`,false);return;}
-      await db.collection('asistenciasPSR').add({proyectoId:id,proyectoNombre:nombre,tier:tier,numeroEmpleado:String(usuarioActual.numero),nombreEmpleado:usuarioActual.nombre,fecha:ahora,fechaStr:fechaStr});
-    }
-    const nb=nivel?`<span class="nivel-badge nivel-${nivel.toLowerCase()}" style="display:inline-block;margin-bottom:6px;">${nivel}</span><br>`:'';
-    mostrarPantallaResultadoQR('✅','¡Asistencia Registrada!',`<strong>${usuarioActual.nombre}</strong><br><span style="color:rgba(255,255,255,0.6);font-size:13px;"># ${usuarioActual.numero}</span><br><br>${nb}<strong>${nombre}</strong><br><span style="color:rgba(255,255,255,0.6);font-size:13px;">${ahora.toLocaleDateString()} ${ahora.toLocaleTimeString()}</span>`,true);
+    const existe=await db.collection('rituales').where('area','==',area).where('semana','==',semana).get();
+    if(!existe.empty){mostrarPantallaResultadoQR('⚠️','Ya registrado',`El área<br><strong>${area}</strong><br>ya registró su ritual esta semana.`,false);return;}
+    const formData=new FormData();formData.append('file',foto);formData.append('upload_preset','rituales');
+    const res=await fetch('https://api.cloudinary.com/v1_1/dc9wxwria/image/upload',{method:'POST',body:formData});
+    const data=await res.json();
+    if(!data.secure_url){mostrarPantallaResultadoQR('❌','Error al subir imagen','No se pudo subir la foto. Intenta de nuevo.',false);return;}
+    await db.collection('rituales').add({numero:usuarioActual.numero,nombre:usuarioActual.nombre,area,imagen:data.secure_url,semana,fecha:new Date()});
+    mostrarPantallaResultadoQR('✅','¡Ritual Registrado!',`<strong>${usuarioActual.nombre}</strong><br><span style="color:rgba(255,255,255,0.6);font-size:13px;"># ${usuarioActual.numero}</span><br><br><strong>⚡ ${area}</strong><br><span style="color:rgba(255,255,255,0.6);font-size:13px;">Semana ${semana}</span>`,true);
   }catch(e){console.error(e);mostrarPantallaResultadoQR('❌','Error al guardar','No se pudo registrar. Intenta de nuevo.',false);}
 }
 
@@ -480,6 +484,7 @@ function entrarModulo(modulo){
   document.getElementById('login-numero').value='';
   document.getElementById('login-hint').innerText='';
   document.getElementById('login-estado').innerText='';
+  document.getElementById('login-foto-campo').style.display='none';
   document.getElementById('modalLogin').classList.add('abierto');
   setTimeout(()=>document.getElementById('login-numero').focus(),150);
 }
@@ -497,6 +502,10 @@ async function confirmarLogin(){
   const numero=document.getElementById('login-numero').value;
   const estado=document.getElementById('login-estado');
   if(!numero){estado.style.color='var(--rojo)';estado.innerText='⚠ Ingresa tu número de empleado';return;}
+  if(_qrParams&&_qrParams.tipo==='rituales'){
+    const foto=document.getElementById('login-foto').files[0];
+    if(!foto){estado.style.color='var(--rojo)';estado.innerText='⚠ Agrega la foto de evidencia';return;}
+  }
   estado.style.color='var(--azul)';estado.innerText='Verificando...';
   try{
     const doc=await db.collection('empleados').doc(String(numero)).get();
@@ -505,7 +514,7 @@ async function confirmarLogin(){
     usuarioActual.nombre=doc.data().nombre;
     document.getElementById('modalLogin').classList.remove('abierto');
     if(_qrParams){
-      if(_qrParams.tipo==='rituales'){await abrirRitualDesdeQR();return;}
+      if(_qrParams.tipo==='rituales'){await registrarRitualDesdeQR();return;}
       await registrarAsistenciaQR();return;
     }
     document.getElementById('pantallaBienvenida').style.display='none';
@@ -515,7 +524,6 @@ async function confirmarLogin(){
     cambiarTab(moduloDestino);
   }catch(e){estado.style.color='var(--rojo)';estado.innerText='Error de conexión con la base de datos';}
 }
-
 function cerrarLogin(){document.getElementById('modalLogin').classList.remove('abierto');}
 
 function volverInicio(){
