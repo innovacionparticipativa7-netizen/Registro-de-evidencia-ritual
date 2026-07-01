@@ -476,7 +476,49 @@ async function registrarRitualDesdeQR(){
     mostrarPantallaResultadoQR('✅','¡Ritual Registrado!',`<strong>${usuarioActual.nombre}</strong><br><span style="color:rgba(255,255,255,0.6);font-size:13px;"># ${usuarioActual.numero}</span><br><br><strong>⚡ ${area}</strong><br><span style="color:rgba(255,255,255,0.6);font-size:13px;">Semana ${semana}</span>`,true);
   }catch(e){console.error(e);mostrarPantallaResultadoQR('❌','Error al guardar','No se pudo registrar. Intenta de nuevo.',false);}
 }
-
+async function registrarAsistenciaQR(){
+  const {tipo,id,nombre,nivel,tier}=_qrParams;
+  mostrarPantallaResultadoQR('⏳','Registrando...','Guardando tu asistencia, por favor espera...',false);
+  try{
+    const ahora=new Date(), fechaStr=ahora.toISOString().split('T')[0];
+    if(tipo==='qrqc'){
+      const dup=await db.collection('asistenciasQRQC')
+        .where('foroId','==',id)
+        .where('numeroEmpleado','==',String(usuarioActual.numero))
+        .where('fechaStr','==',fechaStr).get();
+      if(!dup.empty){
+        mostrarPantallaResultadoQR('⚠️','Ya registrado',`Ya registraste tu asistencia en<br><strong>${nombre}</strong><br>el día de hoy.`,false);
+        return;
+      }
+      await db.collection('asistenciasQRQC').add({
+        foroId:id, foroNombre:nombre, foroNivel:nivel,
+        numeroEmpleado:String(usuarioActual.numero), nombreEmpleado:usuarioActual.nombre,
+        fecha:ahora, fechaStr:fechaStr
+      });
+      mostrarPantallaResultadoQR('✅','¡Asistencia Registrada!',
+        `<strong>${usuarioActual.nombre}</strong><br><span style="color:rgba(255,255,255,0.6);font-size:13px;"># ${usuarioActual.numero}</span><br><br><strong>🔍 ${nombre}</strong>${nivel?`<br><span style="color:rgba(255,255,255,0.6);font-size:13px;">${nivel}</span>`:''}`,true);
+    }else{
+      const dup=await db.collection('asistenciasPSR')
+        .where('proyectoId','==',id)
+        .where('numeroEmpleado','==',String(usuarioActual.numero))
+        .where('fechaStr','==',fechaStr).get();
+      if(!dup.empty){
+        mostrarPantallaResultadoQR('⚠️','Ya registrado',`Ya registraste tu asistencia en<br><strong>${nombre}</strong><br>el día de hoy.`,false);
+        return;
+      }
+      await db.collection('asistenciasPSR').add({
+        proyectoId:id, proyectoNombre:nombre, tier:tier,
+        numeroEmpleado:String(usuarioActual.numero), nombreEmpleado:usuarioActual.nombre,
+        fecha:ahora, fechaStr:fechaStr
+      });
+      mostrarPantallaResultadoQR('✅','¡Asistencia Registrada!',
+        `<strong>${usuarioActual.nombre}</strong><br><span style="color:rgba(255,255,255,0.6);font-size:13px;"># ${usuarioActual.numero}</span><br><br><strong>📋 ${nombre}</strong>${tier?`<br><span style="color:rgba(255,255,255,0.6);font-size:13px;">${tier}</span>`:''}`,true);
+    }
+  }catch(e){
+    console.error(e);
+    mostrarPantallaResultadoQR('❌','Error al guardar','No se pudo registrar tu asistencia. Intenta de nuevo.',false);
+  }
+}
 function entrarModulo(modulo){
   moduloDestino=modulo;
   const etiquetas={rituales:'⚡ Rituales',psr:'📋 PSR — Project Status Review',qrqc:'🔍 QRQC — Quick Response Quality Control'};
