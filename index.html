@@ -233,7 +233,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
     </div>
     <div class="campo" id="login-foto-campo" style="display:none;">
       <label>Foto de Evidencia</label>
-      <input type="file" id="login-foto" accept="image/*" capture="environment">
+      <input type="file" id="login-foto" accept="image/*">
     </div>
     <div id="login-estado" style="font-size:13px;font-weight:600;min-height:18px;margin-bottom:14px;"></div>
     <button class="btn btn-azul btn-full" onclick="confirmarLogin()">✅ Confirmar e Ingresar</button>
@@ -361,7 +361,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
     <div class="card" style="max-width:500px;">
       <div class="card-titulo">Nuevo Ritual <span class="badge badge-amarillo">Semanal</span></div>
       <div class="campo"><label>Área</label><select id="r-area"><option value="">Selecciona área</option><option>LAVS</option><option>ENVIOS A220</option><option>GALLEYS & SMALL/MONUMENTOS</option><option>SHIP LOOSE</option><option>F2F</option><option>CASCADAS</option><option>MAQUINADO Y TROQUELADO</option><option>AIRBUS</option><option>BONDEO</option><option>COMAC</option><option>DECORADO,PINTURA</option><option>MANTENIMIENTO</option><option>ALMACEN</option><option>INSERTOS A220</option><option>CNC 3X/5X</option><option>LIJADO</option><option>LAMINADO / HORNOS</option><option>BOEING</option><option>MOLDES / PRENSAS</option></select></div>
-      <div class="campo"><label>Foto de Evidencia</label><input type="file" id="r-foto" accept="image/*" capture="environment"></div>
+      <div class="campo"><label>Foto de Evidencia</label><input type="file" id="r-foto" accept="image/*"></div>
       <button class="btn btn-amarillo btn-full" onclick="registrarRitual()">⚡ Registrar Ritual</button>
       <div id="r-estado"></div>
     </div>
