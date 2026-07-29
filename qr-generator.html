@@ -70,7 +70,7 @@ firebase.initializeApp({apiKey:"AIzaSyB4VtXbaJrPb2Rg9DxRguVvhQXtiCONPc0",project
 const db=firebase.firestore();
 const BASE_URL="https://innovacionparticipativa7-netizen.github.io/Registro-de-evidencia-ritual/";
 let todosLosItems=[];
-const AREAS_RITUALES=["LAVS","ENVIOS A220","GALLEYS & SMALL/MONUMENTOS","SHIP LOOSE","F2F","CASCADAS","MAQUINADO Y TROQUELADO","AIRBUS","BONDEO","COMAC","DECORADO,PINTURA","MANTENIMIENTO","ALMACEN","INSERTOS A220","CNC 3X/5X","LIJADO","LAMINADO / HORNOS","BOEING","MOLDES / PRENSAS"];
+const AREAS_RITUALES=["LAVS","ENVIOS A220","GALLEYS & SMALL/MONUMENTOS","SHIP LOOSE","F2F","CASCADAS","MAQUINADO Y TROQUELADO","AIRBUS","BONDEO","COMAC","DECORADO,PINTURA","MANTENIMIENTO","ALMACEN","INSERTOS A220","CNC 3X/5X","LIJADO","LAMINADO / HORNOS","BOEING","MOLDES / PRENSAS","DUCTOS"];
 function slugify(str){return str.replace(/[^a-zA-Z0-9]+/g,'_');}
 
 async function cargarTodo(){
