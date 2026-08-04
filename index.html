@@ -5,10 +5,12 @@
 <title>Sistema de Control - Rituales | PSR | QRQC</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<link rel="preconnect" href="https://firestore.googleapis.com">
+<link rel="preconnect" href="https://api.cloudinary.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -496,6 +498,16 @@ function mostrarPantallaResultadoQR(icono,titulo,detalle,esExito){
   mostrarEstado('r-estado','📷 Toma o sube la foto de evidencia y presiona "Registrar Ritual"','info');
 }
 
+
+function cargarScript(src){
+  return new Promise(res=>{
+    if(document.querySelector(`script[src="${src}"]`)){res();return;}
+    const s=document.createElement('script');
+    s.src=src; s.onload=res;
+    document.head.appendChild(s);
+  });
+}
+
   
 function comprimirImagen(file, maxAncho = 1280, calidad = 0.7) {
   return new Promise((resolve) => {
@@ -586,13 +598,17 @@ function entrarModulo(modulo){
   setTimeout(()=>document.getElementById('login-numero').focus(),150);
 }
 
-async function buscarEmpleadoLogin(){
-  const numero=document.getElementById('login-numero').value;
-  const hint=document.getElementById('login-hint');
-  document.getElementById('login-estado').innerText='';
-  if(!numero||numero.length<3){hint.innerText='';return;}
-  try{const doc=await db.collection('empleados').doc(String(numero)).get();hint.innerText=doc.exists?'👤 '+doc.data().nombre:'';}
-  catch(e){hint.innerText='Error de conexión';}
+let _buscarEmpleadoTimer;
+function buscarEmpleadoLogin(){
+  clearTimeout(_buscarEmpleadoTimer);
+  _buscarEmpleadoTimer=setTimeout(async ()=>{
+    const numero=document.getElementById('login-numero').value;
+    const hint=document.getElementById('login-hint');
+    document.getElementById('login-estado').innerText='';
+    if(!numero||numero.length<3){hint.innerText='';return;}
+    try{const doc=await db.collection('empleados').doc(String(numero)).get();hint.innerText=doc.exists?'👤 '+doc.data().nombre:'';}
+    catch(e){hint.innerText='Error de conexión';}
+  },350);
 }
 
 async function confirmarLogin(){
@@ -641,8 +657,17 @@ function cambiarTab(modulo){
   if(modulo==='psr')cargarProyectosPSR();
 }
 
-function toggleAdminPanel(){
-  if(!adminDesbloqueado){const pass=prompt('Contraseña de administrador:');if(pass!=='1234'){alert('Contraseña incorrecta');return;}adminDesbloqueado=true;document.getElementById('dashboardRituales').style.display='block';}
+async function toggleAdminPanel(){
+  if(!adminDesbloqueado){
+    const pass=prompt('Contraseña de administrador:');
+    if(pass!=='1234'){alert('Contraseña incorrecta');return;}
+    await Promise.all([
+      cargarScript('https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js'),
+      cargarScript('https://cdn.jsdelivr.net/npm/chart.js')
+    ]);
+    adminDesbloqueado=true;
+    document.getElementById('dashboardRituales').style.display='block';
+  }
   const panel=document.getElementById('adminPanelGlobal');panel.classList.toggle('abierto');mostrarAdminSeccion(tabActual);
 }
 
