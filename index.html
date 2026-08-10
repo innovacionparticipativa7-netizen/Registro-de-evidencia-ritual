@@ -107,7 +107,7 @@ body { font-family: 'Barlow', sans-serif; background: var(--gris-fondo); min-hei
 .badge-verde    { background: #dcfce7; color: #15803d; }
 .campo { margin-bottom: 14px; }
 .campo label { display: block; font-size: 11px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
-input[type="text"], input[type="number"], input[type="file"], input[type="date"], select, textarea {
+input[type="text"], input[type="number"], input[type="file"], input[type="date"], input[type="password"], select, textarea {
   width: 100%; padding: 11px 14px; border: 1.5px solid var(--gris-borde); border-radius: 9px;
   font-family: 'Barlow', sans-serif; font-size: 14px; color: var(--texto); background: white; transition: .2s;
 }
@@ -266,7 +266,10 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
       <label>Número de Empleado</label>
       <input type="number" id="login-numero" placeholder="Ej: 12345"
         oninput="buscarEmpleadoLogin()"
-        onkeydown="if(event.key==='Enter') confirmarLogin()">
+<div class="campo" id="login-password-campo" style="display:none;">
+  <label>Contraseña de Acceso</label>
+  <input type="password" id="login-password" placeholder="Ingresa la contraseña"
+    onkeydown="if(event.key==='Enter') confirmarLogin()">
       <div class="nombre-hint" id="login-hint"></div>
     </div>
     <div class="campo" id="login-foto-campo" style="display:none;">
@@ -436,6 +439,8 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 
+const CONTRASENA_ACCESO_MANUAL = "1234";
+
 let usuarioActual={numero:"",nombre:""}, moduloDestino="", forosQRQC=[], proyectosPSR=[], graficaRituales=null, adminDesbloqueado=false, tabActual='rituales';
 let _confirmContext={tipo:"",id:"",nombre:"",nivel:"",tier:""};
 let _qrParams=null;
@@ -457,6 +462,7 @@ function detectarQR(){
     document.getElementById('login-foto').value='';
     document.getElementById('modalLogin').classList.add('abierto');
     document.querySelector('#modalLogin .btn-outline').onclick=()=>{window.location.href=window.location.pathname;};
+    document.getElementById('login-password-campo').style.display='none';
     setTimeout(()=>document.getElementById('login-numero').focus(),200);
     return;
   }
@@ -601,6 +607,8 @@ function entrarModulo(modulo){
   document.getElementById('login-numero').value='';
   document.getElementById('login-hint').innerText='';
   document.getElementById('login-estado').innerText='';
+    document.getElementById('login-password-campo').style.display='block';
+  document.getElementById('login-password').value=''; 
   document.getElementById('login-foto-campo').style.display='none';
   document.getElementById('modalLogin').classList.add('abierto');
   setTimeout(()=>document.getElementById('login-numero').focus(),150);
@@ -623,6 +631,15 @@ async function confirmarLogin(){
   const numero=document.getElementById('login-numero').value;
   const estado=document.getElementById('login-estado');
   if(!numero){estado.style.color='var(--rojo)';estado.innerText='⚠ Ingresa tu número de empleado';return;}
+  const passCampo=document.getElementById('login-password-campo');          // ← NUEVO
+  if(passCampo.style.display==='block'){                                    // ← NUEVO
+    const pass=document.getElementById('login-password').value;            // ← NUEVO
+    if(pass!==CONTRASENA_ACCESO_MANUAL){                                    // ← NUEVO
+      estado.style.color='var(--rojo)';                                    // ← NUEVO
+      estado.innerText='❌ Contraseña incorrecta';                          // ← NUEVO
+      return;                                                               // ← NUEVO
+    }                                                                       // ← NUEVO
+  }                                                                         // ← NUEVO
   if(_qrParams&&_qrParams.tipo==='rituales'){
     const foto=document.getElementById('login-foto').files[0];
     if(!foto){estado.style.color='var(--rojo)';estado.innerText='⚠ Agrega la foto de evidencia';return;}
