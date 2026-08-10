@@ -492,7 +492,7 @@ function mostrarPantallaResultadoQR(icono,titulo,detalle,esExito){
   p.innerHTML=`<div style="font-size:70px;margin-bottom:16px;">${icono}</div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:${color};letter-spacing:1px;margin-bottom:16px;">${titulo}</div>
     <div style="background:rgba(255,255,255,0.08);border-radius:16px;padding:20px 28px;max-width:340px;width:100%;color:white;font-size:15px;line-height:1.7;margin-bottom:28px;">${detalle}</div>
-    style="background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.25);color:white;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;padding:12px 28px;border-radius:12px;cursor:pointer;letter-spacing:.5px;">← Volver al inicio</button>`;
+    <button onclick="window.location.href=window.location.pathname" style="background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.25);color:white;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;padding:12px 28px;border-radius:12px;cursor:pointer;letter-spacing:.5px;">← Volver al inicio</button>`;
 }
   async function abrirRitualDesdeQR(){
   document.getElementById('pantallaBienvenida').style.display='none';
