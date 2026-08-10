@@ -263,16 +263,18 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
     <div class="modal-titulo">¡Bienvenido!</div>
     <div class="modal-sub" id="login-modulo-label">Accediendo al módulo</div>
     <div class="campo">
-      <label>Número de Empleado</label>
-      <input type="number" id="login-numero" placeholder="Ej: 12345"
-        oninput="buscarEmpleadoLogin()"
+  <label>Número de Empleado</label>
+  <input type="number" id="login-numero" placeholder="Ej: 12345"
+    oninput="buscarEmpleadoLogin()"
+    onkeydown="if(event.key==='Enter') confirmarLogin()">
+  <div class="nombre-hint" id="login-hint"></div>
+</div>
 <div class="campo" id="login-password-campo" style="display:none;">
   <label>Contraseña de Acceso</label>
   <input type="password" id="login-password" placeholder="Ingresa la contraseña"
     onkeydown="if(event.key==='Enter') confirmarLogin()">
-      <div class="nombre-hint" id="login-hint"></div>
-    </div>
-    <div class="campo" id="login-foto-campo" style="display:none;">
+</div>
+<div class="campo" id="login-foto-campo" style="display:none;">
       <label>Foto de Evidencia</label>
       <input type="file" id="login-foto" accept="image/*">
     </div>
