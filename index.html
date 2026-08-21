@@ -420,7 +420,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
     <div class="registrador-banner"><span style="font-size:20px;">👤</span><div><div class="rb-label">Registrando como</div><div class="rb-nombre" id="banner-nombre-rituales"></div></div></div>
     <div class="card" style="max-width:500px;">
       <div class="card-titulo">Nuevo Ritual <span class="badge badge-amarillo">Semanal</span></div>
-      <div class="campo"><label>Área</label><select id="r-area"><option value="">Selecciona área</option><option>LAVS</option><option>ENVIOS A220</option><option>GALLEYS & SMALL/MONUMENTOS</option><option>SHIP LOOSE</option><option>F2F</option><option>CASCADAS</option><option>MAQUINADO Y TROQUELADO</option><option>AIRBUS</option><option>BONDEO</option><option>COMAC</option><option>DECORADO,PINTURA</option><option>MANTENIMIENTO</option><option>ALMACEN</option><option>INSERTOS A220</option><option>CNC 3X/5X</option><option>LIJADO</option><option>LAMINADO / HORNOS</option><option>BOEING</option><option>MOLDES / PRENSAS</option><option>DUCTOS</option></select></div>
+      <div class="campo"><label>Área</label><select id="r-area"><option value="">Selecciona área</option><option>LAVS</option><option>ENVIOS A220</option><option>GALLEYS & SMALL/MONUMENTOS</option><option>SHIP LOOSE</option><option>F2F</option><option>CASCADAS</option><option>MAQUINADO Y TROQUELADO</option><option>AIRBUS</option><option>BONDEO</option><option>COMAC</option><option>DECORADO,PINTURA</option><option>MANTENIMIENTO</option><option>ALMACEN</option><option>INSERTOS A220</option><option>CNC 3X/5X</option><option>LIJADO</option><option>LAMINADO / HORNOS</option><option>BOEING</option><option>MOLDES / PRENSAS</option<option>DUCTOS</option>><option>BERTHA ZERON</option></select></div>
       <div class="campo"><label>Foto de Evidencia</label><input type="file" id="r-foto" accept="image/*"></div>
       <button class="btn btn-amarillo btn-full" onclick="registrarRitual()">⚡ Registrar Ritual</button>
       <div id="r-estado"></div>
@@ -736,7 +736,7 @@ function cambiarSubtabQRQC(seccion){
 function getSemanaActual(){const hoy=new Date(),ini=new Date(hoy.getFullYear(),0,1);return Math.ceil((((hoy-ini)/86400000)+ini.getDay()+1)/7);}
 function mostrarEstado(id,msg,tipo){const el=document.getElementById(id);el.className='status '+tipo;el.innerText=msg;}
 
-const AREAS_RITUALES=["LAVS","ENVIOS A220","GALLEYS & SMALL/MONUMENTOS","SHIP LOOSE","F2F","CASCADAS","MAQUINADO Y TROQUELADO","AIRBUS","BONDEO","COMAC","DECORADO,PINTURA","MANTENIMIENTO","ALMACEN","INSERTOS A220","CNC 3X/5X","LIJADO","LAMINADO / HORNOS","BOEING","MOLDES / PRENSAS","DUCTOS"];
+const AREAS_RITUALES=["LAVS","ENVIOS A220","GALLEYS & SMALL/MONUMENTOS","SHIP LOOSE","F2F","CASCADAS","MAQUINADO Y TROQUELADO","AIRBUS","BONDEO","COMAC","DECORADO,PINTURA","MANTENIMIENTO","ALMACEN","INSERTOS A220","CNC 3X/5X","LIJADO","LAMINADO / HORNOS","BOEING","MOLDES / PRENSAS","DUCTOS","BERTHA ZERON"];
   
 async function registrarRitual(){
   try{
