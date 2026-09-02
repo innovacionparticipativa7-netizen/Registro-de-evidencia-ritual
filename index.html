@@ -646,23 +646,29 @@ function buscarEmpleadoLogin(){
   },350);
 }
 
+let _procesandoLogin = false; // NUEVO: evita doble-envío / race condition
+
 async function confirmarLogin(){
+  if(_procesandoLogin) return; // NUEVO: si ya hay una petición en curso, ignora
   const numero=document.getElementById('login-numero').value;
   const estado=document.getElementById('login-estado');
   if(!numero){estado.style.color='var(--rojo)';estado.innerText='⚠ Ingresa tu número de empleado';return;}
-  const passCampo=document.getElementById('login-password-campo');          // ← NUEVO
-  if(passCampo.style.display==='block'){                                    // ← NUEVO
-    const pass=document.getElementById('login-password').value;            // ← NUEVO
-    if(pass!==CONTRASENA_ACCESO_MANUAL){                                    // ← NUEVO
-      estado.style.color='var(--rojo)';                                    // ← NUEVO
-      estado.innerText='❌ Contraseña incorrecta';                          // ← NUEVO
-      return;                                                               // ← NUEVO
-    }                                                                       // ← NUEVO
-  }                                                                         // ← NUEVO
+  const passCampo=document.getElementById('login-password-campo');
+  if(passCampo.style.display==='block'){
+    const pass=document.getElementById('login-password').value;
+    if(pass!==CONTRASENA_ACCESO_MANUAL){
+      estado.style.color='var(--rojo)';
+      estado.innerText='❌ Contraseña incorrecta';
+      return;
+    }
+  }
   if(_qrParams&&_qrParams.tipo==='rituales'){
     const foto=document.getElementById('login-foto').files[0];
     if(!foto){estado.style.color='var(--rojo)';estado.innerText='⚠ Agrega la foto de evidencia';return;}
   }
+
+  _procesandoLogin = true; // NUEVO: bloquea reentradas
+  document.getElementById('login-numero').disabled = true; // NUEVO
   estado.style.color='var(--azul)';estado.innerText='Verificando...';
   try{
     const doc=await db.collection('empleados').doc(String(numero)).get();
@@ -680,7 +686,12 @@ async function confirmarLogin(){
     ['rituales','psr','qrqc'].forEach(m=>{const el=document.getElementById('banner-nombre-'+m);if(el)el.innerText=texto;});
     cambiarTab(moduloDestino);
   }catch(e){estado.style.color='var(--rojo)';estado.innerText='Error de conexión con la base de datos';}
+  finally{
+    _procesandoLogin = false; // NUEVO: libera la bandera
+    document.getElementById('login-numero').disabled = false; // NUEVO
+  }
 }
+  
 function cerrarLogin(){document.getElementById('modalLogin').classList.remove('abierto');}
 
 function volverInicio(){
