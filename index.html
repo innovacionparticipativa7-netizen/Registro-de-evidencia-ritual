@@ -353,6 +353,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
         <div class="admin-subtabs">
           <button class="admin-subtab-btn activo-psr" id="psr-subtab-proyectos" onclick="cambiarSubtabPSR('proyectos')">📁 Proyectos</button>
           <button class="admin-subtab-btn" id="psr-subtab-historial" onclick="cambiarSubtabPSR('historial')">📅 Historial de Asistencia</button>
+          <button class="admin-subtab-btn" id="psr-subtab-dashboard" onclick="cambiarSubtabPSR('dashboard')">📊 Dashboard</button>
         </div>
         <div class="admin-seccion activo" id="psr-sec-proyectos">
           <div class="grid2">
@@ -379,12 +380,26 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
           </div>
           <div class="scroll-box" id="p-historial"></div>
         </div>
+        <div class="admin-seccion" id="psr-sec-dashboard">
+          <div class="grid3" id="p-dash-tarjetas" style="margin-bottom:18px;"></div>
+          <div class="grid2">
+            <div class="card" style="margin-bottom:0;">
+              <div class="card-titulo" style="font-size:16px;">📊 Asistencias por Proyecto</div>
+              <canvas id="p-graficaDashboard" height="220"></canvas>
+            </div>
+            <div class="card" style="margin-bottom:0;">
+              <div class="card-titulo" style="font-size:16px;">🏆 Ranking de Proyectos</div>
+              <div class="scroll-box" id="p-dash-ranking" style="max-height:300px;"></div>
+            </div>
+          </div>
+        </div>
       </div>
       <div id="adminQRQC" style="display:none;">
         <div class="card-titulo" style="font-size:15px;margin-bottom:14px;">⚙ Administración — QRQC</div>
         <div class="admin-subtabs">
           <button class="admin-subtab-btn activo-qrqc" id="qrqc-subtab-foros" onclick="cambiarSubtabQRQC('foros')">📁 Foros</button>
           <button class="admin-subtab-btn" id="qrqc-subtab-historial" onclick="cambiarSubtabQRQC('historial')">📅 Historial de Asistencia</button>
+          <button class="admin-subtab-btn" id="qrqc-subtab-dashboard" onclick="cambiarSubtabQRQC('dashboard')">📊 Dashboard</button>
         </div>
         <div class="admin-seccion activo" id="qrqc-sec-foros">
           <div class="grid2">
@@ -410,6 +425,23 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
             <button class="btn btn-outline btn-sm" onclick="document.getElementById('q-filtroFecha').value='';document.getElementById('q-filtroHistorialNivel').value='';verHistorialQRQC()">Todos</button>
           </div>
           <div class="scroll-box" id="q-historial"></div>
+        </div>
+        <div class="admin-seccion" id="qrqc-sec-dashboard">
+          <div class="grid3" id="q-dash-tarjetas" style="margin-bottom:18px;"></div>
+          <div class="grid2">
+            <div class="card" style="margin-bottom:0;">
+              <div class="card-titulo" style="font-size:16px;">📊 Asistencias por Foro</div>
+              <canvas id="q-graficaDashboard" height="220"></canvas>
+            </div>
+            <div class="card" style="margin-bottom:0;">
+              <div class="card-titulo" style="font-size:16px;">🏆 Ranking de Foros</div>
+              <div class="scroll-box" id="q-dash-ranking" style="max-height:300px;"></div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:18px;">
+            <div class="card-titulo" style="font-size:16px;">🚦 Distribución por Nivel</div>
+            <div id="q-dash-niveles"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -646,10 +678,10 @@ function buscarEmpleadoLogin(){
   },350);
 }
 
-let _procesandoLogin = false; // NUEVO: evita doble-envío / race condition
+let _procesandoLogin = false;
 
 async function confirmarLogin(){
-  if(_procesandoLogin) return; // NUEVO: si ya hay una petición en curso, ignora
+  if(_procesandoLogin) return;
   const numero=document.getElementById('login-numero').value;
   const estado=document.getElementById('login-estado');
   if(!numero){estado.style.color='var(--rojo)';estado.innerText='⚠ Ingresa tu número de empleado';return;}
@@ -667,8 +699,8 @@ async function confirmarLogin(){
     if(!foto){estado.style.color='var(--rojo)';estado.innerText='⚠ Agrega la foto de evidencia';return;}
   }
 
-  _procesandoLogin = true; // NUEVO: bloquea reentradas
-  document.getElementById('login-numero').disabled = true; // NUEVO
+  _procesandoLogin = true;
+  document.getElementById('login-numero').disabled = true;
   estado.style.color='var(--azul)';estado.innerText='Verificando...';
   try{
     const doc=await db.collection('empleados').doc(String(numero)).get();
@@ -687,8 +719,8 @@ async function confirmarLogin(){
     cambiarTab(moduloDestino);
   }catch(e){estado.style.color='var(--rojo)';estado.innerText='Error de conexión con la base de datos';}
   finally{
-    _procesandoLogin = false; // NUEVO: libera la bandera
-    document.getElementById('login-numero').disabled = false; // NUEVO
+    _procesandoLogin = false;
+    document.getElementById('login-numero').disabled = false;
   }
 }
   
@@ -735,13 +767,83 @@ function mostrarAdminSeccion(modulo){
 }
 
 function cambiarSubtabPSR(seccion){
-  ['proyectos','historial'].forEach(s=>{document.getElementById('psr-sec-'+s).classList.toggle('activo',s===seccion);document.getElementById('psr-subtab-'+s).classList.toggle('activo-psr',s===seccion);});
+  ['proyectos','historial','dashboard'].forEach(s=>{document.getElementById('psr-sec-'+s).classList.toggle('activo',s===seccion);document.getElementById('psr-subtab-'+s).classList.toggle('activo-psr',s===seccion);});
   if(seccion==='historial')verHistorialPSR();
+  if(seccion==='dashboard')verDashboardPSRAdmin();
 }
 
 function cambiarSubtabQRQC(seccion){
-  ['foros','historial'].forEach(s=>{document.getElementById('qrqc-sec-'+s).classList.toggle('activo',s===seccion);document.getElementById('qrqc-subtab-'+s).classList.toggle('activo-qrqc',s===seccion);});
+  ['foros','historial','dashboard'].forEach(s=>{document.getElementById('qrqc-sec-'+s).classList.toggle('activo',s===seccion);document.getElementById('qrqc-subtab-'+s).classList.toggle('activo-qrqc',s===seccion);});
   if(seccion==='historial')verHistorialQRQC();
+  if(seccion==='dashboard')verDashboardQRQCAdmin();
+}
+
+let graficaPSRDash=null, graficaQRQCDash=null;
+
+function tarjetaResumen(valor,label,color){
+  return `<div class="card" style="margin-bottom:0;text-align:center;padding:16px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;color:${color};">${valor}</div><div style="font-size:11px;color:var(--texto-suave);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;">${label}</div></div>`;
+}
+
+async function verDashboardPSRAdmin(){
+  const tarjetas=document.getElementById('p-dash-tarjetas'),ranking=document.getElementById('p-dash-ranking');
+  tarjetas.innerHTML='Cargando...';ranking.innerHTML='';
+  const snap=await db.collection('asistenciasPSR').get();
+  const total=snap.size;
+  const porProyecto={}, empleadosUnicos=new Set(), hoyStr=new Date().toISOString().split('T')[0];
+  let hoyCount=0;
+  snap.forEach(doc=>{
+    const d=doc.data();
+    porProyecto[d.proyectoNombre]=(porProyecto[d.proyectoNombre]||0)+1;
+    empleadosUnicos.add(d.numeroEmpleado);
+    if(d.fechaStr===hoyStr)hoyCount++;
+  });
+  tarjetas.innerHTML=tarjetaResumen(total,'Total Asistencias','var(--azul-medio)')
+    +tarjetaResumen(hoyCount,'Registradas Hoy','var(--verde)')
+    +tarjetaResumen(empleadosUnicos.size,'Empleados Únicos','#7c3aed');
+  const entradas=Object.entries(porProyecto).sort((a,b)=>b[1]-a[1]);
+  if(!entradas.length){ranking.innerHTML='<p style="color:var(--texto-suave)">Sin registros aún</p>';}
+  else{
+    entradas.forEach(([nombre,cnt],i)=>{
+      ranking.innerHTML+=`<div class="semaforo-item"><span style="font-size:13px;"><strong>#${i+1}</strong> ${nombre}</span><span class="badge badge-azul">${cnt}</span></div>`;
+    });
+  }
+  const ctx=document.getElementById('p-graficaDashboard').getContext('2d');
+  if(graficaPSRDash)graficaPSRDash.destroy();
+  graficaPSRDash=new Chart(ctx,{type:'bar',data:{labels:entradas.map(e=>e[0]),datasets:[{label:'Asistencias',data:entradas.map(e=>e[1]),backgroundColor:'#2563eb88',borderColor:'#1e3a8a',borderWidth:2,borderRadius:6}]},options:{indexAxis:'y',responsive:true,scales:{x:{beginAtZero:true,ticks:{stepSize:1}}}}});
+}
+
+async function verDashboardQRQCAdmin(){
+  const tarjetas=document.getElementById('q-dash-tarjetas'),ranking=document.getElementById('q-dash-ranking'),niveles=document.getElementById('q-dash-niveles');
+  tarjetas.innerHTML='Cargando...';ranking.innerHTML='';niveles.innerHTML='';
+  const snap=await db.collection('asistenciasQRQC').get();
+  const total=snap.size;
+  const porForo={}, porNivel={N3:0,N2:0,N1:0}, empleadosUnicos=new Set(), hoyStr=new Date().toISOString().split('T')[0];
+  let hoyCount=0;
+  snap.forEach(doc=>{
+    const d=doc.data();
+    porForo[d.foroNombre]=(porForo[d.foroNombre]||0)+1;
+    if(d.foroNivel&&porNivel[d.foroNivel]!==undefined)porNivel[d.foroNivel]++;
+    empleadosUnicos.add(d.numeroEmpleado);
+    if(d.fechaStr===hoyStr)hoyCount++;
+  });
+  tarjetas.innerHTML=tarjetaResumen(total,'Total Asistencias','#7c3aed')
+    +tarjetaResumen(hoyCount,'Registradas Hoy','var(--verde)')
+    +tarjetaResumen(empleadosUnicos.size,'Empleados Únicos','var(--azul-medio)');
+  const entradas=Object.entries(porForo).sort((a,b)=>b[1]-a[1]);
+  if(!entradas.length){ranking.innerHTML='<p style="color:var(--texto-suave)">Sin registros aún</p>';}
+  else{
+    entradas.forEach(([nombre,cnt],i)=>{
+      ranking.innerHTML+=`<div class="semaforo-item"><span style="font-size:13px;"><strong>#${i+1}</strong> ${nombre}</span><span class="badge badge-morado">${cnt}</span></div>`;
+    });
+  }
+  ['N3','N2','N1'].forEach(n=>{
+    const pct=total?Math.round((porNivel[n]/total)*100):0;
+    const nc='nivel-'+n.toLowerCase();
+    niveles.innerHTML+=`<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span class="nivel-badge ${nc}">${n}</span><strong style="font-size:13px;">${porNivel[n]} (${pct}%)</strong></div><div class="barra-progreso"><div class="barra-fill" style="width:${pct}%;background:#7c3aed;">${pct?pct+'%':''}</div></div></div>`;
+  });
+  const ctx=document.getElementById('q-graficaDashboard').getContext('2d');
+  if(graficaQRQCDash)graficaQRQCDash.destroy();
+  graficaQRQCDash=new Chart(ctx,{type:'bar',data:{labels:entradas.map(e=>e[0]),datasets:[{label:'Asistencias',data:entradas.map(e=>e[1]),backgroundColor:'#7c3aed88',borderColor:'#5b21b6',borderWidth:2,borderRadius:6}]},options:{indexAxis:'y',responsive:true,scales:{x:{beginAtZero:true,ticks:{stepSize:1}}}}});
 }
 
 function getSemanaActual(){const hoy=new Date(),ini=new Date(hoy.getFullYear(),0,1);return Math.ceil((((hoy-ini)/86400000)+ini.getDay()+1)/7);}
