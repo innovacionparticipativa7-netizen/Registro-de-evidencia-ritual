@@ -213,6 +213,10 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 .admin-subtab-btn.activo-qrqc { background: #f5f3ff; border-color: #7c3aed; color: #5b21b6; }
 .admin-seccion { display: none; }
 .admin-seccion.activo { display: block; }
+.admin-psr-proyecto-row .fila-botones { display: flex; gap: 6px; flex-shrink: 0; }
+.editar-foro-form { background: white; border: 1.5px solid var(--azul-medio); border-radius: 8px; padding: 10px; margin-bottom: 6px; }
+.editar-foro-form .campo { margin-bottom: 8px; }
+.editar-foro-form .fila-botones { display: flex; gap: 8px; }
 </style>
 </head>
 <body>
@@ -1042,7 +1046,53 @@ async function cargarAdminListaForos(){
   const lista=document.getElementById('q-listaForosAdmin');if(!lista)return;lista.innerHTML='Cargando...';
   const snap=await db.collection('forosQRQC').orderBy('nivel').get();lista.innerHTML='';
   if(snap.empty){lista.innerHTML='<p style="color:var(--texto-suave)">No hay foros</p>';return;}
-  snap.docs.forEach(doc=>{const d=doc.data();const nc='nivel-'+d.nivel.toLowerCase();lista.innerHTML+=`<div class="admin-psr-proyecto-row"><div><span class="nivel-badge ${nc}">${d.nivel}</span><strong style="margin-left:6px;">${d.nombre}</strong></div><button class="btn btn-rojo btn-sm" onclick="eliminarForo('${doc.id}')">✕ Eliminar</button></div>`;});
+  snap.docs.forEach(doc=>{const d=doc.data();const nc='nivel-'+d.nivel.toLowerCase();lista.innerHTML+=`<div class="admin-psr-proyecto-row" id="fila-foro-${doc.id}"><div><span class="nivel-badge ${nc}">${d.nivel}</span><strong style="margin-left:6px;">${d.nombre}</strong></div><div class="fila-botones"><button class="btn btn-azul btn-sm" onclick="mostrarFormEditarForo('${doc.id}','${d.nombre.replace(/'/g,"\\'")}','${d.nivel}')">✏ Editar</button><button class="btn btn-rojo btn-sm" onclick="eliminarForo('${doc.id}')">✕ Eliminar</button></div></div>`;});
+}
+
+function mostrarFormEditarForo(id,nombreActual,nivelActual){
+  const fila=document.getElementById('fila-foro-'+id);
+  if(!fila)return;
+  fila.innerHTML=`<div class="editar-foro-form" style="width:100%;">
+    <div class="campo"><label>Nombre del Foro</label><input type="text" id="edit-nombre-${id}" value="${nombreActual.replace(/"/g,'&quot;')}"></div>
+    <div class="campo"><label>Nivel</label><select id="edit-nivel-${id}">
+      <option value="N3" ${nivelActual==='N3'?'selected':''}>N3</option>
+      <option value="N2" ${nivelActual==='N2'?'selected':''}>N2</option>
+      <option value="N1" ${nivelActual==='N1'?'selected':''}>N1</option>
+    </select></div>
+    <div id="edit-estado-${id}" style="font-size:12px;font-weight:600;margin-bottom:8px;"></div>
+    <div class="fila-botones">
+      <button class="btn btn-verde btn-sm" style="flex:1;" onclick="guardarEdicionForo('${id}')">✅ Guardar</button>
+      <button class="btn btn-outline btn-sm" style="flex:1;" onclick="cargarAdminListaForos()">Cancelar</button>
+    </div>
+  </div>`;
+}
+
+async function guardarEdicionForo(id){
+  const nuevoNombre=document.getElementById('edit-nombre-'+id).value.trim();
+  const nuevoNivel=document.getElementById('edit-nivel-'+id).value;
+  const estadoEl=document.getElementById('edit-estado-'+id);
+  if(!nuevoNombre){estadoEl.style.color='var(--rojo)';estadoEl.innerText='Ingresa un nombre válido';return;}
+  estadoEl.style.color='var(--azul)';estadoEl.innerText='Guardando...';
+  try{
+    const forosRef=db.collection('forosQRQC').doc(id);
+    const forosSnap=await forosRef.get();
+    if(!forosSnap.exists){estadoEl.style.color='var(--rojo)';estadoEl.innerText='El foro ya no existe';return;}
+    await forosRef.update({nombre:nuevoNombre,nivel:nuevoNivel});
+
+    const asistSnap=await db.collection('asistenciasQRQC').where('foroId','==',id).get();
+    if(!asistSnap.empty){
+      const batch=db.batch();
+      asistSnap.forEach(doc=>{batch.update(doc.ref,{foroNombre:nuevoNombre,foroNivel:nuevoNivel});});
+      await batch.commit();
+    }
+
+    await cargarForosQRQC();
+    await cargarAdminListaForos();
+  }catch(e){
+    console.error(e);
+    estadoEl.style.color='var(--rojo)';
+    estadoEl.innerText='❌ Error al guardar los cambios';
+  }
 }
 
 async function agregarForo(){
